@@ -56,4 +56,4 @@ Contributions are always welcome! Please look at following commit-conventions, w
 
 <!-- Links and Images -->
 
-[version_shield]: https://img.shields.io/github/v/release/Gastas-DHGE/UserAppv
+[version_shield]: https://img.shields.io/github/v/release/Gastas-DHGE/UserApp
