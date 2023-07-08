@@ -9,6 +9,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  gastas_core: 
+    path: ../Core/
 
 dev_dependencies:
   flutter_test:
