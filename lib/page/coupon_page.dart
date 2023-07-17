@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class CouponPage extends StatefulWidget {
+  const CouponPage({super.key});
+
   @override
   State<StatefulWidget> createState() => _CouponPage();
 }

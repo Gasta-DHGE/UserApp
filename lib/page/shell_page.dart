@@ -6,6 +6,8 @@ import 'package:gastas_user_app/page/settings_page.dart';
 import 'package:gastas_user_app/page/testPage.dart';
 
 class ShellPage extends StatefulWidget {
+  const ShellPage({super.key});
+
   @override
   State<StatefulWidget> createState() => _ShellPage();
 }
