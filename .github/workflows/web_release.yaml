@@ -1,14 +1,7 @@
 name: Web Release
 
 on:
-  push:
-    branches:
-      - master
-  pull_request:
-    branches:
-      - master
-  # for manual run
-  workflow_dispatch:
+  [workflow_dispatch]
 
 env:
   SOURCE_DIR: ${{ github.workspace }}

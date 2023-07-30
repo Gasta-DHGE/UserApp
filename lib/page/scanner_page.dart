@@ -1,26 +1,49 @@
 import 'package:flutter/material.dart';
 import 'package:gastas_core/models/survey.dart';
+import 'package:gastas_core/models/survey_answer.dart';
+import 'package:gastas_core/models/survey_item.dart';
+import 'package:gastas_core/models/survey_item_answer.dart';
 import 'package:gastas_core/ui/pages/survey/survey_page.dart';
-import 'package:gastas_core/models/text_survey_item.dart';
-import 'package:gastas_core/models/single_selection_survey_item.dart';
+import 'package:uuid/uuid.dart';
 
 class ScannerPage extends StatefulWidget {
-  const ScannerPage({super.key});
+  ScannerPage({super.key});
+
+  SurveyAnswer surveyAnswer = SurveyAnswer();
 
   @override
   State<StatefulWidget> createState() => _ScannerPage();
 }
 
 class _ScannerPage extends State<ScannerPage> {
-  Survey survey = Survey(surveyItems: [
-    TextSurveyItem(heading: 'What could we do better?'),
-    SingleSelectionSurveyItem(
-        heading: 'What could we do better?',
-        options: ["Option 1", "Option 2", "Option 3", "Option 4"])
-  ]);
-
   @override
   Widget build(BuildContext context) {
+    var uuid = const Uuid();
+    Survey survey = Survey();
+    survey.surveyItems = [
+      SurveyItem(
+          question: 'What could we do better?',
+          data: [],
+          questionId: uuid.v1(),
+          type: 'TextSurveyItem'),
+      SurveyItem(
+          question: 'What could we do better?',
+          data: [
+            ["Option 1", "Option 2", "Option 3", "Option 4"]
+          ],
+          questionId: uuid.v1(),
+          type: 'SingleSelectionSurveyItem')
+    ];
+
+    widget.surveyAnswer.surveyId = survey.surveyId;
+
+    for (int i = 0; i < survey.surveyItems.length; i++) {
+      widget.surveyAnswer.surveyItemAnswers.add(SurveyItemAnswer(
+        questionId: survey.surveyItems[i].questionId,
+        type: survey.surveyItems[i].type,
+      ));
+    }
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
@@ -34,6 +57,14 @@ class _ScannerPage extends State<ScannerPage> {
                   color: Theme.of(context).colorScheme.primary),
             ),
           ]),
+          Text(widget.surveyAnswer.surveyItemAnswers[0].data.toString()),
+          Text(widget.surveyAnswer.surveyItemAnswers[1].data.toString()),
+          MaterialButton(
+            onPressed: () {
+              setState(() {});
+            },
+            child: const Text("refresh"),
+          ),
           MaterialButton(
               child: const Text("Start Survey"),
               onPressed: () {
@@ -43,6 +74,7 @@ class _ScannerPage extends State<ScannerPage> {
                         builder: (context) => SurveyPage(
                               context: context,
                               survey: survey,
+                              surveyAnswer: widget.surveyAnswer,
                             )));
               }),
         ],
