@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gastas_core/ui/general/dark_theme.dart';
 import 'package:gastas_core/ui/general/light_theme.dart';
-import 'package:gastas_user_app/page/shell_page.dart';
+import 'package:gastas_user_app/page/app_page.dart';
 
 class App extends StatefulWidget {
   const App({super.key});
@@ -17,7 +17,7 @@ class _App extends State<App> {
       themeMode: ThemeMode.system,
       theme: lightTheme,
       darkTheme: darkTheme,
-      home: ShellPage(),
+      home: const AppPage(),
     );
   }
 }

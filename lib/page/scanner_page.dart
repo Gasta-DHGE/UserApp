@@ -3,29 +3,25 @@ import 'package:gastas_core/models/survey.dart';
 import 'package:gastas_core/models/survey_answer.dart';
 import 'package:gastas_core/models/survey_item_answer.dart';
 import 'package:gastas_core/ui/pages/survey/survey_page.dart';
-import 'package:gastas_user_app/services/i_survey_service.dart';
-import 'package:gastas_user_app/services/test_survey_service.dart';
+import 'package:gastas_user_app/controller/scanner_page_controller.dart';
 
 class ScannerPage extends StatefulWidget {
-  ScannerPage({super.key});
-
-  SurveyAnswer surveyAnswer = SurveyAnswer();
+  const ScannerPage({super.key});
 
   @override
   State<StatefulWidget> createState() => _ScannerPage();
 }
 
 class _ScannerPage extends State<ScannerPage> {
+  static ScannerPageController controller = ScannerPageController();
+
   @override
   Widget build(BuildContext context) {
-    ISurveyService surveyService = TestSurveyService();
-    Survey survey = surveyService.getSurvey();
-
-    widget.surveyAnswer.surveyId = survey.surveyId;
-    for (int i = 0; i < survey.surveyItems.length; i++) {
-      widget.surveyAnswer.surveyItemAnswers.add(SurveyItemAnswer(
-        questionId: survey.surveyItems[i].questionId,
-        type: survey.surveyItems[i].type,
+    controller.surveyAnswer.surveyId = controller.survey!.surveyId;
+    for (int i = 0; i < controller.survey!.surveyItems.length; i++) {
+      controller.surveyAnswer.surveyItemAnswers.add(SurveyItemAnswer(
+        questionId: controller.survey!.surveyItems[i].questionId,
+        type: controller.survey!.surveyItems[i].type,
       ));
     }
 
@@ -50,15 +46,15 @@ class _ScannerPage extends State<ScannerPage> {
                     MaterialPageRoute(
                         builder: (context) => SurveyPage(
                               context: context,
-                              survey: survey,
-                              surveyAnswer: widget.surveyAnswer,
+                              survey: controller.survey!,
+                              surveyAnswer: controller.surveyAnswer,
                             )));
               }),
-          Text("SurveyId: " + widget.surveyAnswer.surveyId),
+          Text("SurveyId: " + controller.surveyAnswer.surveyId),
           Text("Answer Question 1: " +
-              widget.surveyAnswer.surveyItemAnswers[0].data.toString()),
+              controller.surveyAnswer.surveyItemAnswers[0].data.toString()),
           Text("Answer Question 2: " +
-              widget.surveyAnswer.surveyItemAnswers[1].data.toString()),
+              controller.surveyAnswer.surveyItemAnswers[1].data.toString()),
           MaterialButton(
             onPressed: () {
               setState(() {});
