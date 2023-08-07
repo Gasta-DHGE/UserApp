@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:gastas_core/ui/general/text_styles.dart';
+
+import '../controller/map_page_controller.dart';
 
 class MapPage extends StatefulWidget {
   @override
@@ -6,6 +9,8 @@ class MapPage extends StatefulWidget {
 }
 
 class _MapPage extends State<MapPage> {
+  static MapPageController controller = MapPageController();
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -14,11 +19,8 @@ class _MapPage extends State<MapPage> {
         children: [
           Text(
             "Map",
-            style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 40,
-                color: Theme.of(context).colorScheme.primary),
-          )
+            style: TextStyles.bigHeadlineTextStyle(context),
+          ),
         ],
       ),
     );

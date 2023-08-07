@@ -42,11 +42,14 @@ class _ShellPage extends State<ShellPage> {
           onDestinationSelected: (value) =>
               setState(() => _currentpage = value),
           destinations: const [
-            NavigationDestination(icon: Icon(Icons.percent), label: "Coupons"),
-            NavigationDestination(icon: Icon(Icons.qr_code), label: "Scanner"),
-            NavigationDestination(icon: Icon(Icons.map), label: "Map"),
             NavigationDestination(
-                icon: Icon(Icons.settings), label: "Settings"),
+                icon: Icon(Icons.percent), label: "Coupons", tooltip: ""),
+            NavigationDestination(
+                icon: Icon(Icons.qr_code), label: "Scanner", tooltip: ""),
+            NavigationDestination(
+                icon: Icon(Icons.map), label: "Map", tooltip: ""),
+            NavigationDestination(
+                icon: Icon(Icons.settings), label: "Settings", tooltip: ""),
           ],
         ),
         body: SafeArea(

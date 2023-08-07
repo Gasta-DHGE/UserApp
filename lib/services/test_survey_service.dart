@@ -1,5 +1,5 @@
-import 'package:gastas_core/models/survey.dart';
-import 'package:gastas_core/models/survey_item.dart';
+import 'package:gastas_core/models/survey/survey.dart';
+import 'package:gastas_core/models/survey/survey_item.dart';
 import 'package:gastas_user_app/services/i_survey_service.dart';
 import 'package:uuid/uuid.dart';
 

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gastas_core/ui/general/dark_theme.dart';
-import 'package:gastas_core/ui/general/light_theme.dart';
+import 'package:gastas_core/ui/general/themes.dart';
 import 'package:gastas_user_app/page/app_page.dart';
 
 class App extends StatefulWidget {
@@ -15,8 +14,8 @@ class _App extends State<App> {
   Widget build(BuildContext context) {
     return MaterialApp(
       themeMode: ThemeMode.system,
-      theme: lightTheme,
-      darkTheme: darkTheme,
+      theme: Themes.lightTheme,
+      darkTheme: Themes.darkTheme,
       home: const AppPage(),
     );
   }

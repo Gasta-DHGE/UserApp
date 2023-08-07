@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gastas_core/models/survey.dart';
-import 'package:gastas_core/models/survey_answer.dart';
-import 'package:gastas_core/models/survey_item_answer.dart';
+import 'package:gastas_core/ui/general/text_styles.dart';
+import 'package:gastas_core/models/survey/survey_item_answer.dart';
 import 'package:gastas_core/ui/pages/survey/survey_page.dart';
 import 'package:gastas_user_app/controller/scanner_page_controller.dart';
 
@@ -32,10 +31,7 @@ class _ScannerPage extends State<ScannerPage> {
           Row(children: [
             Text(
               "Scanner",
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 40,
-                  color: Theme.of(context).colorScheme.primary),
+              style: TextStyles.bigHeadlineTextStyle(context),
             ),
           ]),
           MaterialButton(

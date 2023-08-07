@@ -1,0 +1,3 @@
+class MapPageController {
+  MapPageController() {}
+}

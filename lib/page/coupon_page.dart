@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gastas_core/ui/general/text_styles.dart';
 
 class CouponPage extends StatefulWidget {
   const CouponPage({super.key});
@@ -16,10 +17,7 @@ class _CouponPage extends State<CouponPage> {
         children: [
           Text(
             "Coupons",
-            style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 40,
-                color: Theme.of(context).colorScheme.primary),
+            style: TextStyles.bigHeadlineTextStyle(context),
           )
         ],
       ),
