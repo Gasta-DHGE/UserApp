@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:gastas_core/ui/widgets/default_button.dart';
+import 'package:gastas_core/src/ui/widgets/default_button.dart';
 import 'package:gastas_user_app/service_provider.dart';
-import 'package:gastas_core/ui/general/text_styles.dart';
+import 'package:gastas_core/src/ui/general/text_styles.dart';
+import 'package:gastas_user_app/utility/observer.dart';
+
+import '../controller/login_page_controller.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -10,7 +13,12 @@ class LoginPage extends StatefulWidget {
   State<StatefulWidget> createState() => _LoginPage();
 }
 
-class _LoginPage extends State<LoginPage> {
+class _LoginPage extends State<LoginPage> implements Observer {
+  static var controller = LoginPageController();
+  _LoginPage() {
+    controller.isLoading.addObserver(this);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,14 +35,12 @@ class _LoginPage extends State<LoginPage> {
             Expanded(
               child: Container(
                 alignment: Alignment.center,
-                child: ServiceProvider
-                        .instance.authenticationService.isLoading.value
+                child: controller.isLoading.value
                     ? const CircularProgressIndicator()
                     : DefaultButton(
                         onPressed: () {
                           setState(() {
-                            ServiceProvider.instance.authenticationService
-                                .logInAsync();
+                            controller.loginAsync();
                           });
                         },
                         child: const Text("Login"),
@@ -45,5 +51,16 @@ class _LoginPage extends State<LoginPage> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    controller.isLoading.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void onNotify(value) {
+    setState(() {});
   }
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gastas_core/ui/general/text_styles.dart';
+import 'package:gastas_core/src/ui/general/text_styles.dart';
 
 class CouponPage extends StatefulWidget {
   const CouponPage({super.key});

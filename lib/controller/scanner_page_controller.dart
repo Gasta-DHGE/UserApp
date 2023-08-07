@@ -1,5 +1,6 @@
-import 'package:gastas_core/models/survey/survey.dart';
-import 'package:gastas_core/models/survey/survey_answer.dart';
+import 'package:gastas_core/src/models/survey/survey.dart';
+import 'package:gastas_core/src/models/survey/survey_answer.dart';
+import 'package:gastas_user_app/utility/observable.dart';
 
 import '../service_provider.dart';
 import '../services/i_survey_service.dart';
@@ -7,10 +8,17 @@ import '../services/i_survey_service.dart';
 class ScannerPageController {
   ISurveyService surveyService = ServiceProvider.instance.surveyService;
 
-  Survey? survey;
+  var survey = Observable<Survey?>(null);
   SurveyAnswer surveyAnswer = SurveyAnswer();
+  var isLoading = Observable<bool>(false);
 
   ScannerPageController() {
-    survey = surveyService.getSurvey();
+    loadSurveyAsync();
+  }
+
+  void loadSurveyAsync() async {
+    isLoading.value = true;
+    survey.value = await surveyService.getSurveyAsync("");
+    isLoading.value = false;
   }
 }

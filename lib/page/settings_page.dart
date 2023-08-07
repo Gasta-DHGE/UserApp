@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:gastas_core/ui/general/text_styles.dart';
-import 'package:gastas_core/ui/widgets/default_button.dart';
+import 'package:gastas_core/src/ui/general/text_styles.dart';
+import 'package:gastas_core/src/ui/widgets/default_button.dart';
+import 'package:gastas_user_app/utility/observer.dart';
 
+import '../controller/settings_page_controller.dart';
 import '../service_provider.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -9,7 +11,12 @@ class SettingsPage extends StatefulWidget {
   State<StatefulWidget> createState() => _SettingsPage();
 }
 
-class _SettingsPage extends State<SettingsPage> {
+class _SettingsPage extends State<SettingsPage> implements Observer {
+  static var controller = SettingsPageController();
+  _SettingsPage() {
+    controller.isLoading.addObserver(this);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -25,22 +32,31 @@ class _SettingsPage extends State<SettingsPage> {
           Expanded(
             child: Container(
               alignment: Alignment.center,
-              child:
-                  ServiceProvider.instance.authenticationService.isLoading.value
-                      ? const CircularProgressIndicator()
-                      : DefaultButton(
-                          onPressed: () {
-                            setState(() {
-                              ServiceProvider.instance.authenticationService
-                                  .logOutAsync();
-                            });
-                          },
-                          child: const Text("Logout"),
-                        ),
+              child: controller.isLoading.value
+                  ? const CircularProgressIndicator()
+                  : DefaultButton(
+                      onPressed: () {
+                        setState(() {
+                          controller.logoutAsync();
+                        });
+                      },
+                      child: const Text("Logout"),
+                    ),
             ),
           )
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    controller.isLoading.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void onNotify(value) {
+    setState(() {});
   }
 }

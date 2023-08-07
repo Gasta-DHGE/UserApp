@@ -21,8 +21,8 @@ class _AppPage extends State<AppPage> implements Observer {
   @override
   Widget build(BuildContext context) {
     return controller.authenticationService.isLoggedIn.value
-        ? ShellPage()
-        : LoginPage();
+        ? const ShellPage()
+        : const LoginPage();
   }
 
   @override

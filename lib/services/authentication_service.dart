@@ -7,21 +7,14 @@ class AuthenticationService implements IAuthenticationService {
   var isLoggedIn = Observable<bool>(false);
 
   @override
-  var isLoading = Observable<bool>(false);
-
-  @override
-  Future<void> logInAsync() async {
-    isLoading.value = true;
+  Future<void> loginAsync() async {
     await Future.delayed(const Duration(seconds: 2));
     isLoggedIn.value = true;
-    isLoading.value = false;
   }
 
   @override
-  Future<void> logOutAsync() async {
-    isLoading.value = true;
+  Future<void> logoutAsync() async {
     await Future.delayed(const Duration(seconds: 2));
     isLoggedIn.value = false;
-    isLoading.value = false;
   }
 }

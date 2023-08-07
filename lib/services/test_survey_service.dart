@@ -1,11 +1,13 @@
-import 'package:gastas_core/models/survey/survey.dart';
-import 'package:gastas_core/models/survey/survey_item.dart';
+import 'package:gastas_core/src/models/survey/survey.dart';
+import 'package:gastas_core/src/models/survey/survey_answer.dart';
+import 'package:gastas_core/src/models/survey/survey_item.dart';
 import 'package:gastas_user_app/services/i_survey_service.dart';
 import 'package:uuid/uuid.dart';
 
 class TestSurveyService extends ISurveyService {
   @override
-  Survey getSurvey() {
+  Future<Survey> getSurveyAsync(String surveyId) async {
+    await Future.delayed(const Duration(seconds: 2));
     var uuid = const Uuid();
     Survey survey = Survey();
     survey.surveyId = "bb0fbff0-2fe2-11ee-8cc7-099e5572a5a2";
@@ -25,5 +27,11 @@ class TestSurveyService extends ISurveyService {
     ];
 
     return survey;
+  }
+
+  @override
+  Future<bool> sendSurveyAsync(SurveyAnswer answer) async {
+    await Future.delayed(const Duration(seconds: 2));
+    return true;
   }
 }
