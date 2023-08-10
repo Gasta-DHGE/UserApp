@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gastas_core/gastas_core.dart';
 
-import '../controller/map_page_controller.dart';
-
 class MapPage extends StatefulWidget {
   const MapPage({super.key});
 
@@ -11,7 +9,7 @@ class MapPage extends StatefulWidget {
 }
 
 class _MapPage extends State<MapPage> {
-  static MapPageController controller = MapPageController();
+  //static MapPageController controller = MapPageController();
 
   @override
   Widget build(BuildContext context) {
