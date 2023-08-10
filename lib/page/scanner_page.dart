@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gastas_core/gastas_core.dart';
 import 'package:gastas_user_app/controller/scanner_page_controller.dart';
+import 'package:gastas_user_app/page/debug_page.dart';
 import 'package:gastas_user_app/utility/observer.dart';
 
 class ScannerPage extends StatefulWidget {
@@ -57,25 +58,20 @@ class _ScannerPage extends State<ScannerPage> implements Observer {
                                         onSendPressed: (value) {
                                           controller.surveyAnswer = value;
                                           Navigator.pop(context);
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => DebugPage(
+                                                  data:
+                                                      controller.surveyAnswer),
+                                            ),
+                                          );
                                         },
                                         onValueChanged: (value) {
                                           controller.surveyAnswer = value;
                                         },
                                       )));
                         }),
-                    Text("SurveyId: " + controller.surveyAnswer.surveyId),
-                    Text("Answer Question 1: " +
-                        controller.surveyAnswer.surveyItemAnswers[0].data
-                            .toString()),
-                    Text("Answer Question 2: " +
-                        controller.surveyAnswer.surveyItemAnswers[1].data
-                            .toString()),
-                    MaterialButton(
-                      onPressed: () {
-                        setState(() {});
-                      },
-                      child: const Text("refresh"),
-                    ),
                   ],
                 ),
         ],
