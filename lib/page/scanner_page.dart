@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:gastas_core/gastas_core.dart';
 import 'package:gastas_core/src/ui/general/text_styles.dart';
 import 'package:gastas_core/src/models/survey/survey_item_answer.dart';
-import 'package:gastas_core/src/ui/pages/survey/survey_page.dart';
+import 'package:gastas_core/src/ui/pages/survey/survey_page_widget.dart';
 import 'package:gastas_user_app/controller/scanner_page_controller.dart';
 import 'package:gastas_user_app/utility/observer.dart';
 
@@ -51,10 +52,18 @@ class _ScannerPage extends State<ScannerPage> implements Observer {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => SurveyPage(
-                                        context: context,
+                                  builder: (context) => SurveyPageWidget(
                                         survey: controller.survey.value!,
-                                        surveyAnswer: controller.surveyAnswer,
+                                        onSavePressed: (value) {
+                                          controller.surveyAnswer = value;
+                                        },
+                                        onSendPressed: (value) {
+                                          controller.surveyAnswer = value;
+                                          Navigator.pop(context);
+                                        },
+                                        onValueChanged: (value) {
+                                          controller.surveyAnswer = value;
+                                        },
                                       )));
                         }),
                     Text("SurveyId: " + controller.surveyAnswer.surveyId),

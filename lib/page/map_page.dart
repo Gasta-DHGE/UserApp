@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:gastas_core/src/ui/general/text_styles.dart';
+import 'package:gastas_core/gastas_core.dart';
 
 import '../controller/map_page_controller.dart';
 
 class MapPage extends StatefulWidget {
+  const MapPage({super.key});
+
   @override
   State<StatefulWidget> createState() => _MapPage();
 }

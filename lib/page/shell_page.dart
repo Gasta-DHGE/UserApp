@@ -3,7 +3,6 @@ import 'package:gastas_user_app/page/coupon_page.dart';
 import 'package:gastas_user_app/page/map_page.dart';
 import 'package:gastas_user_app/page/scanner_page.dart';
 import 'package:gastas_user_app/page/settings_page.dart';
-import 'package:gastas_user_app/page/testPage.dart';
 
 class ShellPage extends StatefulWidget {
   const ShellPage({super.key});
@@ -30,9 +29,6 @@ class _ShellPage extends State<ShellPage> {
         break;
       case 3:
         _content = SettingsPage();
-        break;
-      case 4:
-        _content = TestPage();
         break;
     }
 

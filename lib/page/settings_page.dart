@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:gastas_core/src/ui/general/text_styles.dart';
-import 'package:gastas_core/src/ui/widgets/default_button.dart';
+import 'package:gastas_core/gastas_core.dart';
 import 'package:gastas_user_app/utility/observer.dart';
 
 import '../controller/settings_page_controller.dart';
-import '../service_provider.dart';
 
 class SettingsPage extends StatefulWidget {
   @override
