@@ -3,6 +3,7 @@ import 'package:gastas_core/gastas_core.dart';
 import 'package:gastas_user_app/controller/scanner_page_controller.dart';
 import 'package:gastas_user_app/page/debug_page.dart';
 import 'package:gastas_user_app/utility/observer.dart';
+import 'package:gastas_user_app/page/survey_page.dart' as local;
 
 class ScannerPage extends StatefulWidget {
   const ScannerPage({super.key});
@@ -50,7 +51,7 @@ class _ScannerPage extends State<ScannerPage> implements Observer {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => SurveyPage(
+                                  builder: (context) => local.SurveyPage(
                                         survey: controller.survey.value!,
                                         onSavePressed: (value) {
                                           controller.surveyAnswer = value;
