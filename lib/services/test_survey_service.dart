@@ -23,7 +23,14 @@ class TestSurveyService extends ISurveyService {
             ["Option 1", "Option 2", "Option 3", "Option 4"]
           ],
           questionId: uuid.v1(),
-          type: 'SingleSelectionSurveyItem')
+          type: 'SingleSelectionSurveyItem'),
+      SurveyItem(
+          question: 'What could we do better?',
+          data: [
+            ["Option 1", "Option 2", "Option 3", "Option 4"]
+          ],
+          questionId: uuid.v1(),
+          type: 'MultiSelectionSurveyItem')
     ];
 
     return survey;
