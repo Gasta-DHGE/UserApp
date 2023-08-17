@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:gastas_core/gastas_core.dart';
-import 'package:gastas_user_app/controller/scanner_page_controller.dart';
-import 'package:gastas_user_app/page/debug_page.dart';
-import 'package:gastas_user_app/utility/observer.dart';
-import 'package:gastas_user_app/page/survey_page.dart' as local;
+import 'package:gasta_core/gasta_core.dart';
+import 'package:gasta_user_app/controller/scanner_page_controller.dart';
+import 'package:gasta_user_app/page/debug_page.dart';
+import 'package:gasta_user_app/utility/observer.dart';
+import 'package:gasta_user_app/page/survey_page.dart' as local;
 
 class ScannerPage extends StatefulWidget {
   const ScannerPage({super.key});

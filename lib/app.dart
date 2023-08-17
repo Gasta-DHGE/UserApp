@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gastas_core/src/ui/general/themes.dart';
-import 'package:gastas_user_app/page/app_page.dart';
+import 'package:gasta_core/src/ui/general/themes.dart';
+import 'package:gasta_user_app/page/app_page.dart';
 
 class App extends StatefulWidget {
   const App({super.key});

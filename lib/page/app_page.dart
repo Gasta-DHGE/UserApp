@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:gastas_user_app/controller/app_page_controller.dart';
-import 'package:gastas_user_app/page/login_page.dart';
-import 'package:gastas_user_app/page/shell_page.dart';
-import 'package:gastas_user_app/utility/observer.dart';
+import 'package:gasta_user_app/controller/app_page_controller.dart';
+import 'package:gasta_user_app/page/login_page.dart';
+import 'package:gasta_user_app/page/shell_page.dart';
+import 'package:gasta_user_app/utility/observer.dart';
 
 class AppPage extends StatefulWidget {
   const AppPage({super.key});

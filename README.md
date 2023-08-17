@@ -1,6 +1,6 @@
 <a name="readme_top"></a>
 
-# Gastas User-App
+# Gasta User-App
 
 ![Version][version_shield]
 
@@ -34,7 +34,7 @@ The app for the user, that visits a restaurant. The user will be able to use the
 
 1. Clone the repository
    ```sh
-   git clone https://github.com/Gastas-DHGE/UserApp.git
+   git clone https://github.com/Gasta-DHGE/UserApp.git
    ```
 2. Install the depencies
    ```sh
@@ -47,7 +47,7 @@ The app for the user, that visits a restaurant. The user will be able to use the
 Contributions are always welcome! Please look at following commit-conventions, while contributing: https://www.conventionalcommits.org/en/v1.0.0/#summary 😃
 
 1. (Fork the project.)
-2. (Pick or create an [issue](https://github.com/Gastas-DHGE/UserApp/issues) you want to work on.)
+2. (Pick or create an [issue](https://github.com/Gasta-DHGE/UserApp/issues) you want to work on.)
 3. Create your Feature-Branch. (`git checkout -b feat/best_feature`)
 4. Commit your changes. (`git commit -m 'feat: add some cool feature'`)
 5. Push to the branch. (`git push origin feat/best_feature`)
@@ -56,4 +56,4 @@ Contributions are always welcome! Please look at following commit-conventions, w
 
 <!-- Links and Images -->
 
-[version_shield]: https://img.shields.io/github/v/release/Gastas-DHGE/UserApp
+[version_shield]: https://img.shields.io/github/v/release/Gasta-DHGE/UserApp

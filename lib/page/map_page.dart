@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gastas_core/gastas_core.dart';
+import 'package:gasta_core/gasta_core.dart';
 
 class MapPage extends StatefulWidget {
   const MapPage({super.key});
