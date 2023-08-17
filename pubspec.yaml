@@ -1,4 +1,4 @@
-name: gastas_user_app
+name: gasta_user_app
 description: A new Flutter project.
 publish_to: "none"
 version: 0.1.0
@@ -9,7 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  gastas_core: 
+  gasta_core:
     path: ../Core/
   uuid: ^3.0.7
 

@@ -1,5 +1,5 @@
-import 'package:gastas_core/gastas_core.dart';
-import 'package:gastas_user_app/services/i_survey_service.dart';
+import 'package:gasta_core/gasta_core.dart';
+import 'package:gasta_user_app/services/i_survey_service.dart';
 import 'package:uuid/uuid.dart';
 
 class TestSurveyService extends ISurveyService {

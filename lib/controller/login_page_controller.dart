@@ -1,4 +1,4 @@
-import 'package:gastas_user_app/utility/observable.dart';
+import 'package:gasta_user_app/utility/observable.dart';
 
 import '../service_provider.dart';
 import '../services/i_authentication_service.dart';
