@@ -1,4 +1,4 @@
-package com.example.gastas_user_app
+package com.example.gasta_user_app
 
 import io.flutter.embedding.android.FlutterActivity
 
