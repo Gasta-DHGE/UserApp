@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gastas_core/gastas_core.dart';
+import 'package:gasta_core/gasta_core.dart';
 import 'package:gastas_user_app/utility/observer.dart';
 
 import '../controller/settings_page_controller.dart';

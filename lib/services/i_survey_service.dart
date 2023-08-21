@@ -1,7 +1,8 @@
-import 'package:gastas_core/src/models/survey/survey.dart';
-import 'package:gastas_core/src/models/survey/survey_answer.dart';
+import 'package:gasta_core/gasta_core.dart';
+import 'package:gastas_user_app/models/survey.dart' as s;
 
 abstract class ISurveyService {
-  Future<Survey> getSurveyAsync(String surveyId);
+  Future<s.Survey?> getSurveyByIdAsync(String userId, String surveyId);
+  Future createSurveyAsync(String userId, s.Survey survey);
   Future<bool> sendSurveyAsync(SurveyAnswer answer);
 }

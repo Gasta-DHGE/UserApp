@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gastas_core/gastas_core.dart' as core;
-import 'package:gastas_core/gastas_core.dart';
+import 'package:gasta_core/gasta_core.dart' as core;
+import 'package:gasta_core/gasta_core.dart';
 
 // ignore: must_be_immutable
 class SurveyPage extends StatefulWidget {

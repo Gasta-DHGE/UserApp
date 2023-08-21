@@ -1,46 +1,57 @@
-import 'package:gastas_core/gastas_core.dart';
+import 'package:gasta_core/gasta_core.dart' as core;
 import 'package:gastas_user_app/services/i_survey_service.dart';
-import 'package:uuid/uuid.dart';
+
+import '../models/models.dart';
 
 class TestSurveyService extends ISurveyService {
   @override
-  Future<Survey> getSurveyAsync(String surveyId) async {
+  Future<bool> sendSurveyAsync(core.SurveyAnswer answer) async {
     await Future.delayed(const Duration(seconds: 2));
-    var uuid = const Uuid();
-
-    Survey survey1 = Survey();
-    survey1.surveyId = "bb0fbff0-2fe2-11ee-8cc7-099e5572a5a2";
-    survey1.surveyItems = [
-      SurveyItem(
-          question: 'What could we do better?',
-          data: [],
-          questionId: uuid.v1(),
-          type: 'TextSurveyItem'),
-      SurveyItem(
-          question: 'What could we do better?',
-          data: [
-            ["Option 1", "Option 2", "Option 3", "Option 4"]
-          ],
-          questionId: uuid.v1(),
-          type: 'SingleSelectionSurveyItem'),
-      SurveyItem(
-          question: 'What could we do better?',
-          data: [
-            ["Option 1", "Option 2", "Option 3", "Option 4"]
-          ],
-          questionId: uuid.v1(),
-          type: 'MultiSelectionSurveyItem')
-    ];
-
-    Survey survey2 = Survey();
-    survey2.surveyId = "bb0fbff0-2fe2-11ee-8cc7-099e5572a5a2";
-
-    return survey1;
+    return true;
   }
 
   @override
-  Future<bool> sendSurveyAsync(SurveyAnswer answer) async {
-    await Future.delayed(const Duration(seconds: 2));
-    return true;
+  Future<Survey?> getSurveyByIdAsync(String userId, String surveyId) async {
+    await Future.delayed(const Duration(seconds: 1));
+
+    var survey = Survey(
+        id: surveyId,
+        userId: "Tnn3Gwoeb3R99rjCxzxi",
+        companyId: "Tnn3Gwoeb3R99rjCxzxi",
+        version: 1,
+        name: "test",
+        description: "test description",
+        startDate: DateTime.now(),
+        endDate: DateTime.now(),
+        createdDate: DateTime.now(),
+        lastModifiedDate: DateTime.now(),
+        questions: [
+          Question(
+              isOptional: false,
+              title: 'What could we do better?',
+              description: 'test description',
+              content: Map<String, dynamic>(),
+              type: core.QuestionType.text),
+          Question(
+              isOptional: false,
+              title: 'What could we do better?',
+              description: 'test description',
+              content: Map<String, dynamic>(),
+              type: core.QuestionType.select),
+          Question(
+              isOptional: true,
+              title: 'What could we do better?',
+              description: 'test description',
+              content: Map<String, dynamic>(),
+              type: core.QuestionType.multiSelect),
+        ]);
+
+    return survey;
+  }
+
+  @override
+  Future createSurveyAsync(String userId, Survey survey) {
+    // TODO: implement createSurveyAsync
+    throw UnimplementedError();
   }
 }

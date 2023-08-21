@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:gastas_core/gastas_core.dart';
+import 'package:gasta_core/gasta_core.dart' as core;
 import 'package:gastas_user_app/controller/scanner_page_controller.dart';
-import 'package:gastas_user_app/page/debug_page.dart';
 import 'package:gastas_user_app/utility/observer.dart';
-import 'package:gastas_user_app/page/survey_page.dart' as local;
+import 'package:gastas_user_app/page/pages.dart';
 
 class ScannerPage extends StatefulWidget {
   const ScannerPage({super.key});
@@ -22,11 +21,11 @@ class _ScannerPage extends State<ScannerPage> implements Observer {
   @override
   Widget build(BuildContext context) {
     if (controller.survey.value != null) {
-      controller.surveyAnswer.surveyId = controller.survey.value!.surveyId;
-      for (int i = 0; i < controller.survey.value!.surveyItems.length; i++) {
-        controller.surveyAnswer.surveyItemAnswers.add(SurveyItemAnswer(
-          questionId: controller.survey.value!.surveyItems[i].questionId,
-          type: controller.survey.value!.surveyItems[i].type,
+      controller.surveyAnswer.surveyId = controller.survey.value!.id;
+      for (int i = 0; i < controller.survey.value!.questions.length; i++) {
+        controller.surveyAnswer.surveyItemAnswers.add(core.SurveyItemAnswer(
+          questionId: "",
+          type: controller.survey.value!.questions[i].type.toString(),
         ));
       }
     }
@@ -38,7 +37,7 @@ class _ScannerPage extends State<ScannerPage> implements Observer {
           Row(children: [
             Text(
               "Scanner",
-              style: TextStyles.bigHeadlineTextStyle(context),
+              style: core.TextStyles.bigHeadlineTextStyle(context),
             ),
           ]),
           controller.isLoading.value
@@ -51,8 +50,8 @@ class _ScannerPage extends State<ScannerPage> implements Observer {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => local.SurveyPage(
-                                        survey: controller.survey.value!,
+                                  builder: (context) => SurveyPage(
+                                        survey: core.Survey(),
                                         onSavePressed: (value) {
                                           controller.surveyAnswer = value;
                                         },
