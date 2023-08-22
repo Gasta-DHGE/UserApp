@@ -1,5 +1,5 @@
 import 'package:gasta_core/gasta_core.dart' as core;
-import 'package:gastas_user_app/utility/observable.dart';
+import 'package:gasta_user_app/utility/observable.dart';
 
 import '../models/models.dart';
 import '../service_provider.dart';

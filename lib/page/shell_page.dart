@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gastas_user_app/page/pages.dart';
+import 'package:gasta_user_app/page/pages.dart';
 
 class ShellPage extends StatefulWidget {
   const ShellPage({super.key});

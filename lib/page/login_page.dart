@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gasta_core/gasta_core.dart';
-import 'package:gastas_user_app/utility/observer.dart';
+import 'package:gasta_user_app/utility/observer.dart';
 
 import '../controller/login_page_controller.dart';
 

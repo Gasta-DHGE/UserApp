@@ -1,4 +1,4 @@
-import 'package:gastas_user_app/models/question.dart';
+import 'package:gasta_user_app/models/question.dart';
 
 class Survey {
   String id;

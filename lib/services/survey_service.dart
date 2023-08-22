@@ -1,6 +1,6 @@
-import 'package:gastas_user_app/services/mapping_service.dart';
+import 'package:gasta_user_app/services/mapping_service.dart';
 import 'package:http/http.dart' as http;
-import 'package:gastas_user_app/services/i_survey_service.dart';
+import 'package:gasta_user_app/services/i_survey_service.dart';
 import 'package:gasta_core/gasta_core.dart' as core;
 import '../models/models.dart';
 

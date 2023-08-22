@@ -1,5 +1,5 @@
 import 'package:gasta_core/gasta_core.dart' as core;
-import 'package:gastas_user_app/services/i_survey_service.dart';
+import 'package:gasta_user_app/services/i_survey_service.dart';
 
 import '../models/models.dart';
 
