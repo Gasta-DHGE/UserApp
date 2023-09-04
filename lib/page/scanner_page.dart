@@ -3,6 +3,7 @@ import 'package:gasta_core/gasta_core.dart' as core;
 import 'package:gasta_user_app/controller/scanner_page_controller.dart';
 import 'package:gasta_user_app/utility/observer.dart';
 import 'package:gasta_user_app/page/pages.dart';
+import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 class ScannerPage extends StatefulWidget {
   const ScannerPage({super.key});
@@ -42,37 +43,51 @@ class _ScannerPage extends State<ScannerPage> implements Observer {
           ]),
           controller.isLoading.value
               ? const Center(child: CircularProgressIndicator())
-              : Column(
-                  children: [
-                    MaterialButton(
-                        child: const Text("Start Survey"),
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => SurveyPage(
-                                        survey: core.Survey(),
-                                        onSavePressed: (value) {
-                                          controller.surveyAnswer = value;
-                                        },
-                                        onSendPressed: (value) {
-                                          controller.surveyAnswer = value;
-                                          Navigator.pop(context);
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) => DebugPage(
-                                                  data:
-                                                      controller.surveyAnswer),
-                                            ),
-                                          );
-                                        },
-                                        onValueChanged: (value) {
-                                          controller.surveyAnswer = value;
-                                        },
-                                      )));
-                        }),
-                  ],
+              : Expanded(
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: QRView(
+                          key: GlobalKey(),
+                          onQRViewCreated: (value) => {},
+                          overlay: QrScannerOverlayShape(
+                            borderColor: Theme.of(context).colorScheme.primary,
+                            borderRadius: 10,
+                            borderLength: 20,
+                            borderWidth: 10,
+                          ),
+                        ),
+                      ),
+                      MaterialButton(
+                          child: const Text("Load Survey"),
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => SurveyPage(
+                                          survey: core.Survey(),
+                                          onSavePressed: (value) {
+                                            controller.surveyAnswer = value;
+                                          },
+                                          onSendPressed: (value) {
+                                            controller.surveyAnswer = value;
+                                            Navigator.pop(context);
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) => DebugPage(
+                                                    data: controller
+                                                        .surveyAnswer),
+                                              ),
+                                            );
+                                          },
+                                          onValueChanged: (value) {
+                                            controller.surveyAnswer = value;
+                                          },
+                                        )));
+                          }),
+                    ],
+                  ),
                 ),
         ],
       ),

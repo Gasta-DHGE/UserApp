@@ -9,9 +9,11 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_osm_plugin: ^0.60.3
   gasta_core: 
     path: ../Core/
   http: ^1.1.0
+  qr_code_scanner: ^1.0.1
 
 dev_dependencies:
   flutter_test:
