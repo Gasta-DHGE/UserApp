@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gasta_core/gasta_core.dart' as core;
-import 'package:gasta_core/gasta_core.dart';
+import 'package:gasta_user_app/services/mapping_service.dart';
+
+import '../models/models.dart';
 
 // ignore: must_be_immutable
 class SurveyPage extends StatefulWidget {
@@ -30,10 +32,22 @@ class _SurveyPage extends State<SurveyPage> {
     return Scaffold(
       body: SafeArea(
         child: core.SurveyPage(
-          survey: widget._survey,
-          onValueChanged: widget._onValueChanged,
-          onSendPressed: widget._onSendPressed,
-          onSavePressed: widget._onSavePressed,
+          survey: MappingService.map<Survey, core.SurveyModel>(widget._survey),
+          onValueChanged: (value) {
+            widget._onValueChanged!.call(
+                MappingService.map<core.SurveyAnswerModel, SurveyAnswer>(
+                    core.SurveyAnswerModel.fromEntity(value)));
+          },
+          onSendPressed: (value) {
+            widget._onSendPressed!.call(
+                MappingService.map<core.SurveyAnswerModel, SurveyAnswer>(
+                    core.SurveyAnswerModel.fromEntity(value)));
+          },
+          onSavePressed: (value) {
+            widget._onSavePressed!.call(
+                MappingService.map<core.SurveyAnswerModel, SurveyAnswer>(
+                    core.SurveyAnswerModel.fromEntity(value)));
+          },
         ),
       ),
     );

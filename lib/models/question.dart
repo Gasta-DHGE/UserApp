@@ -1,6 +1,7 @@
 import 'package:gasta_core/gasta_core.dart';
 
 class Question {
+  String id;
   bool isOptional;
   QuestionType type;
   String title;
@@ -8,6 +9,7 @@ class Question {
   Map<String, dynamic> content;
 
   Question({
+    required this.id,
     required this.isOptional,
     required this.type,
     required this.title,

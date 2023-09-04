@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:gasta_core/gasta_core.dart' as core;
 import 'package:gasta_user_app/controller/scanner_page_controller.dart';
+import 'package:gasta_user_app/services/mapping_service.dart';
 import 'package:gasta_user_app/utility/observer.dart';
 import 'package:gasta_user_app/page/pages.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
+
+import '../models/models.dart';
 
 class ScannerPage extends StatefulWidget {
   const ScannerPage({super.key});
@@ -22,12 +25,14 @@ class _ScannerPage extends State<ScannerPage> implements Observer {
   @override
   Widget build(BuildContext context) {
     if (controller.survey.value != null) {
-      controller.surveyAnswer.surveyId = controller.survey.value!.id;
       for (int i = 0; i < controller.survey.value!.questions.length; i++) {
-        controller.surveyAnswer.surveyItemAnswers.add(core.SurveyItemAnswer(
-          questionId: "",
-          type: controller.survey.value!.questions[i].type.toString(),
-        ));
+        controller.surveyAnswer.answers.add(
+          core.QuestionAnswerEntity(
+            id: "",
+            type: controller.survey.value!.questions[i].type,
+            content: List.empty(growable: true),
+          ),
+        );
       }
     }
 
@@ -65,12 +70,18 @@ class _ScannerPage extends State<ScannerPage> implements Observer {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => SurveyPage(
-                                          survey: core.Survey(),
+                                          survey: controller.survey.value!,
                                           onSavePressed: (value) {
-                                            controller.surveyAnswer = value;
+                                            controller.surveyAnswer =
+                                                MappingService.map<SurveyAnswer,
+                                                        core.SurveyAnswerModel>(
+                                                    value);
                                           },
                                           onSendPressed: (value) {
-                                            controller.surveyAnswer = value;
+                                            controller.surveyAnswer =
+                                                MappingService.map<SurveyAnswer,
+                                                        core.SurveyAnswerModel>(
+                                                    value);
                                             Navigator.pop(context);
                                             Navigator.push(
                                               context,
@@ -82,7 +93,10 @@ class _ScannerPage extends State<ScannerPage> implements Observer {
                                             );
                                           },
                                           onValueChanged: (value) {
-                                            controller.surveyAnswer = value;
+                                            controller.surveyAnswer =
+                                                MappingService.map<SurveyAnswer,
+                                                        core.SurveyAnswerModel>(
+                                                    value);
                                           },
                                         )));
                           }),

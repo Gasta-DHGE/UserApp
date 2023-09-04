@@ -5,7 +5,7 @@ import '../models/models.dart';
 
 class TestSurveyService extends ISurveyService {
   @override
-  Future<bool> sendSurveyAsync(core.SurveyAnswer answer) async {
+  Future<bool> sendSurveyAsync(core.SurveyAnswerModel answer) async {
     await Future.delayed(const Duration(seconds: 2));
     return true;
   }
@@ -27,18 +27,21 @@ class TestSurveyService extends ISurveyService {
         lastModifiedDate: DateTime.now(),
         questions: [
           Question(
+              id: "Tnz3Gwoeb3R99rjCxzxi",
               isOptional: false,
               title: 'What could we do better?',
               description: 'test description',
               content: Map<String, dynamic>(),
               type: core.QuestionType.text),
           Question(
+              id: "Tnz3Gwoeb3R99ejCxzxi",
               isOptional: false,
               title: 'What could we do better?',
               description: 'test description',
               content: Map<String, dynamic>(),
               type: core.QuestionType.select),
           Question(
+              id: "Tnz3Gwoeb3Rs9rjCxzxi",
               isOptional: true,
               title: 'What could we do better?',
               description: 'test description',

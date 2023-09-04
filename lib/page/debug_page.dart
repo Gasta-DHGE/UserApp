@@ -15,14 +15,7 @@ class _DebugPage extends State<DebugPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Column(children: [
-        Text(
-          (widget.data as SurveyAnswer).surveyItemAnswers[0].data.toString(),
-        ),
-        Text(
-          (widget.data as SurveyAnswer).surveyItemAnswers[1].data.toString(),
-        ),
-      ]),
+      body: Column(children: []),
     );
   }
 }

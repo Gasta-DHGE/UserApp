@@ -27,13 +27,13 @@ class SurveyService implements ISurveyService {
   }
 
   @override
-  Future<bool> sendSurveyAsync(core.SurveyAnswer answer) {
+  Future<bool> sendSurveyAsync(core.SurveyAnswerModel answer) {
     // TODO: implement sendSurveyAsync
     throw UnimplementedError();
   }
 
   @override
-  Future<core.Survey> getSurveyAsync(String surveyId) {
+  Future<core.SurveyModel> getSurveyAsync(String surveyId) {
     // TODO: implement getSurveyAsync
     throw UnimplementedError();
   }

@@ -15,6 +15,21 @@ class MappingService {
     if (FROM == Question && TO == core.QuestionModel) {
       return _questionToQuestionModel(source as Question) as TO;
     }
+    if (FROM == core.SurveyAnswerModel && TO == SurveyAnswer) {
+      return _surveyAnswerModelToSurveyAnswer(source as core.SurveyAnswerModel)
+          as TO;
+    }
+    if (FROM == SurveyAnswer && TO == core.SurveyAnswerModel) {
+      return _surveyAnswerToSurveyAnswerModel(source as SurveyAnswer) as TO;
+    }
+    if (FROM == core.QuestionAnswerModel && TO == QuestionAnswer) {
+      return _questionAnswerModelToQuestionAnswer(
+          source as core.QuestionAnswerModel) as TO;
+    }
+    if (FROM == QuestionAnswer && TO == core.QuestionAnswerModel) {
+      return _questionAnswerToQuestionAnswerModel(source as QuestionAnswer)
+          as TO;
+    }
 
     throw Exception("No mapping defined.");
   }
@@ -73,6 +88,7 @@ class MappingService {
 
   static Question _questionModelToQuestion(core.QuestionModel source) {
     return Question(
+        id: source.id,
         isOptional: source.isOptional,
         type: source.type,
         title: source.title,
@@ -82,10 +98,48 @@ class MappingService {
 
   static core.QuestionModel _questionToQuestionModel(Question source) {
     return core.QuestionModel(
+        id: source.id,
         isOptional: source.isOptional,
         type: source.type,
         title: source.title,
         description: source.description,
         content: source.content);
+  }
+
+  static SurveyAnswer _surveyAnswerModelToSurveyAnswer(
+      core.SurveyAnswerModel source) {
+    var result =
+        SurveyAnswer(id: source.id, version: source.version, answers: []);
+
+    for (var answer in source.answers) {
+      result.answers.add(map<core.QuestionAnswerModel, QuestionAnswer>(
+          core.QuestionAnswerModel.fromEntity(answer)));
+    }
+
+    return result;
+  }
+
+  static core.SurveyAnswerModel _surveyAnswerToSurveyAnswerModel(
+      SurveyAnswer source) {
+    var result = core.SurveyAnswerModel(
+        id: source.id, version: source.version, answers: []);
+
+    for (var answer in source.answers) {
+      result.answers.add(map<QuestionAnswer, core.QuestionAnswerModel>(answer));
+    }
+
+    return result;
+  }
+
+  static QuestionAnswer _questionAnswerModelToQuestionAnswer(
+      core.QuestionAnswerModel source) {
+    return QuestionAnswer(
+        id: source.id, type: source.type, content: source.content);
+  }
+
+  static core.QuestionAnswerModel _questionAnswerToQuestionAnswerModel(
+      QuestionAnswer source) {
+    return core.QuestionAnswerModel(
+        id: source.id, type: source.type, content: source.content);
   }
 }

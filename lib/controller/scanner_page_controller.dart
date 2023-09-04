@@ -9,7 +9,7 @@ class ScannerPageController {
   ISurveyService surveyService = ServiceProvider.instance.surveyService;
 
   var survey = Observable<Survey?>(null);
-  core.SurveyAnswer surveyAnswer = core.SurveyAnswer();
+  late core.SurveyAnswerEntity surveyAnswer;
   var isLoading = Observable<bool>(false);
 
   ScannerPageController() {
@@ -20,7 +20,12 @@ class ScannerPageController {
     isLoading.value = true;
 
     survey.value = await surveyService.getSurveyByIdAsync(
-        "583LbbNMaEgzVoXlJfVgTw3mKNI2", "10kw7Wfcd337fN7tYhAf");
+        "583LbbNMaEgzVoXlJfVgTw3mKNI2", "bgkwuOZ5SK3I7YGT62Ff");
+
+    surveyAnswer = core.SurveyAnswerEntity(
+        id: survey.value != null ? survey.value!.id : "",
+        version: survey.value != null ? survey.value!.version : 0,
+        answers: List.empty(growable: true));
 
     isLoading.value = false;
   }
