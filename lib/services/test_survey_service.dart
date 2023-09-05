@@ -1,5 +1,6 @@
 import 'package:gasta_core/gasta_core.dart' as core;
 import 'package:gasta_user_app/services/i_survey_service.dart';
+import 'package:gasta_user_app/services/mapping_service.dart';
 
 import '../models/models.dart';
 
@@ -13,6 +14,8 @@ class TestSurveyService extends ISurveyService {
   @override
   Future<Survey?> getSurveyByIdAsync(String userId, String surveyId) async {
     await Future.delayed(const Duration(seconds: 1));
+
+    var options = ["Option 1", "Option 2", "Option 3", "Option 4"];
 
     var survey = Survey(
         id: surveyId,
@@ -31,23 +34,27 @@ class TestSurveyService extends ISurveyService {
               isOptional: false,
               title: 'What could we do better?',
               description: 'test description',
-              content: Map<String, dynamic>(),
+              content: List.empty(growable: true),
               type: core.QuestionType.text),
           Question(
               id: "Tnz3Gwoeb3R99ejCxzxi",
               isOptional: false,
               title: 'What could we do better?',
               description: 'test description',
-              content: Map<String, dynamic>(),
+              content: options,
               type: core.QuestionType.select),
           Question(
               id: "Tnz3Gwoeb3Rs9rjCxzxi",
               isOptional: true,
               title: 'What could we do better?',
               description: 'test description',
-              content: Map<String, dynamic>(),
+              content: options,
               type: core.QuestionType.multiSelect),
         ]);
+
+    /*var json = MappingService.map<Survey, core.SurveyModel>(survey)
+        .toJson()
+        .toString();*/
 
     return survey;
   }

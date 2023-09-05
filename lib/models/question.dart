@@ -6,7 +6,7 @@ class Question {
   QuestionType type;
   String title;
   String description;
-  Map<String, dynamic> content;
+  List<dynamic> content;
 
   Question({
     required this.id,

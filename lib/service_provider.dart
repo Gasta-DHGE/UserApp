@@ -10,5 +10,5 @@ class ServiceProvider {
   static final ServiceProvider instance = ServiceProvider._();
 
   final IAuthenticationService authenticationService = AuthenticationService();
-  final ISurveyService surveyService = SurveyService();
+  final ISurveyService surveyService = TestSurveyService();
 }
