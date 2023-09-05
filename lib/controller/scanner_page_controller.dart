@@ -23,9 +23,10 @@ class ScannerPageController {
         "583LbbNMaEgzVoXlJfVgTw3mKNI2", "vWoEPAyGiRjV6mqSScNS");
 
     surveyAnswer = core.SurveyAnswerEntity(
-        id: survey.value != null ? survey.value!.id : "",
-        version: survey.value != null ? survey.value!.version : 0,
-        answers: List.empty(growable: true));
+      id: survey.value != null ? survey.value!.id : "",
+      version: survey.value != null ? survey.value!.version : 0,
+      answers: List.empty(growable: true),
+    );
 
     isLoading.value = false;
   }
