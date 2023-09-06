@@ -15,7 +15,19 @@ class _DebugPage extends State<DebugPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Column(children: []),
+      body: Column(children: [
+        Text("Text: " +
+            (widget.data as SurveyAnswerModel).answers[0].content[0]),
+        Text("Selected Index: " +
+            (widget.data as SurveyAnswerModel)
+                .answers[1]
+                .content[0]
+                .toString()),
+        Text(
+          "Selected Indexes length: " +
+              (widget.data as SurveyAnswerModel).answers[2].content.toString(),
+        ),
+      ]),
     );
   }
 }

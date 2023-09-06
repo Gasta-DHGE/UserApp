@@ -40,12 +40,14 @@ class _ScannerPage extends State<ScannerPage> implements Observer {
       padding: const EdgeInsets.all(8.0),
       child: Column(
         children: [
-          Row(children: [
-            Text(
-              "Scanner",
-              style: core.TextStyles.bigHeadlineTextStyle(context),
-            ),
-          ]),
+          Row(
+            children: [
+              Text(
+                "Scanner",
+                style: core.TextStyles.bigHeadlineTextStyle(context),
+              ),
+            ],
+          ),
           controller.isLoading.value
               ? const Center(child: CircularProgressIndicator())
               : Expanded(
