@@ -7,6 +7,7 @@ import 'package:gasta_user_app/page/pages.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 import '../models/models.dart';
+import '../widgets/widgets.dart';
 
 class ScannerPage extends StatefulWidget {
   const ScannerPage({super.key});
@@ -54,44 +55,16 @@ class _ScannerPage extends State<ScannerPage> implements Observer {
                   child: Column(
                     children: [
                       Expanded(
-                        child: Container(
-                          foregroundDecoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: [
-                                Theme.of(context).colorScheme.background,
-                                Colors.transparent,
-                                Colors.transparent,
-                                Theme.of(context).colorScheme.background,
-                              ],
-                              begin: Alignment.centerRight,
-                              end: Alignment.centerLeft,
-                              stops: const [0, 0.1, 0.9, 1.0],
-                            ),
-                          ),
-                          child: Container(
-                            foregroundDecoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                colors: [
-                                  Theme.of(context).colorScheme.background,
-                                  Colors.transparent,
-                                  Colors.transparent,
-                                  Theme.of(context).colorScheme.background,
-                                ],
-                                begin: Alignment.topCenter,
-                                end: Alignment.bottomCenter,
-                                stops: const [0, 0.1, 0.9, 1.0],
-                              ),
-                            ),
-                            child: QRView(
-                              key: GlobalKey(),
-                              onQRViewCreated: (value) => {},
-                              overlay: QrScannerOverlayShape(
-                                borderColor:
-                                    Theme.of(context).colorScheme.primary,
-                                borderRadius: 10,
-                                borderLength: 20,
-                                borderWidth: 10,
-                              ),
+                        child: FadeBorder(
+                          child: QRView(
+                            key: GlobalKey(),
+                            onQRViewCreated: (value) => {},
+                            overlay: QrScannerOverlayShape(
+                              borderColor:
+                                  Theme.of(context).colorScheme.primary,
+                              borderRadius: 10,
+                              borderLength: 20,
+                              borderWidth: 10,
                             ),
                           ),
                         ),
