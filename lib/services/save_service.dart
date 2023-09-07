@@ -23,19 +23,12 @@ class SaveService implements ISaveService {
 
   @override
   void saveSurveyAsync(SurveyData survey) async {
-    sharedPreferences ??= await SharedPreferences.getInstance();
+    List<String> strings = [];
+    List<SurveyData> loadedSurveys = await loadSurveysAsync();
 
-    var strings = sharedPreferences!.getStringList("surveys") ??
-        List.empty(growable: true);
-    List<SurveyData> loaded = [];
+    loadedSurveys.add(survey);
 
-    for (var string in strings) {
-      loaded.add(SurveyData.fromJson(jsonDecode(string)));
-    }
-
-    loaded.add(survey);
-
-    for (var survey in loaded) {
+    for (var survey in loadedSurveys) {
       strings.add(jsonEncode(survey.toJson()));
     }
 
@@ -44,24 +37,37 @@ class SaveService implements ISaveService {
 
   @override
   void saveSurveysAsync(List<SurveyData> surveys) async {
-    sharedPreferences ??= await SharedPreferences.getInstance();
-
-    var strings = sharedPreferences!.getStringList("surveys") ??
-        List.empty(growable: true);
-    List<SurveyData> loaded = [];
-
-    for (var string in strings) {
-      loaded.add(SurveyData.fromJson(jsonDecode(string)));
-    }
+    List<String> strings = [];
+    List<SurveyData> loadedSurveys = await loadSurveysAsync();
 
     for (var survey in surveys) {
-      loaded.add(survey);
+      loadedSurveys.add(survey);
     }
 
-    for (var survey in loaded) {
+    for (var survey in loadedSurveys) {
       strings.add(jsonEncode(survey.toJson()));
     }
 
     sharedPreferences!.setStringList("surveys", strings);
+  }
+
+  @override
+  void removeAllSurveysAsync() async {
+    sharedPreferences ??= await SharedPreferences.getInstance();
+    sharedPreferences!.setStringList("surveys", List.empty());
+  }
+
+  @override
+  void removeSurvey(String id) async {
+    List<SurveyData> loadedSurveys = await loadSurveysAsync();
+    loadedSurveys.removeWhere((element) => element.survey.id == id);
+    saveSurveysAsync(loadedSurveys);
+  }
+
+  @override
+  void removeSurveys(List<String> ids) async {
+    List<SurveyData> loadedSurveys = await loadSurveysAsync();
+    loadedSurveys.removeWhere((element) => ids.contains(element.survey.id));
+    saveSurveysAsync(loadedSurveys);
   }
 }
