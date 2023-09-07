@@ -1,6 +1,7 @@
 import 'package:gasta_core/gasta_core.dart' as core;
 import 'package:gasta_user_app/services/i_survey_service.dart';
 import 'package:gasta_user_app/services/mapping_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/models.dart';
 
@@ -52,9 +53,9 @@ class TestSurveyService extends ISurveyService {
               type: core.QuestionType.multiSelect),
         ]);
 
-    /*var json = MappingService.map<Survey, core.SurveyModel>(survey)
+    var json = MappingService.map<Survey, core.SurveyModel>(survey)
         .toJson()
-        .toString();*/
+        .toString();
 
     return survey;
   }

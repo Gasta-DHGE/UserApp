@@ -1,4 +1,5 @@
 import 'package:gasta_core/gasta_core.dart' as core;
+import 'package:gasta_user_app/services/i_save_service.dart';
 import 'package:gasta_user_app/utility/observable.dart';
 
 import '../models/models.dart';
@@ -7,6 +8,7 @@ import '../services/i_survey_service.dart';
 
 class ScannerPageController {
   ISurveyService surveyService = ServiceProvider.instance.surveyService;
+  ISaveService saveService = ServiceProvider.instance.saveService;
 
   var survey = Observable<Survey?>(null);
   late core.SurveyAnswerEntity surveyAnswer;
@@ -20,7 +22,7 @@ class ScannerPageController {
     isLoading.value = true;
 
     survey.value = await surveyService.getSurveyByIdAsync(
-        "583LbbNMaEgzVoXlJfVgTw3mKNI2", "vWoEPAyGiRjV6mqSScNS");
+        "583LbbNMaEgzVoXlJfVgTw3mKNI2", "8Jm8NM7DaMPRe0gDYfNK");
 
     surveyAnswer = core.SurveyAnswerEntity(
       id: survey.value != null ? survey.value!.id : "",

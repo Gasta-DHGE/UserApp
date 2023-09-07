@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:gasta_core/gasta_core.dart' as core;
 import 'package:gasta_user_app/controller/scanner_page_controller.dart';
+import 'package:gasta_user_app/models/survey_data.dart';
 import 'package:gasta_user_app/services/mapping_service.dart';
 import 'package:gasta_user_app/utility/observer.dart';
 import 'package:gasta_user_app/page/pages.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/models.dart';
 import '../widgets/widgets.dart';
@@ -77,7 +79,7 @@ class _ScannerPage extends State<ScannerPage> implements Observer {
                                 MaterialPageRoute(
                                     builder: (context) => SurveyPage(
                                           survey: controller.survey.value!,
-                                          onSavePressed: (value) {
+                                          onSavePressed: (value) async {
                                             controller.surveyAnswer =
                                                 MappingService.map<SurveyAnswer,
                                                         core.SurveyAnswerModel>(
