@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:gasta_user_app/dependency_provider.dart';
 import 'package:gasta_user_app/page/pages.dart';
 
+import '../controller/controller.dart';
+
+// ignore: must_be_immutable
 class ShellPage extends StatefulWidget {
-  const ShellPage({super.key});
+  ShellPageController controller;
+  ShellPage({super.key, required this.controller});
 
   @override
   State<StatefulWidget> createState() => _ShellPage();
@@ -16,16 +21,20 @@ class _ShellPage extends State<ShellPage> {
   Widget build(BuildContext context) {
     switch (_currentpage) {
       case 0:
-        _content = CouponPage();
+        _content = CouponPage(
+            controller: DependencyProvider.instance.couponPageController);
         break;
       case 1:
-        _content = ScannerPage();
+        _content = ScannerPage(
+            controller: DependencyProvider.instance.scannerPageController);
         break;
       case 2:
-        _content = MapPage();
+        _content =
+            MapPage(controller: DependencyProvider.instance.mapPageController);
         break;
       case 3:
-        _content = SettingsPage();
+        _content = SettingsPage(
+            controller: DependencyProvider.instance.settingsPageController);
         break;
     }
 

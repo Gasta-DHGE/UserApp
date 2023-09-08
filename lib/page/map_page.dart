@@ -1,21 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:gasta_core/gasta_core.dart';
-import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
+import 'package:gasta_user_app/controller/map_page_controller.dart';
 
+// ignore: must_be_immutable
 class MapPage extends StatefulWidget {
-  const MapPage({super.key});
+  MapPageController controller;
+  MapPage({super.key, required this.controller});
 
   @override
   State<StatefulWidget> createState() => _MapPage();
 }
 
 class _MapPage extends State<MapPage> {
-  //static MapPageController controller = MapPageController();
-
-  var controller = MapController(
-    initMapWithUserPosition: UserTrackingOption(),
-  );
-
   @override
   Widget build(BuildContext context) {
     return Padding(

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:gasta_core/src/ui/general/text_styles.dart';
+import 'package:gasta_core/gasta_core.dart';
+import 'package:gasta_user_app/controller/controller.dart';
 
+// ignore: must_be_immutable
 class CouponPage extends StatefulWidget {
-  const CouponPage({super.key});
+  CouponPageController controller;
+  CouponPage({super.key, required this.controller});
 
   @override
   State<StatefulWidget> createState() => _CouponPage();

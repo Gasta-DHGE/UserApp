@@ -1,38 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:gasta_core/gasta_core.dart' as core;
-import 'package:gasta_user_app/controller/scanner_page_controller.dart';
-import 'package:gasta_user_app/models/survey_data.dart';
+import 'package:gasta_user_app/controller/controller.dart';
 import 'package:gasta_user_app/services/mapping_service.dart';
-import 'package:gasta_user_app/utility/observer.dart';
 import 'package:gasta_user_app/page/pages.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/models.dart';
 import '../widgets/widgets.dart';
 
+// ignore: must_be_immutable
 class ScannerPage extends StatefulWidget {
-  const ScannerPage({super.key});
+  ScannerPageController controller;
+  ScannerPage({super.key, required this.controller});
 
   @override
   State<StatefulWidget> createState() => _ScannerPage();
 }
 
-class _ScannerPage extends State<ScannerPage> implements Observer {
-  static ScannerPageController controller = ScannerPageController();
-
-  _ScannerPage() {
-    controller.isLoading.addObserver(this);
-  }
+class _ScannerPage extends State<ScannerPage> {
+  QRViewController? qrViewController;
 
   @override
   Widget build(BuildContext context) {
-    if (controller.survey.value != null) {
-      for (int i = 0; i < controller.survey.value!.questions.length; i++) {
-        controller.surveyAnswer.answers.add(
+    if (widget.controller.survey != null) {
+      for (int i = 0; i < widget.controller.survey!.questions.length; i++) {
+        widget.controller.surveyAnswer.answers.add(
           core.QuestionAnswerEntity(
             id: "",
-            type: controller.survey.value!.questions[i].type,
+            type: widget.controller.survey!.questions[i].type,
             content: List.empty(growable: true),
           ),
         );
@@ -51,7 +46,7 @@ class _ScannerPage extends State<ScannerPage> implements Observer {
               ),
             ],
           ),
-          controller.isLoading.value
+          widget.controller.isLoading
               ? const Center(child: CircularProgressIndicator())
               : Expanded(
                   child: Column(
@@ -60,7 +55,9 @@ class _ScannerPage extends State<ScannerPage> implements Observer {
                         child: FadeBorder(
                           child: QRView(
                             key: GlobalKey(),
-                            onQRViewCreated: (value) => {},
+                            onQRViewCreated: _onQRViewCreated,
+                            onPermissionSet: (p0, p1) =>
+                                {_onPermissionSet(context, p0, p1)},
                             overlay: QrScannerOverlayShape(
                               borderColor:
                                   Theme.of(context).colorScheme.primary,
@@ -78,33 +75,37 @@ class _ScannerPage extends State<ScannerPage> implements Observer {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => SurveyPage(
-                                          survey: controller.survey.value!,
+                                          controller: SurveyPageController(),
+                                          survey: widget.controller.survey!,
                                           onSavePressed: (value) async {
-                                            controller.surveyAnswer =
-                                                MappingService.map<SurveyAnswer,
-                                                        core.SurveyAnswerModel>(
-                                                    value);
+                                            widget.controller.surveyAnswer =
+                                                MappingService.map<
+                                                    SurveyAnswer,
+                                                    core
+                                                    .SurveyAnswerModel>(value);
                                           },
                                           onSendPressed: (value) {
-                                            controller.surveyAnswer =
-                                                MappingService.map<SurveyAnswer,
-                                                        core.SurveyAnswerModel>(
-                                                    value);
+                                            widget.controller.surveyAnswer =
+                                                MappingService.map<
+                                                    SurveyAnswer,
+                                                    core
+                                                    .SurveyAnswerModel>(value);
                                             Navigator.pop(context);
                                             Navigator.push(
                                               context,
                                               MaterialPageRoute(
                                                 builder: (context) => DebugPage(
-                                                    data: controller
+                                                    data: widget.controller
                                                         .surveyAnswer),
                                               ),
                                             );
                                           },
                                           onValueChanged: (value) {
-                                            controller.surveyAnswer =
-                                                MappingService.map<SurveyAnswer,
-                                                        core.SurveyAnswerModel>(
-                                                    value);
+                                            widget.controller.surveyAnswer =
+                                                MappingService.map<
+                                                    SurveyAnswer,
+                                                    core
+                                                    .SurveyAnswerModel>(value);
                                           },
                                         )));
                           }),
@@ -116,14 +117,20 @@ class _ScannerPage extends State<ScannerPage> implements Observer {
     );
   }
 
-  @override
-  void dispose() {
-    controller.isLoading.removeObserver(this);
-    super.dispose();
+  void _onQRViewCreated(QRViewController controller) {
+    qrViewController = controller;
+    controller.scannedDataStream.listen((scanData) {
+      setState(() {
+        widget.controller.onDataReceivedAsync(scanData.code ?? "");
+      });
+    });
   }
 
-  @override
-  void onNotify(value) {
-    setState(() {});
+  void _onPermissionSet(BuildContext context, QRViewController ctrl, bool p) {
+    if (!p) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('no Permission')),
+      );
+    }
   }
 }

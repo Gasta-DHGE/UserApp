@@ -1,35 +1,45 @@
 import 'package:gasta_core/gasta_core.dart' as core;
 import 'package:gasta_user_app/services/i_save_service.dart';
-import 'package:gasta_user_app/utility/observable.dart';
 
 import '../models/models.dart';
-import '../service_provider.dart';
 import '../services/i_survey_service.dart';
 
 class ScannerPageController {
-  ISurveyService surveyService = ServiceProvider.instance.surveyService;
-  ISaveService saveService = ServiceProvider.instance.saveService;
+  ISurveyService surveyService;
+  ISaveService saveService;
 
-  var survey = Observable<Survey?>(null);
-  late core.SurveyAnswerEntity surveyAnswer;
-  var isLoading = Observable<bool>(false);
-
-  ScannerPageController() {
+  ScannerPageController(
+      {required this.surveyService, required this.saveService}) {
     loadSurveyAsync();
   }
 
-  void loadSurveyAsync() async {
-    isLoading.value = true;
+  Survey? survey;
+  late core.SurveyAnswerEntity surveyAnswer;
+  var isLoading = false;
 
-    survey.value = await surveyService.getSurveyByIdAsync(
+  void loadSurveyAsync() async {
+    isLoading = true;
+
+    survey = await surveyService.getSurveyByIdAsync(
         "583LbbNMaEgzVoXlJfVgTw3mKNI2", "8Jm8NM7DaMPRe0gDYfNK");
 
     surveyAnswer = core.SurveyAnswerEntity(
-      id: survey.value != null ? survey.value!.id : "",
-      version: survey.value != null ? survey.value!.version : 0,
+      id: survey != null ? survey!.id : "",
+      version: survey != null ? survey!.version : 0,
       answers: List.empty(growable: true),
     );
 
-    isLoading.value = false;
+    isLoading = false;
+  }
+
+  void onDataReceivedAsync(String data) async {
+    survey = await surveyService.getSurveyByIdAsync(
+        "583LbbNMaEgzVoXlJfVgTw3mKNI2", "8Jm8NM7DaMPRe0gDYfNK");
+
+    surveyAnswer = core.SurveyAnswerEntity(
+      id: survey != null ? survey!.id : "",
+      version: survey != null ? survey!.version : 0,
+      answers: List.empty(growable: true),
+    );
   }
 }

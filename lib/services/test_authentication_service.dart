@@ -1,10 +1,9 @@
+import 'package:flutter/material.dart';
 import 'package:gasta_user_app/services/i_authentication_service.dart';
 
-import '../utility/observable.dart';
-
-class AuthenticationService implements IAuthenticationService {
+class TestAuthenticationService implements IAuthenticationService {
   @override
-  var isLoggedIn = Observable<bool>(false);
+  var isLoggedIn = ValueNotifier<bool>(false);
 
   @override
   Future<void> loginAsync() async {

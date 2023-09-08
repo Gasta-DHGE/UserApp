@@ -2,16 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:gasta_core/gasta_core.dart' as core;
 import 'package:gasta_user_app/services/mapping_service.dart';
 
+import '../controller/controller.dart';
 import '../models/models.dart';
 
 // ignore: must_be_immutable
 class SurveyPage extends StatefulWidget {
+  SurveyPageController controller;
   late Survey _survey;
   ValueChanged<SurveyAnswer>? _onValueChanged;
   ValueChanged<SurveyAnswer>? _onSendPressed;
   ValueChanged<SurveyAnswer>? _onSavePressed;
   SurveyPage(
       {super.key,
+      required this.controller,
       required Survey survey,
       ValueChanged<SurveyAnswer>? onValueChanged,
       ValueChanged<SurveyAnswer>? onSendPressed,

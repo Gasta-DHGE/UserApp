@@ -1,12 +1,14 @@
-import '../service_provider.dart';
+import 'package:flutter/material.dart';
+
+import '../dependency_provider.dart';
 import '../services/i_authentication_service.dart';
-import '../utility/observable.dart';
 
 class SettingsPageController {
-  IAuthenticationService authenticationService =
-      ServiceProvider.instance.authenticationService;
+  IAuthenticationService authenticationService;
 
-  var isLoading = Observable<bool>(false);
+  SettingsPageController({required this.authenticationService});
+
+  var isLoading = ValueNotifier<bool>(false);
 
   Future<void> logoutAsync() async {
     isLoading.value = true;

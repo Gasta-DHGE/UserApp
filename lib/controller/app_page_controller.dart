@@ -1,8 +1,7 @@
 import 'package:gasta_user_app/services/i_authentication_service.dart';
 
-import '../service_provider.dart';
-
 class AppPageController {
-  IAuthenticationService authenticationService =
-      ServiceProvider.instance.authenticationService;
+  IAuthenticationService authenticationService;
+
+  AppPageController({required this.authenticationService});
 }

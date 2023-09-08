@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:gasta_core/gasta_core.dart';
-import 'package:gasta_user_app/utility/observer.dart';
 
 import '../controller/settings_page_controller.dart';
 
+// ignore: must_be_immutable
 class SettingsPage extends StatefulWidget {
+  SettingsPageController controller;
+  SettingsPage({super.key, required this.controller});
+
   @override
   State<StatefulWidget> createState() => _SettingsPage();
 }
 
-class _SettingsPage extends State<SettingsPage> implements Observer {
-  static var controller = SettingsPageController();
-  _SettingsPage() {
-    controller.isLoading.addObserver(this);
-  }
-
+class _SettingsPage extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -30,12 +28,12 @@ class _SettingsPage extends State<SettingsPage> implements Observer {
           Expanded(
             child: Container(
               alignment: Alignment.center,
-              child: controller.isLoading.value
+              child: widget.controller.isLoading.value
                   ? const CircularProgressIndicator()
                   : DefaultButton(
                       onPressed: () {
                         setState(() {
-                          controller.logoutAsync();
+                          widget.controller.logoutAsync();
                         });
                       },
                       child: const Text("Logout"),
@@ -45,16 +43,5 @@ class _SettingsPage extends State<SettingsPage> implements Observer {
         ],
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    controller.isLoading.removeObserver(this);
-    super.dispose();
-  }
-
-  @override
-  void onNotify(value) {
-    setState(() {});
   }
 }

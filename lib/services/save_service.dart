@@ -22,7 +22,7 @@ class SaveService implements ISaveService {
   }
 
   @override
-  void saveSurveyAsync(SurveyData survey) async {
+  Future saveSurveyAsync(SurveyData survey) async {
     List<String> strings = [];
     List<SurveyData> loadedSurveys = await loadSurveysAsync();
 
@@ -32,11 +32,11 @@ class SaveService implements ISaveService {
       strings.add(jsonEncode(survey.toJson()));
     }
 
-    sharedPreferences!.setStringList("surveys", strings);
+    await sharedPreferences!.setStringList("surveys", strings);
   }
 
   @override
-  void saveSurveysAsync(List<SurveyData> surveys) async {
+  Future saveSurveysAsync(List<SurveyData> surveys) async {
     List<String> strings = [];
     List<SurveyData> loadedSurveys = await loadSurveysAsync();
 
@@ -48,26 +48,32 @@ class SaveService implements ISaveService {
       strings.add(jsonEncode(survey.toJson()));
     }
 
-    sharedPreferences!.setStringList("surveys", strings);
+    await sharedPreferences!.setStringList("surveys", strings);
   }
 
   @override
-  void removeAllSurveysAsync() async {
+  Future removeAllSurveysAsync() async {
     sharedPreferences ??= await SharedPreferences.getInstance();
-    sharedPreferences!.setStringList("surveys", List.empty());
+    await sharedPreferences!.setStringList("surveys", List.empty());
   }
 
   @override
-  void removeSurvey(String id) async {
+  Future removeSurvey(String id) async {
     List<SurveyData> loadedSurveys = await loadSurveysAsync();
     loadedSurveys.removeWhere((element) => element.survey.id == id);
-    saveSurveysAsync(loadedSurveys);
+    await saveSurveysAsync(loadedSurveys);
   }
 
   @override
-  void removeSurveys(List<String> ids) async {
+  Future removeSurveys(List<String> ids) async {
     List<SurveyData> loadedSurveys = await loadSurveysAsync();
     loadedSurveys.removeWhere((element) => ids.contains(element.survey.id));
-    saveSurveysAsync(loadedSurveys);
+    await saveSurveysAsync(loadedSurveys);
+  }
+
+  @override
+  Future updateSurveyAsync(String id, SurveyData survey) async {
+    await removeSurvey(id);
+    await saveSurveyAsync(survey);
   }
 }

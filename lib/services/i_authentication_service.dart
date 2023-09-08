@@ -1,7 +1,7 @@
-import 'package:gasta_user_app/utility/observable.dart';
+import 'package:flutter/foundation.dart';
 
 abstract class IAuthenticationService {
-  var isLoggedIn = Observable<bool>(false);
+  var isLoggedIn = ValueNotifier<bool>(false);
 
   Future<void> loginAsync();
   Future<void> logoutAsync();

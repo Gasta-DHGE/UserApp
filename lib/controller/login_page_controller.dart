@@ -1,13 +1,15 @@
-import 'package:gasta_user_app/utility/observable.dart';
+import 'package:flutter/material.dart';
+import 'package:gasta_user_app/page/pages.dart';
 
-import '../service_provider.dart';
+import '../dependency_provider.dart';
 import '../services/i_authentication_service.dart';
 
 class LoginPageController {
-  IAuthenticationService authenticationService =
-      ServiceProvider.instance.authenticationService;
+  IAuthenticationService authenticationService;
 
-  var isLoading = Observable<bool>(false);
+  LoginPageController({required this.authenticationService});
+
+  var isLoading = ValueNotifier<bool>(false);
 
   Future<void> loginAsync() async {
     isLoading.value = true;

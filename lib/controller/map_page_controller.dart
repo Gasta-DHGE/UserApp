@@ -1,3 +1,1 @@
-class MapPageController {
-  MapPageController() {}
-}
+class MapPageController {}

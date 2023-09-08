@@ -16,7 +16,6 @@ class SurveyService implements ISurveyService {
   @override
   Future<Survey?> getSurveyByIdAsync(String userId, String surveyId) async {
     var model = await source.getSurveyById(userId, surveyId);
-    var map = MappingService.map<core.SurveyModel, Survey>(model);
     return MappingService.map<core.SurveyModel, Survey>(model);
   }
 
@@ -29,12 +28,6 @@ class SurveyService implements ISurveyService {
   @override
   Future<bool> sendSurveyAsync(core.SurveyAnswerModel answer) {
     // TODO: implement sendSurveyAsync
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<core.SurveyModel> getSurveyAsync(String surveyId) {
-    // TODO: implement getSurveyAsync
     throw UnimplementedError();
   }
 }

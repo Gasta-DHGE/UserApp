@@ -1,22 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:gasta_core/gasta_core.dart';
-import 'package:gasta_user_app/utility/observer.dart';
 
 import '../controller/login_page_controller.dart';
 
+// ignore: must_be_immutable
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+  LoginPageController controller;
+  LoginPage({super.key, required this.controller});
 
   @override
   State<StatefulWidget> createState() => _LoginPage();
 }
 
-class _LoginPage extends State<LoginPage> implements Observer {
-  static var controller = LoginPageController();
-  _LoginPage() {
-    controller.isLoading.addObserver(this);
-  }
-
+class _LoginPage extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,12 +29,12 @@ class _LoginPage extends State<LoginPage> implements Observer {
             Expanded(
               child: Container(
                 alignment: Alignment.center,
-                child: controller.isLoading.value
+                child: widget.controller.isLoading.value
                     ? const CircularProgressIndicator()
                     : DefaultButton(
                         onPressed: () {
                           setState(() {
-                            controller.loginAsync();
+                            widget.controller.loginAsync();
                           });
                         },
                         child: const Text("Login"),
@@ -49,16 +45,5 @@ class _LoginPage extends State<LoginPage> implements Observer {
         ),
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    controller.isLoading.removeObserver(this);
-    super.dispose();
-  }
-
-  @override
-  void onNotify(value) {
-    setState(() {});
   }
 }
