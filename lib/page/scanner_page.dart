@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gasta_core/gasta_core.dart' as core;
 import 'package:gasta_user_app/controller/controller.dart';
+import 'package:gasta_user_app/dependency_provider.dart';
 import 'package:gasta_user_app/services/mapping_service.dart';
 import 'package:gasta_user_app/page/pages.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
@@ -83,6 +84,12 @@ class _ScannerPage extends State<ScannerPage> {
                                                     SurveyAnswer,
                                                     core
                                                     .SurveyAnswerModel>(value);
+                                            DependencyProvider
+                                                .instance.saveService
+                                                .saveSurveyAsync(SurveyData(
+                                                    survey: widget
+                                                        .controller.survey!,
+                                                    answer: value));
                                           },
                                           onSendPressed: (value) {
                                             widget.controller.surveyAnswer =

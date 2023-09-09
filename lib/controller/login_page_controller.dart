@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gasta_user_app/page/pages.dart';
 
-import '../dependency_provider.dart';
 import '../services/i_authentication_service.dart';
 
 class LoginPageController {

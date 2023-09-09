@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../dependency_provider.dart';
 import '../services/i_authentication_service.dart';
 
 class SettingsPageController {

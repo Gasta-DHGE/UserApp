@@ -1,10 +1,11 @@
+// ignore_for_file: unused_import
+
 import 'package:gasta_user_app/controller/controller.dart';
 import 'package:gasta_user_app/services/test_authentication_service.dart';
 import 'package:gasta_user_app/services/i_authentication_service.dart';
 import 'package:gasta_user_app/services/i_save_service.dart';
 import 'package:gasta_user_app/services/i_survey_service.dart';
 import 'package:gasta_user_app/services/save_service.dart';
-// ignore: unused_import
 import 'package:gasta_user_app/services/survey_service.dart';
 import 'package:gasta_user_app/services/test_survey_service.dart';
 
@@ -16,7 +17,7 @@ class DependencyProvider {
 
     _appPageController =
         AppPageController(authenticationService: _authenticationService);
-    _couponPageController = CouponPageController();
+    _couponPageController = CouponPageController(saveService: _saveService);
     _loginPageController =
         LoginPageController(authenticationService: _authenticationService);
     _mapPageController = MapPageController();
