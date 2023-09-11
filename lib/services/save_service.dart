@@ -55,6 +55,17 @@ class SaveService implements ISaveService {
     await sharedPreferences!.setStringList("surveys", strings);
   }
 
+  Future overrideSurveysAsync(List<SurveyData> surveys) async {
+    await removeAllSurveysAsync();
+
+    List<String> strings = [];
+    for (var survey in surveys) {
+      strings.add(jsonEncode(survey.toJson()));
+    }
+
+    await sharedPreferences!.setStringList("surveys", strings);
+  }
+
   @override
   Future removeAllSurveysAsync() async {
     sharedPreferences ??= await SharedPreferences.getInstance();
@@ -65,14 +76,14 @@ class SaveService implements ISaveService {
   Future removeSurvey(String id) async {
     List<SurveyData> loadedSurveys = await loadSurveysAsync();
     loadedSurveys.removeWhere((element) => element.survey.id == id);
-    await saveSurveysAsync(loadedSurveys);
+    await overrideSurveysAsync(loadedSurveys);
   }
 
   @override
   Future removeSurveys(List<String> ids) async {
     List<SurveyData> loadedSurveys = await loadSurveysAsync();
     loadedSurveys.removeWhere((element) => ids.contains(element.survey.id));
-    await saveSurveysAsync(loadedSurveys);
+    await overrideSurveysAsync(loadedSurveys);
   }
 
   @override
