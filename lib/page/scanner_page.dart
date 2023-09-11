@@ -90,6 +90,7 @@ class _ScannerPage extends State<ScannerPage> {
                                                     survey: widget
                                                         .controller.survey!,
                                                     answer: value));
+                                            Navigator.pop(context);
                                           },
                                           onSendPressed: (value) {
                                             widget.controller.surveyAnswer =

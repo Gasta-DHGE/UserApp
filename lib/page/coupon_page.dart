@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gasta_core/gasta_core.dart';
 import 'package:gasta_user_app/controller/controller.dart';
 import 'package:gasta_user_app/widgets/saved_survey_tile.dart';
+import 'package:uuid/uuid.dart';
 
 import '../models/models.dart';
 
@@ -15,14 +16,6 @@ class CouponPage extends StatefulWidget {
 }
 
 class _CouponPage extends State<CouponPage> {
-  List<SavedSurveyTile> get savedSurveyTiles {
-    List<SavedSurveyTile> ret = [];
-    for (var survey in widget.controller.savedServices.value) {
-      ret.add(SavedSurveyTile(survey: survey));
-    }
-    return ret;
-  }
-
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
@@ -31,7 +24,7 @@ class _CouponPage extends State<CouponPage> {
           return Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Text(
                   "Coupons",
@@ -40,8 +33,20 @@ class _CouponPage extends State<CouponPage> {
                 Expanded(
                   child: RefreshIndicator(
                     onRefresh: () => widget.controller.loadSavedServicesAsync(),
-                    child: ListView(
-                      children: savedSurveyTiles,
+                    child: ListView.builder(
+                      itemCount: widget.controller.savedServices.value.length,
+                      itemBuilder: (context, index) => Dismissible(
+                        key: Key(const Uuid().v1()),
+                        background: Container(
+                          color: Theme.of(context).colorScheme.error,
+                        ),
+                        child: ListTile(
+                          title: SavedSurveyTile(
+                            survey:
+                                widget.controller.savedServices.value[index],
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ),

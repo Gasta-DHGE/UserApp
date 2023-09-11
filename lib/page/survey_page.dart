@@ -9,6 +9,7 @@ import '../models/models.dart';
 class SurveyPage extends StatefulWidget {
   SurveyPageController controller;
   late Survey _survey;
+  SurveyAnswer? _answer;
   ValueChanged<SurveyAnswer>? _onValueChanged;
   ValueChanged<SurveyAnswer>? _onSendPressed;
   ValueChanged<SurveyAnswer>? _onSavePressed;
@@ -16,10 +17,12 @@ class SurveyPage extends StatefulWidget {
       {super.key,
       required this.controller,
       required Survey survey,
+      SurveyAnswer? answer,
       ValueChanged<SurveyAnswer>? onValueChanged,
       ValueChanged<SurveyAnswer>? onSendPressed,
       ValueChanged<SurveyAnswer>? onSavePressed}) {
     _survey = survey;
+    _answer = answer;
     _onValueChanged = onValueChanged;
     _onSendPressed = onSendPressed;
     _onSavePressed = onSavePressed;
@@ -36,6 +39,10 @@ class _SurveyPage extends State<SurveyPage> {
       body: SafeArea(
         child: core.SurveyPage(
           survey: MappingService.map<Survey, core.SurveyModel>(widget._survey),
+          answer: widget._answer != null
+              ? MappingService.map<SurveyAnswer, core.SurveyAnswerModel>(
+                  widget._answer!)
+              : null,
           onValueChanged: (value) {
             widget._onValueChanged!.call(
                 MappingService.map<core.SurveyAnswerModel, SurveyAnswer>(

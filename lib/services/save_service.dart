@@ -26,6 +26,8 @@ class SaveService implements ISaveService {
     List<String> strings = [];
     List<SurveyData> loadedSurveys = await loadSurveysAsync();
 
+    loadedSurveys
+        .removeWhere((element) => element.survey.id == survey.survey.id);
     loadedSurveys.add(survey);
 
     for (var survey in loadedSurveys) {
@@ -41,6 +43,8 @@ class SaveService implements ISaveService {
     List<SurveyData> loadedSurveys = await loadSurveysAsync();
 
     for (var survey in surveys) {
+      loadedSurveys
+          .removeWhere((element) => element.survey.id == survey.survey.id);
       loadedSurveys.add(survey);
     }
 
