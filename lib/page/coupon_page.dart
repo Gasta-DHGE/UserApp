@@ -16,54 +16,6 @@ class CouponPage extends StatefulWidget {
 }
 
 class _CouponPage extends State<CouponPage> {
-  List<Widget> get listItems {
-    List<Widget> items = [];
-
-    // coupons
-    items.add(
-      SizedBox(
-        height: 250,
-        child: Center(
-          child: Text(
-            "No Coupons :(",
-            style: TextStyles.headlineTextStyle(context),
-          ),
-        ),
-      ),
-    );
-
-    // saved surveys
-    if (widget.controller.savedServices.value.isNotEmpty) {
-      items.add(
-        Text(
-          "Saved Surveys",
-          style: TextStyles.headlineTextStyle(context),
-        ),
-      );
-      for (var survey in widget.controller.savedServices.value) {
-        items.add(Dismissible(
-          key: Key(const Uuid().v1()),
-          background: Container(
-            color: Theme.of(context).colorScheme.error,
-          ),
-          onDismissed: (direction) async {
-            widget.controller.savedServices.value.removeWhere(
-                (element) => element.survey.id == survey.survey.id);
-            widget.controller.saveService.removeSurvey(survey.survey.id);
-            setState(() {});
-          },
-          child: ListTile(
-            contentPadding: EdgeInsets.zero,
-            title: SavedSurveyTile(
-              survey: survey,
-            ),
-          ),
-        ));
-      }
-    }
-    return items;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -76,18 +28,74 @@ class _CouponPage extends State<CouponPage> {
             style: TextStyles.bigHeadlineTextStyle(context),
           ),
           Expanded(
-            child: RefreshIndicator(
-              onRefresh: () => widget.controller.loadSavedServicesAsync(),
-              child: ValueListenableBuilder(
-                valueListenable: widget.controller.savedServices,
-                builder: (BuildContext context, List<SurveyData> value,
-                    Widget? child) {
-                  return ListView(
-                    children: listItems,
-                  );
-                },
+            child: GestureDetector(
+              onTap: () => widget.controller.loadSavedServicesAsync(),
+              child: Center(
+                child: Text(
+                  "No Coupons :(",
+                  style: TextStyles.headlineTextStyle(context),
+                ),
               ),
             ),
+          ),
+          ValueListenableBuilder(
+            valueListenable: widget.controller.savedServices,
+            builder:
+                (BuildContext context, List<SurveyData> value, Widget? child) {
+              return Visibility(
+                visible: widget.controller.savedServices.value.isNotEmpty,
+                child: Text(
+                  "Saved Surveys",
+                  style: TextStyles.headlineTextStyle(context),
+                ),
+              );
+            },
+          ),
+          ValueListenableBuilder(
+            valueListenable: widget.controller.savedServices,
+            builder:
+                (BuildContext context, List<SurveyData> value, Widget? child) {
+              return Visibility(
+                visible: widget.controller.savedServices.value.isNotEmpty,
+                child: Expanded(
+                  child: RefreshIndicator(
+                    onRefresh: () => widget.controller.loadSavedServicesAsync(),
+                    child: ListView.builder(
+                      itemCount: widget.controller.savedServices.value.length,
+                      itemBuilder: (context, index) {
+                        return Dismissible(
+                          key: Key(const Uuid().v1()),
+                          background: Container(
+                            color: Theme.of(context).colorScheme.error,
+                          ),
+                          onDismissed: (direction) async {
+                            widget.controller.saveService.removeSurvey(widget
+                                .controller
+                                .savedServices
+                                .value[index]
+                                .survey
+                                .id);
+                            widget.controller.savedServices.value.removeWhere(
+                                (element) =>
+                                    element.survey.id ==
+                                    widget.controller.savedServices.value[index]
+                                        .survey.id);
+                            setState(() {});
+                          },
+                          child: ListTile(
+                            contentPadding: EdgeInsets.zero,
+                            title: SavedSurveyTile(
+                              survey:
+                                  widget.controller.savedServices.value[index],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+              );
+            },
           ),
         ],
       ),

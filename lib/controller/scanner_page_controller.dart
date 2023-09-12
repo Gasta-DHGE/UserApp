@@ -15,6 +15,7 @@ class ScannerPageController {
 
   Survey? survey;
   late core.SurveyAnswerEntity surveyAnswer;
+  bool surveyLoaded = false;
   var isLoading = false;
 
   void loadSurveyAsync() async {
