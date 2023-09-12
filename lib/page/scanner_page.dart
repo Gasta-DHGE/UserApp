@@ -7,7 +7,6 @@ import 'package:gasta_user_app/page/pages.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 import '../models/models.dart';
-import '../widgets/widgets.dart';
 
 // ignore: must_be_immutable
 class ScannerPage extends StatefulWidget {
@@ -45,96 +44,64 @@ class _ScannerPage extends State<ScannerPage> {
             style: core.TextStyles.bigHeadlineTextStyle(context),
           ),
         ),
-        widget.controller.isLoading
-            ? const Center(child: CircularProgressIndicator())
-            : Expanded(
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: Container(
-                        foregroundDecoration: BoxDecoration(
-                          gradient: LinearGradient(
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                              colors: [
-                                Theme.of(context).colorScheme.background,
-                                Colors.transparent
-                              ],
-                              stops: const [
-                                0,
-                                0.1
-                              ]),
-                        ),
-                        child: QRView(
-                          key: GlobalKey(),
-                          onQRViewCreated: _onQRViewCreated,
-                          overlay: QrScannerOverlayShape(
-                            borderColor: Theme.of(context).colorScheme.primary,
-                            borderRadius: 10,
-                            borderLength: 20,
-                            borderWidth: 10,
+        ValueListenableBuilder(
+          valueListenable: widget.controller.isLoading,
+          builder: (context, value, child) {
+            return widget.controller.isLoading.value
+                ? const Expanded(
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  )
+                : Expanded(
+                    child: Stack(
+                      children: [
+                        Expanded(
+                          child: Container(
+                            foregroundDecoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                  begin: Alignment.topCenter,
+                                  end: Alignment.bottomCenter,
+                                  colors: [
+                                    Theme.of(context).colorScheme.background,
+                                    Colors.transparent
+                                  ],
+                                  stops: const [
+                                    0,
+                                    0.1
+                                  ]),
+                            ),
+                            child: QRView(
+                              key: GlobalKey(),
+                              onQRViewCreated: _onQRViewCreated,
+                              overlay: QrScannerOverlayShape(
+                                borderColor:
+                                    Theme.of(context).colorScheme.primary,
+                                borderRadius: 10,
+                                borderLength: 20,
+                                borderWidth: 10,
+                              ),
+                            ),
                           ),
                         ),
-                      ),
+                        Align(
+                          alignment: Alignment.bottomRight,
+                          child: ElevatedButton(
+                            child: const Text("Simulate QR scanned"),
+                            onPressed: () {
+                              setState(
+                                () {
+                                  _onDataReceivedAsync('8Jm8NM7DaMPRe0gDYfNK');
+                                },
+                              );
+                            },
+                          ),
+                        ),
+                      ],
                     ),
-                    /*ElevatedButton(
-                      child: const Text("Simulate QR scanned"),
-                      onPressed: () {
-                        setState(
-                          () {
-                            if (widget.controller.surveyLoaded == true) return;
-                            widget.controller.surveyLoaded = true;
-
-                            widget.controller
-                                .onDataReceivedAsync('8Jm8NM7DaMPRe0gDYfNK');
-
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => SurveyPage(
-                                  controller: SurveyPageController(),
-                                  survey: widget.controller.survey!,
-                                  onSavePressed: (value) async {
-                                    widget.controller.surveyAnswer =
-                                        MappingService.map<SurveyAnswer,
-                                            core.SurveyAnswerModel>(value);
-                                    DependencyProvider.instance.saveService
-                                        .saveSurveyAsync(SurveyData(
-                                            survey: widget.controller.survey!,
-                                            answer: value));
-                                    Navigator.pop(context);
-                                    widget.controller.surveyLoaded = false;
-                                  },
-                                  onSendPressed: (value) {
-                                    widget.controller.surveyAnswer =
-                                        MappingService.map<SurveyAnswer,
-                                            core.SurveyAnswerModel>(value);
-                                    Navigator.pop(context);
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => DebugPage(
-                                            data:
-                                                widget.controller.surveyAnswer),
-                                      ),
-                                    );
-                                    widget.controller.surveyLoaded = false;
-                                  },
-                                  onValueChanged: (value) {
-                                    widget.controller.surveyAnswer =
-                                        MappingService.map<SurveyAnswer,
-                                            core.SurveyAnswerModel>(value);
-                                  },
-                                ),
-                              ),
-                            );
-                          },
-                        );
-                      },
-                    ),*/
-                  ],
-                ),
-              ),
+                  );
+          },
+        )
       ],
     );
   }
@@ -145,49 +112,58 @@ class _ScannerPage extends State<ScannerPage> {
       (scanData) {
         setState(
           () {
-            if (widget.controller.surveyLoaded == true) return;
-            widget.controller.surveyLoaded = true;
-
-            widget.controller.onDataReceivedAsync(scanData.code ?? "");
-
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => SurveyPage(
-                  controller: SurveyPageController(),
-                  survey: widget.controller.survey!,
-                  onSavePressed: (value) async {
-                    widget.controller.surveyAnswer = MappingService.map<
-                        SurveyAnswer, core.SurveyAnswerModel>(value);
-                    DependencyProvider.instance.saveService.saveSurveyAsync(
-                        SurveyData(
-                            survey: widget.controller.survey!, answer: value));
-                    Navigator.pop(context);
-                    widget.controller.surveyLoaded = false;
-                  },
-                  onSendPressed: (value) {
-                    widget.controller.surveyAnswer = MappingService.map<
-                        SurveyAnswer, core.SurveyAnswerModel>(value);
-                    Navigator.pop(context);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            DebugPage(data: widget.controller.surveyAnswer),
-                      ),
-                    );
-                    widget.controller.surveyLoaded = false;
-                  },
-                  onValueChanged: (value) {
-                    widget.controller.surveyAnswer = MappingService.map<
-                        SurveyAnswer, core.SurveyAnswerModel>(value);
-                  },
-                ),
-              ),
-            );
+            _onDataReceivedAsync(scanData.code ?? '');
           },
         );
       },
+    );
+  }
+
+  Future _onDataReceivedAsync(String data) async {
+    if (widget.controller.surveyLoaded == true) return;
+    widget.controller.isLoading.value = true;
+    widget.controller.surveyLoaded = true;
+
+    await widget.controller.onDataReceivedAsync(data);
+
+    _openSurveyPage();
+    widget.controller.isLoading.value = false;
+  }
+
+  void _openSurveyPage() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => SurveyPage(
+          controller: SurveyPageController(),
+          survey: widget.controller.survey!,
+          onSavePressed: (value) async {
+            widget.controller.surveyAnswer =
+                MappingService.map<SurveyAnswer, core.SurveyAnswerModel>(value);
+            DependencyProvider.instance.saveService.saveSurveyAsync(
+                SurveyData(survey: widget.controller.survey!, answer: value));
+            Navigator.pop(context);
+            widget.controller.surveyLoaded = false;
+          },
+          onSendPressed: (value) {
+            widget.controller.surveyAnswer =
+                MappingService.map<SurveyAnswer, core.SurveyAnswerModel>(value);
+            Navigator.pop(context);
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    DebugPage(data: widget.controller.surveyAnswer),
+              ),
+            );
+            widget.controller.surveyLoaded = false;
+          },
+          onValueChanged: (value) {
+            widget.controller.surveyAnswer =
+                MappingService.map<SurveyAnswer, core.SurveyAnswerModel>(value);
+          },
+        ),
+      ),
     );
   }
 }

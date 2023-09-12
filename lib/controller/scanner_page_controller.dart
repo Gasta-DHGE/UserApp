@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:gasta_core/gasta_core.dart' as core;
 import 'package:gasta_user_app/services/i_save_service.dart';
 
@@ -9,33 +10,16 @@ class ScannerPageController {
   ISaveService saveService;
 
   ScannerPageController(
-      {required this.surveyService, required this.saveService}) {
-    loadSurveyAsync();
-  }
+      {required this.surveyService, required this.saveService});
 
   Survey? survey;
   late core.SurveyAnswerEntity surveyAnswer;
   bool surveyLoaded = false;
-  var isLoading = false;
+  var isLoading = ValueNotifier<bool>(false);
 
-  void loadSurveyAsync() async {
-    isLoading = true;
-
+  Future onDataReceivedAsync(String data) async {
     survey = await surveyService.getSurveyByIdAsync(
-        "583LbbNMaEgzVoXlJfVgTw3mKNI2", "8Jm8NM7DaMPRe0gDYfNK");
-
-    surveyAnswer = core.SurveyAnswerEntity(
-      id: survey != null ? survey!.id : "",
-      version: survey != null ? survey!.version : 0,
-      answers: List.empty(growable: true),
-    );
-
-    isLoading = false;
-  }
-
-  void onDataReceivedAsync(String data) async {
-    survey = await surveyService.getSurveyByIdAsync(
-        "583LbbNMaEgzVoXlJfVgTw3mKNI2", "8Jm8NM7DaMPRe0gDYfNK");
+        "583LbbNMaEgzVoXlJfVgTw3mKNI2", data);
 
     surveyAnswer = core.SurveyAnswerEntity(
       id: survey != null ? survey!.id : "",
