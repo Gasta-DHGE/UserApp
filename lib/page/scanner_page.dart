@@ -18,6 +18,7 @@ class ScannerPage extends StatefulWidget {
 }
 
 class _ScannerPage extends State<ScannerPage> {
+  // ignore: unused_field
   static QRViewController? qrViewController;
 
   @override

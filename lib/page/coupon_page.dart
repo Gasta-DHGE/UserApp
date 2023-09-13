@@ -17,6 +17,12 @@ class CouponPage extends StatefulWidget {
 
 class _CouponPage extends State<CouponPage> {
   @override
+  void initState() {
+    super.initState();
+    widget.controller.loadSavedServicesAsync();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
