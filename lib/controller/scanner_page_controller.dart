@@ -17,14 +17,18 @@ class ScannerPageController {
   bool surveyLoaded = false;
   var isLoading = ValueNotifier<bool>(false);
 
-  Future onDataReceivedAsync(String data) async {
+  Future<bool> onDataReceivedAsync(String data) async {
     survey = await surveyService.getSurveyByIdAsync(
         "583LbbNMaEgzVoXlJfVgTw3mKNI2", data);
+
+    if (survey == null) return false;
 
     surveyAnswer = core.SurveyAnswerEntity(
       id: survey != null ? survey!.id : "",
       version: survey != null ? survey!.version : 0,
       answers: List.empty(growable: true),
     );
+
+    return true;
   }
 }

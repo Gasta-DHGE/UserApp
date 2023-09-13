@@ -18,7 +18,7 @@ class ScannerPage extends StatefulWidget {
 }
 
 class _ScannerPage extends State<ScannerPage> {
-  QRViewController? qrViewController;
+  static QRViewController? qrViewController;
 
   @override
   Widget build(BuildContext context) {
@@ -47,16 +47,14 @@ class _ScannerPage extends State<ScannerPage> {
         ValueListenableBuilder(
           valueListenable: widget.controller.isLoading,
           builder: (context, value, child) {
-            return widget.controller.isLoading.value
-                ? const Expanded(
-                    child: Center(
+            return Expanded(
+              child: widget.controller.isLoading.value
+                  ? const Center(
                       child: CircularProgressIndicator(),
-                    ),
-                  )
-                : Expanded(
-                    child: Stack(
+                    )
+                  : Stack(
                       children: [
-                        Expanded(
+                        Positioned(
                           child: Container(
                             foregroundDecoration: BoxDecoration(
                               gradient: LinearGradient(
@@ -99,7 +97,7 @@ class _ScannerPage extends State<ScannerPage> {
                         ),
                       ],
                     ),
-                  );
+            );
           },
         )
       ],
@@ -124,7 +122,11 @@ class _ScannerPage extends State<ScannerPage> {
     widget.controller.isLoading.value = true;
     widget.controller.surveyLoaded = true;
 
-    await widget.controller.onDataReceivedAsync(data);
+    var valid = await widget.controller.onDataReceivedAsync(data);
+    if (valid == false) {
+      widget.controller.isLoading.value = false;
+      return;
+    }
 
     _openSurveyPage();
     widget.controller.isLoading.value = false;
