@@ -59,16 +59,14 @@ class _ScannerPage extends State<ScannerPage> {
                           child: Container(
                             foregroundDecoration: BoxDecoration(
                               gradient: LinearGradient(
-                                  begin: Alignment.topCenter,
-                                  end: Alignment.bottomCenter,
-                                  colors: [
-                                    Theme.of(context).colorScheme.background,
-                                    Colors.transparent
-                                  ],
-                                  stops: const [
-                                    0,
-                                    0.1
-                                  ]),
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                                colors: [
+                                  Theme.of(context).colorScheme.background,
+                                  Colors.transparent
+                                ],
+                                stops: const [0, 0.1],
+                              ),
                             ),
                             child: QRView(
                               key: GlobalKey(),
@@ -126,6 +124,18 @@ class _ScannerPage extends State<ScannerPage> {
     var valid = await widget.controller.onDataReceivedAsync(data);
     if (valid == false) {
       widget.controller.isLoading.value = false;
+
+      // ignore: use_build_context_synchronously
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return const AlertDialog(
+              title: Text("No Survey found"),
+              content: Text("Survey could not be loaded"),
+            );
+          });
+      widget.controller.surveyLoaded = false;
+
       return;
     }
 
