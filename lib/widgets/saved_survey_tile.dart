@@ -15,44 +15,47 @@ class SavedSurveyTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FloatingActionButton.extended(
-      heroTag: const Uuid().v1(),
-      label: Text(survey.survey.name),
-      backgroundColor: Theme.of(context).colorScheme.surface,
-      onPressed: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => SurveyPage(
-              controller: SurveyPageController(),
-              survey: survey.survey,
-              answer: survey.answer,
-              onSavePressed: (value) async {
-                survey.answer = value;
-                DependencyProvider.instance.saveService.saveSurveyAsync(
-                    SurveyData(survey: survey.survey, answer: value));
-                Navigator.pop(context);
-              },
-              onSendPressed: (value) {
-                survey.answer = value;
-                Navigator.pop(context);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => DebugPage(
-                      data: MappingService.map<SurveyAnswer,
-                          core.SurveyAnswerModel>(survey.answer),
+    return ListTile(
+      contentPadding: EdgeInsets.zero,
+      title: FloatingActionButton.extended(
+        heroTag: const Uuid().v1(),
+        label: Text(survey.survey.name),
+        backgroundColor: Theme.of(context).colorScheme.surface,
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => SurveyPage(
+                controller: SurveyPageController(),
+                survey: survey.survey,
+                answer: survey.answer,
+                onSavePressed: (value) async {
+                  survey.answer = value;
+                  DependencyProvider.instance.saveService.saveSurveyAsync(
+                      SurveyData(survey: survey.survey, answer: value));
+                  Navigator.pop(context);
+                },
+                onSendPressed: (value) {
+                  survey.answer = value;
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => DebugPage(
+                        data: MappingService.map<SurveyAnswer,
+                            core.SurveyAnswerModel>(survey.answer),
+                      ),
                     ),
-                  ),
-                );
-              },
-              onValueChanged: (value) {
-                survey.answer = value;
-              },
+                  );
+                },
+                onValueChanged: (value) {
+                  survey.answer = value;
+                },
+              ),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }

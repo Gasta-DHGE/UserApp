@@ -9,9 +9,9 @@ class CouponPageController {
     loadSavedServicesAsync();
   }
 
-  var savedServices = ValueNotifier<List<SurveyData>>([]);
+  var savedSurveys = ValueNotifier<List<SurveyData>>([]);
 
   Future loadSavedServicesAsync() async {
-    savedServices.value = await saveService.loadSurveysAsync();
+    savedSurveys.value = await saveService.loadSurveysAsync();
   }
 }
