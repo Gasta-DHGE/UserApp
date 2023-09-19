@@ -18,8 +18,12 @@ class ScannerPageController {
   var isLoading = ValueNotifier<bool>(false);
 
   Future<bool> onDataReceivedAsync(String data) async {
-    survey = await surveyService.getSurveyByIdAsync(
-        "583LbbNMaEgzVoXlJfVgTw3mKNI2", data);
+    try {
+      survey = await surveyService.getSurveyByIdAsync(
+          "583LbbNMaEgzVoXlJfVgTw3mKNI2", data);
+    } catch (e) {
+      survey = null;
+    }
 
     if (survey == null) return false;
 

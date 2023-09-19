@@ -18,39 +18,44 @@ class TestSurveyService extends ISurveyService {
     var options = ["Option 1", "Option 2", "Option 3", "Option 4"];
 
     var survey = Survey(
-        id: surveyId,
-        userId: "Tnn3Gwoeb3R99rjCxzxi",
-        companyId: "Tnn3Gwoeb3R99rjCxzxi",
-        version: 1,
-        name: "test",
-        description: "test description",
-        startDate: DateTime.now(),
-        endDate: DateTime.now(),
-        createdDate: DateTime.now(),
-        lastModifiedDate: DateTime.now(),
-        questions: [
-          Question(
-              id: "Tnz3Gwoeb3R99rjCxzxi",
-              isOptional: false,
-              title: 'What could we do better?',
-              description: 'test description',
-              content: List.empty(growable: true),
-              type: core.QuestionType.text),
-          Question(
-              id: "Tnz3Gwoeb3R99ejCxzxi",
-              isOptional: false,
-              title: 'What could we do better?',
-              description: 'test description',
-              content: options,
-              type: core.QuestionType.select),
-          Question(
-              id: "Tnz3Gwoeb3Rs9rjCxzxi",
-              isOptional: true,
-              title: 'What could we do better?',
-              description: 'test description',
-              content: options,
-              type: core.QuestionType.multiSelect),
-        ]);
+      id: surveyId,
+      userId: "Tnn3Gwoeb3R99rjCxzxi",
+      companyId: "Tnn3Gwoeb3R99rjCxzxi",
+      version: 1,
+      name: "test",
+      description: "test description",
+      startDate: DateTime.now(),
+      endDate: DateTime.now(),
+      createdDate: DateTime.now(),
+      lastModifiedDate: DateTime.now(),
+      rewards: [],
+      rewardExpirationDate: DateTime.now(),
+      rewardVariant: "",
+      questions: [
+        Question(
+            id: "Tnz3Gwoeb3R99rjCxzxi",
+            isOptional: false,
+            title: 'What could we do better?',
+            description: 'test description',
+            content: List.empty(growable: true),
+            type: core.QuestionType.text),
+        Question(
+            id: "Tnz3Gwoeb3R99ejCxzxi",
+            isOptional: false,
+            title: 'What could we do better?',
+            description: 'test description',
+            content: options,
+            type: core.QuestionType.select),
+        Question(
+            id: "Tnz3Gwoeb3Rs9rjCxzxi",
+            isOptional: true,
+            title: 'What could we do better?',
+            description: 'test description',
+            content: options,
+            type: core.QuestionType.multiSelect),
+      ],
+      questionsAreInFixedOrder: true,
+    );
 
     // ignore: unused_local_variable
     var json = MappingService.map<Survey, core.SurveyModel>(survey)
