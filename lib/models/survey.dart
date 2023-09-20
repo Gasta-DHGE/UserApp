@@ -77,7 +77,14 @@ class Survey {
     List<Reward> rewards = [];
     var rewardMaps = json['rewards'];
     for (var map in rewardMaps) {
-      rewards.add(Question.fromJson(map));
+      switch (map['type']) {
+        case SurveyRewardType.itemDiscount:
+          rewards.add(ItemDiscountReward.fromJson(map));
+          break;
+        case SurveyRewardType.freeItem:
+          rewards.add(FreeItemReward.fromJson(map));
+          break;
+      }
     }
 
     return Survey(

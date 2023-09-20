@@ -11,7 +11,7 @@ abstract class Reward {
     required this.type,
   });
 
-  toJson();
+  Map<String, dynamic> toJson();
 }
 
 class ItemDiscountReward extends Reward {
@@ -37,7 +37,7 @@ class ItemDiscountReward extends Reward {
     };
   }
 
-  static fromJson(Map<String, dynamic> json) {
+  static ItemDiscountReward fromJson(Map<String, dynamic> json) {
     return ItemDiscountReward(
       name: json['name'],
       description: json['description'],
@@ -70,7 +70,7 @@ class FreeItemReward extends Reward {
     };
   }
 
-  static fromJson(Map<String, dynamic> json) {
+  static FreeItemReward fromJson(Map<String, dynamic> json) {
     return FreeItemReward(
       name: json['name'],
       description: json['description'],

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "478132208455",
+    "project_id": "gastas-4b583",
+    "storage_bucket": "gastas-4b583.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:478132208455:android:23530ea906e2c3759a8262",
+        "android_client_info": {
+          "package_name": "com.example.gasta_user_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "478132208455-b2slg515b35tuhist21rqueq85877g4r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDpDM1v3jpaZzxYHVQcabTpoM5nkCHOK_E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "478132208455-b2slg515b35tuhist21rqueq85877g4r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
