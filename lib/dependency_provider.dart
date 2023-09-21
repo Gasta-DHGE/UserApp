@@ -2,16 +2,13 @@
 
 import 'package:gasta_user_app/controller/controller.dart';
 import 'package:gasta_user_app/services/test_authentication_service.dart';
-import 'package:gasta_user_app/services/i_authentication_service.dart';
-import 'package:gasta_user_app/services/i_save_service.dart';
-import 'package:gasta_user_app/services/i_survey_service.dart';
-import 'package:gasta_user_app/services/save_service.dart';
-import 'package:gasta_user_app/services/survey_service.dart';
 import 'package:gasta_user_app/services/test_survey_service.dart';
+
+import 'services/services.dart';
 
 class DependencyProvider {
   DependencyProvider._() {
-    _authenticationService = TestAuthenticationService();
+    _authenticationService = AuthenticationService();
     _surveyService = SurveyService();
     _saveService = SaveService();
 
@@ -22,7 +19,9 @@ class DependencyProvider {
         LoginPageController(authenticationService: _authenticationService);
     _mapPageController = MapPageController();
     _scannerPageController = ScannerPageController(
-        surveyService: _surveyService, saveService: _saveService);
+        authenticationService: _authenticationService,
+        surveyService: _surveyService,
+        saveService: _saveService);
     _settingsPageController =
         SettingsPageController(authenticationService: _authenticationService);
     _shellPageController = ShellPageController();

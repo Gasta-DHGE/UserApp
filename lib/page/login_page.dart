@@ -36,10 +36,14 @@ class _LoginPage extends State<LoginPage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            const SizedBox(
+                            SizedBox(
                               width: 300,
                               child: TextField(
-                                decoration: InputDecoration(
+                                controller: TextEditingController(
+                                    text: widget.controller.username),
+                                onChanged: (value) =>
+                                    widget.controller.username = value,
+                                decoration: const InputDecoration(
                                   hintText: 'Username',
                                   focusedBorder: OutlineInputBorder(
                                     borderRadius:
@@ -59,11 +63,15 @@ class _LoginPage extends State<LoginPage> {
                             const SizedBox(
                               height: 10,
                             ),
-                            const SizedBox(
+                            SizedBox(
                               width: 300,
                               child: TextField(
+                                controller: TextEditingController(
+                                    text: widget.controller.password),
+                                onChanged: (value) =>
+                                    widget.controller.password = value,
                                 obscureText: true,
-                                decoration: InputDecoration(
+                                decoration: const InputDecoration(
                                   hintText: 'Password',
                                   focusedBorder: OutlineInputBorder(
                                     borderRadius:

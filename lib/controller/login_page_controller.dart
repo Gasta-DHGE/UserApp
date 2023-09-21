@@ -4,6 +4,8 @@ import '../services/i_authentication_service.dart';
 
 class LoginPageController {
   IAuthenticationService authenticationService;
+  String username = '';
+  String password = '';
 
   LoginPageController({required this.authenticationService});
 
@@ -11,7 +13,7 @@ class LoginPageController {
 
   Future<void> loginAsync() async {
     isLoading.value = true;
-    await authenticationService.loginAsync();
+    await authenticationService.loginAsync(username, password);
     isLoading.value = false;
   }
 }

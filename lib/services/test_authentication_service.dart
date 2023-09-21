@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gasta_user_app/services/i_authentication_service.dart';
 
@@ -6,7 +7,7 @@ class TestAuthenticationService implements IAuthenticationService {
   var isLoggedIn = ValueNotifier<bool>(false);
 
   @override
-  Future<void> loginAsync() async {
+  Future<void> loginAsync(String email, String password) async {
     await Future.delayed(const Duration(seconds: 2));
     isLoggedIn.value = true;
   }
@@ -16,4 +17,7 @@ class TestAuthenticationService implements IAuthenticationService {
     await Future.delayed(const Duration(seconds: 2));
     isLoggedIn.value = false;
   }
+
+  @override
+  User? user;
 }
