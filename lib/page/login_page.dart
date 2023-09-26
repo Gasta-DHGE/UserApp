@@ -25,7 +25,7 @@ class _LoginPage extends State<LoginPage> {
             children: [
               Text(
                 "Login",
-                style: TextStyles.bigHeadlineTextStyle(context),
+                style: Styles.bigHeadlineTextStyle(context),
               ),
               Expanded(
                 child: Container(
@@ -36,72 +36,46 @@ class _LoginPage extends State<LoginPage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            SizedBox(
-                              width: 300,
-                              child: TextField(
-                                controller: TextEditingController(
-                                    text: widget.controller.username),
-                                onChanged: (value) =>
-                                    widget.controller.username = value,
-                                decoration: const InputDecoration(
-                                  hintText: 'Username',
-                                  focusedBorder: OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(40)),
-                                    borderSide: BorderSide(
-                                        color: Colors.greenAccent, width: 2.0),
-                                  ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(40)),
-                                    borderSide: BorderSide(
-                                        color: Colors.greenAccent, width: 2.0),
-                                  ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: SizedBox(
+                                width: 300,
+                                child: TextField(
+                                  controller: TextEditingController(
+                                      text: widget.controller.username),
+                                  onChanged: (value) =>
+                                      widget.controller.username = value,
+                                  decoration: Styles.inputDecoration(
+                                      context: context, hintText: "Username"),
                                 ),
                               ),
                             ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            SizedBox(
-                              width: 300,
-                              child: TextField(
-                                controller: TextEditingController(
-                                    text: widget.controller.password),
-                                onChanged: (value) =>
-                                    widget.controller.password = value,
-                                obscureText: true,
-                                decoration: const InputDecoration(
-                                  hintText: 'Password',
-                                  focusedBorder: OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(40)),
-                                    borderSide: BorderSide(
-                                        color: Colors.greenAccent, width: 2.0),
-                                  ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(40)),
-                                    borderSide: BorderSide(
-                                        color: Colors.greenAccent, width: 2.0),
-                                  ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: SizedBox(
+                                width: 300,
+                                child: TextField(
+                                  controller: TextEditingController(
+                                      text: widget.controller.password),
+                                  onChanged: (value) =>
+                                      widget.controller.password = value,
+                                  obscureText: true,
+                                  decoration: Styles.inputDecoration(
+                                      context: context, hintText: "Password"),
                                 ),
                               ),
-                            ),
-                            SizedBox(
-                              height: 10,
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                core.OutlinedButton(
-                                  onPressed: () {
-                                    setState(() {});
-                                  },
-                                  child: const Text("Sign Up"),
-                                ),
-                                const SizedBox(
-                                  width: 10,
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 8.0),
+                                  child: core.OutlinedButton(
+                                    onPressed: () {
+                                      setState(() {});
+                                    },
+                                    child: const Text("Sign Up"),
+                                  ),
                                 ),
                                 DefaultButton(
                                   onPressed: () {

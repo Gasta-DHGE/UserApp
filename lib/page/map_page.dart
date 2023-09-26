@@ -21,7 +21,7 @@ class _MapPage extends State<MapPage> {
           children: [
             Text(
               "Map",
-              style: TextStyles.bigHeadlineTextStyle(context),
+              style: Styles.bigHeadlineTextStyle(context),
             ),
           ],
         ),

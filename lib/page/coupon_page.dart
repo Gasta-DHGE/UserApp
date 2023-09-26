@@ -31,7 +31,7 @@ class _CouponPage extends State<CouponPage> {
         children: [
           Text(
             "Coupons",
-            style: TextStyles.bigHeadlineTextStyle(context),
+            style: Styles.bigHeadlineTextStyle(context),
           ),
           ValueListenableBuilder(
             valueListenable: widget.controller.savedSurveys,
@@ -45,7 +45,7 @@ class _CouponPage extends State<CouponPage> {
                     child: Center(
                       child: Text(
                         "No Coupons :(",
-                        style: TextStyles.headlineTextStyle(context),
+                        style: Styles.headlineTextStyle(context),
                       ),
                     ),
                   ),

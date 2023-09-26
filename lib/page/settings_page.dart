@@ -22,7 +22,7 @@ class _SettingsPage extends State<SettingsPage> {
           Row(children: [
             Text(
               "Settings",
-              style: TextStyles.bigHeadlineTextStyle(context),
+              style: Styles.bigHeadlineTextStyle(context),
             ),
           ]),
           Expanded(

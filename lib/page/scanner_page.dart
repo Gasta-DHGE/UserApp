@@ -42,7 +42,7 @@ class _ScannerPage extends State<ScannerPage> {
           padding: const EdgeInsets.all(8.0),
           child: Text(
             "Scanner",
-            style: core.TextStyles.bigHeadlineTextStyle(context),
+            style: core.Styles.bigHeadlineTextStyle(context),
           ),
         ),
         ValueListenableBuilder(
