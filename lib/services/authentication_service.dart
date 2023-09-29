@@ -9,6 +9,20 @@ class AuthenticationService implements IAuthenticationService {
   @override
   User? user;
 
+  AuthenticationService() {
+    _firebaseAuth.authStateChanges().listen(
+      (user) {
+        if (user == null) {
+          this.user = null;
+          isLoggedIn.value = false;
+        } else {
+          this.user = user;
+          isLoggedIn.value = true;
+        }
+      },
+    );
+  }
+
   @override
   ValueNotifier<bool> isLoggedIn = ValueNotifier<bool>(false);
 
