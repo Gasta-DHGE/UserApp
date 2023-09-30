@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gasta_core/gasta_core.dart';
 import 'package:gasta_core/gasta_core.dart' as core;
+import 'package:gasta_user_app/dependency_provider.dart';
+import 'package:gasta_user_app/page/pages.dart';
 import 'package:gasta_user_app/services/i_authentication_service.dart';
 
 import '../controller/login_page_controller.dart';
@@ -99,7 +101,16 @@ class _LoginPage extends State<LoginPage> {
                                           const EdgeInsets.only(right: 8.0),
                                       child: core.OutlinedButton(
                                         onPressed: () {
-                                          setState(() {});
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => SignupPage(
+                                                controller: DependencyProvider
+                                                    .instance
+                                                    .signupPageController,
+                                              ),
+                                            ),
+                                          );
                                         },
                                         child: const Text("Sign Up"),
                                       ),

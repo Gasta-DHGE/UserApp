@@ -26,6 +26,7 @@ class DependencyProvider {
         SettingsPageController(authenticationService: _authenticationService);
     _shellPageController = ShellPageController();
     _surveyPageController = SurveyPageController();
+    _signupPageController = SignupPageController();
   }
 
   static DependencyProvider? _instance;
@@ -70,4 +71,7 @@ class DependencyProvider {
 
   late SurveyPageController _surveyPageController;
   SurveyPageController get surveyPageController => _surveyPageController;
+
+  late SignupPageController _signupPageController;
+  SignupPageController get signupPageController => _signupPageController;
 }

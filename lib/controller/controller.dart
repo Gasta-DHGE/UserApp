@@ -6,3 +6,4 @@ export 'settings_page_controller.dart';
 export 'coupon_page_controller.dart';
 export 'shell_page_controller.dart';
 export 'survey_page_controller.dart';
+export 'signup_page_controller.dart';

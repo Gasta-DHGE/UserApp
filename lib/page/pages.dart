@@ -7,3 +7,4 @@ export 'scanner_page.dart';
 export 'settings_page.dart';
 export 'shell_page.dart';
 export 'survey_page.dart';
+export 'signup_page.dart';
