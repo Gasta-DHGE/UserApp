@@ -7,9 +7,10 @@ class TestAuthenticationService implements IAuthenticationService {
   var isLoggedIn = ValueNotifier<bool>(false);
 
   @override
-  Future<void> loginAsync(String email, String password) async {
+  Future<AuthenticationResult> loginAsync(String email, String password) async {
     await Future.delayed(const Duration(seconds: 2));
     isLoggedIn.value = true;
+    return AuthenticationResult.success;
   }
 
   @override

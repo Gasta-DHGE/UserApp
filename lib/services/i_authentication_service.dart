@@ -5,6 +5,8 @@ abstract class IAuthenticationService {
   User? user;
   var isLoggedIn = ValueNotifier<bool>(false);
 
-  Future<void> loginAsync(String email, String password);
+  Future<AuthenticationResult> loginAsync(String email, String password);
   Future<void> logoutAsync();
 }
+
+enum AuthenticationResult { success, noConnection, invalid, unknown }

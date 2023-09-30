@@ -27,14 +27,23 @@ class AuthenticationService implements IAuthenticationService {
   ValueNotifier<bool> isLoggedIn = ValueNotifier<bool>(false);
 
   @override
-  Future<void> loginAsync(String email, String password) async {
+  Future<AuthenticationResult> loginAsync(String email, String password) async {
     try {
       user = (await _firebaseAuth.signInWithEmailAndPassword(
               email: email, password: password))
           .user;
       isLoggedIn.value = true;
-    } catch (e) {
+      return AuthenticationResult.success;
+    } on FirebaseAuthException catch (e) {
       isLoggedIn.value = false;
+
+      if (e.code == "network-request-failed") {
+        return AuthenticationResult.noConnection;
+      }
+
+      return AuthenticationResult.invalid;
+    } catch (e) {
+      return AuthenticationResult.unknown;
     }
   }
 
