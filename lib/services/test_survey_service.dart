@@ -1,4 +1,5 @@
 import 'package:gasta_core/gasta_core.dart' as core;
+import 'package:gasta_core/gasta_core.dart';
 import 'package:gasta_user_app/services/i_survey_service.dart';
 import 'package:gasta_user_app/services/mapping_service.dart';
 
@@ -30,7 +31,7 @@ class TestSurveyService extends ISurveyService {
       lastModifiedDate: DateTime.now(),
       rewards: [],
       rewardExpirationDate: DateTime.now(),
-      rewardVariant: "",
+      rewardVariant: SurveyRewardVariantType.first,
       questions: [
         Question(
             id: "Tnz3Gwoeb3R99rjCxzxi",

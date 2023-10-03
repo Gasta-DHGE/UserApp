@@ -26,6 +26,35 @@ class _SignupPage extends State<SignupPage> {
                 "Sign Up",
                 style: Styles.bigHeadlineTextStyle(context),
               ),
+              Expanded(
+                child: ListView(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: TextField(
+                        decoration: Styles.inputDecoration(
+                            context: context, hintText: "E-Mail"),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: TextField(
+                        obscureText: true,
+                        decoration: Styles.inputDecoration(
+                            context: context, hintText: "Password"),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: TextField(
+                        obscureText: true,
+                        decoration: Styles.inputDecoration(
+                            context: context, hintText: "Repeat Password"),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),

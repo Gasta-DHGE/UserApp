@@ -15,7 +15,7 @@ class Survey {
   DateTime lastModifiedDate;
   List<Reward> rewards;
   DateTime rewardExpirationDate;
-  String rewardVariant;
+  SurveyRewardVariantType rewardVariant;
   List<Question> questions;
   bool questionsAreInFixedOrder;
 
@@ -61,7 +61,7 @@ class Survey {
       'rewards': rewardMaps,
       'rewardExpirationDate':
           Util.getSecondsTimeStampByDateTime(rewardExpirationDate),
-      'rewardVariant': rewardVariant,
+      'rewardVariant': rewardVariant.toString(),
       'questions': questionMaps,
       'questionAreInFixedOrder': questionsAreInFixedOrder,
     };
@@ -110,7 +110,12 @@ class Survey {
       rewardExpirationDate: Util.getDateTimeBySecondsTimeStamp(
         json['rewardExpirationDate'] as int,
       ),
-      rewardVariant: json['rewardVariant'],
+      rewardVariant: SurveyRewardVariantType.values.contains(
+              (element) => element.toString() == json['rewardVariant'])
+          ? SurveyRewardVariantType.values
+              .where((element) => element.toString() == json['rewardVariant'])
+              .first
+          : SurveyRewardVariantType.first,
       questions: questions,
       questionsAreInFixedOrder: json['questionAreInFixedOrder'],
     );
