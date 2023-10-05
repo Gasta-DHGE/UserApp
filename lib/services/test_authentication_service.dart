@@ -21,4 +21,10 @@ class TestAuthenticationService implements IAuthenticationService {
 
   @override
   User? user;
+
+  @override
+  Future<void> signupAsync(String email, String password) {
+    // TODO: implement signupAsync
+    throw UnimplementedError();
+  }
 }

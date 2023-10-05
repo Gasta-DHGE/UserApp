@@ -75,6 +75,30 @@ class MappingService {
       }
     }
 
+    if ((FROM == core.AddressEntity || FROM == core.AddressModel) &&
+        TO == Address) {
+      return _addressEntityToAddress(source as core.AddressEntity) as TO;
+    }
+    if (FROM == Address && TO == core.AddressEntity) {
+      return _addressToAddressEntity(source as Address) as TO;
+    }
+    if (FROM == SurveyAnswer && TO == core.SurveyAnswerModel) {
+      return core.AddressModel.fromEntity(
+          _addressToAddressEntity(source as Address)) as TO;
+    }
+
+    if ((FROM == core.UserEntity || FROM == core.UserModel) &&
+        TO == GastaUser) {
+      return _userEntityToGastaUser(source as core.UserEntity) as TO;
+    }
+    if (FROM == GastaUser && TO == core.UserEntity) {
+      return _gastaUserToUserEntity(source as GastaUser) as TO;
+    }
+    if (FROM == GastaUser && TO == core.UserModel) {
+      return core.UserModel.fromEntity(
+          _gastaUserToUserEntity(source as GastaUser)) as TO;
+    }
+
     throw Exception("No mapping defined.");
   }
 
@@ -255,5 +279,49 @@ class MappingService {
     }
 
     throw Exception("Not a supported Reward type");
+  }
+
+  static Address _addressEntityToAddress(core.AddressEntity source) {
+    return Address(
+        city: source.city,
+        street: source.street,
+        streetNumber: source.streetNumber,
+        additionalInformation: source.additionalInformation,
+        postcode: source.postcode,
+        posLongitude: source.posLongitude,
+        posLatitude: source.posLatitude);
+  }
+
+  static core.AddressEntity _addressToAddressEntity(Address source) {
+    return core.AddressEntity(
+        city: source.city,
+        street: source.street,
+        streetNumber: source.streetNumber,
+        additionalInformation: source.additionalInformation,
+        postcode: source.postcode,
+        posLongitude: source.posLongitude,
+        posLatitude: source.posLatitude);
+  }
+
+  static GastaUser _userEntityToGastaUser(core.UserEntity source) {
+    return GastaUser(
+      firstName: source.firstName,
+      lastName: source.lastName,
+      birthDate: source.birthDate,
+      gender: source.gender,
+      diet: source.diet,
+      address: MappingService.map<core.AddressEntity, Address>(source.address),
+    );
+  }
+
+  static core.UserEntity _gastaUserToUserEntity(GastaUser source) {
+    return core.UserEntity(
+      firstName: source.firstName,
+      lastName: source.lastName,
+      birthDate: source.birthDate,
+      gender: source.gender,
+      diet: source.diet,
+      address: MappingService.map<Address, core.AddressEntity>(source.address),
+    );
   }
 }

@@ -7,6 +7,7 @@ abstract class IAuthenticationService {
 
   Future<AuthenticationResult> loginAsync(String email, String password);
   Future<void> logoutAsync();
+  Future<void> signupAsync(String email, String password);
 }
 
 enum AuthenticationResult { success, noConnection, invalid, unknown }

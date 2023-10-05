@@ -1,13 +1,13 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart' as google;
 import 'package:flutter/material.dart';
 
 import 'services.dart';
 
 class AuthenticationService implements IAuthenticationService {
-  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  final google.FirebaseAuth _firebaseAuth = google.FirebaseAuth.instance;
 
   @override
-  User? user;
+  google.User? user;
 
   AuthenticationService() {
     _firebaseAuth.authStateChanges().listen(
@@ -34,7 +34,7 @@ class AuthenticationService implements IAuthenticationService {
           .user;
       isLoggedIn.value = true;
       return AuthenticationResult.success;
-    } on FirebaseAuthException catch (e) {
+    } on google.FirebaseAuthException catch (e) {
       isLoggedIn.value = false;
 
       if (e.code == "network-request-failed") {
@@ -51,5 +51,15 @@ class AuthenticationService implements IAuthenticationService {
   Future<void> logoutAsync() async {
     await _firebaseAuth.signOut();
     isLoggedIn.value = false;
+  }
+
+  @override
+  Future<void> signupAsync(String email, String password) async {
+    try {
+      await _firebaseAuth.createUserWithEmailAndPassword(
+          email: email, password: password);
+    } catch (e) {
+      var test = "";
+    }
   }
 }

@@ -30,29 +30,54 @@ class _SignupPage extends State<SignupPage> {
                 child: ListView(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
                       child: TextField(
+                        onChanged: (value) =>
+                            setState(() => widget.controller.username = value),
                         decoration: Styles.inputDecoration(
                             context: context, hintText: "E-Mail"),
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
                       child: TextField(
+                        onChanged: (value) =>
+                            setState(() => widget.controller.password = value),
                         obscureText: true,
                         decoration: Styles.inputDecoration(
                             context: context, hintText: "Password"),
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
                       child: TextField(
+                        onChanged: (value) => setState(
+                            () => widget.controller.repeatedPassword = value),
                         obscureText: true,
                         decoration: Styles.inputDecoration(
                             context: context, hintText: "Repeat Password"),
                       ),
                     ),
                   ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: DefaultButton(
+                    disabledColor: Theme.of(context).colorScheme.surface,
+                    onPressed: widget.controller.password.length > 5 &&
+                            widget.controller.password ==
+                                widget.controller.repeatedPassword
+                        ? () {
+                            widget.controller.authenticationService.signupAsync(
+                                widget.controller.username,
+                                widget.controller.password);
+                          }
+                        : null,
+                    child: const Text("Sign up"),
+                  ),
                 ),
               ),
             ],
