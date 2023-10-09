@@ -8,9 +8,10 @@ import 'services/services.dart';
 
 class DependencyProvider {
   DependencyProvider._() {
-    _authenticationService = AuthenticationService();
     _surveyService = SurveyService();
     _saveService = SaveService();
+    _userService = UserService();
+    _authenticationService = AuthenticationService(userService: _userService);
 
     _appPageController =
         AppPageController(authenticationService: _authenticationService);
@@ -24,8 +25,12 @@ class DependencyProvider {
         saveService: _saveService);
     _settingsPageController =
         SettingsPageController(authenticationService: _authenticationService);
-    _shellPageController = ShellPageController();
+    _shellPageController =
+        ShellPageController(authenticationService: _authenticationService);
     _surveyPageController = SurveyPageController();
+    _createUserDataPageController = CreateUserDataPageController(
+        authenticationService: _authenticationService,
+        userService: _userService);
     _signupPageController =
         SignupPageController(authenticationService: _authenticationService);
   }
@@ -42,6 +47,9 @@ class DependencyProvider {
 
   late IAuthenticationService _authenticationService;
   IAuthenticationService get authenticationService => _authenticationService;
+
+  late IUserService _userService;
+  IUserService get userService => _userService;
 
   late ISurveyService _surveyService;
   ISurveyService get surveyService => _surveyService;
@@ -75,4 +83,8 @@ class DependencyProvider {
 
   late SignupPageController _signupPageController;
   SignupPageController get signupPageController => _signupPageController;
+
+  late CreateUserDataPageController _createUserDataPageController;
+  CreateUserDataPageController get createUserDataPageController =>
+      _createUserDataPageController;
 }

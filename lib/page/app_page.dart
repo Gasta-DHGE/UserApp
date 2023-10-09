@@ -17,14 +17,18 @@ class AppPage extends StatefulWidget {
 class _AppPage extends State<AppPage> {
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder(
-        valueListenable: widget.controller.authenticationService.isLoggedIn,
-        builder: (context, value, child) {
-          return widget.controller.authenticationService.isLoggedIn.value
-              ? ShellPage(
-                  controller: DependencyProvider.instance.shellPageController)
-              : LoginPage(
-                  controller: DependencyProvider.instance.loginPageController);
-        });
+    return ListenableBuilder(
+      listenable: widget.controller.authenticationService,
+      builder: (context, child) {
+        return widget.controller.authenticationService.isLoggedIn
+            ? ShellPage(
+                controller: DependencyProvider.instance.shellPageController)
+            : LoginPage(
+                controller: LoginPageController(
+                    authenticationService:
+                        DependencyProvider.instance.authenticationService),
+              );
+      },
+    );
   }
 }

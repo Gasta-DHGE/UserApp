@@ -5,7 +5,7 @@ import '../services/i_authentication_service.dart';
 class SettingsPageController {
   IAuthenticationService authenticationService;
 
-  SettingsPageController({required this.authenticationService});
+  SettingsPageController({required this.authenticationService}) {}
 
   var isLoading = ValueNotifier<bool>(false);
 

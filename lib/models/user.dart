@@ -3,7 +3,7 @@ import 'models.dart';
 
 class User {
   google.User firebaseUser;
-  GastaUser gastaUser;
+  GastaUser? gastaUser;
 
-  User({required this.firebaseUser, required this.gastaUser});
+  User({required this.firebaseUser, this.gastaUser});
 }

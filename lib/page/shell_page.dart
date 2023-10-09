@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gasta_user_app/dependency_provider.dart';
+import 'package:gasta_user_app/page/create_user_data_page.dart';
 import 'package:gasta_user_app/page/pages.dart';
 
 import '../controller/controller.dart';
@@ -38,24 +39,43 @@ class _ShellPage extends State<ShellPage> {
         break;
     }
 
-    return Scaffold(
-        bottomNavigationBar: NavigationBar(
-          selectedIndex: _currentpage,
-          onDestinationSelected: (value) =>
-              setState(() => _currentpage = value),
-          destinations: const [
-            NavigationDestination(
-                icon: Icon(Icons.percent), label: "Coupons", tooltip: ""),
-            NavigationDestination(
-                icon: Icon(Icons.qr_code), label: "Scanner", tooltip: ""),
-            NavigationDestination(
-                icon: Icon(Icons.map), label: "Map", tooltip: ""),
-            NavigationDestination(
-                icon: Icon(Icons.settings), label: "Settings", tooltip: ""),
-          ],
-        ),
-        body: SafeArea(
-          child: _content!,
-        ));
+    return ListenableBuilder(
+      listenable: widget.controller.authenticationService,
+      builder: (BuildContext context, Widget? child) {
+        return widget.controller.authenticationService.user!.gastaUser == null
+            ? CreateUserDataPage(
+                controller: CreateUserDataPageController(
+                    authenticationService:
+                        DependencyProvider.instance.authenticationService,
+                    userService: DependencyProvider.instance.userService),
+              )
+            : Scaffold(
+                bottomNavigationBar: NavigationBar(
+                  selectedIndex: _currentpage,
+                  onDestinationSelected: (value) =>
+                      setState(() => _currentpage = value),
+                  destinations: const [
+                    NavigationDestination(
+                        icon: Icon(Icons.percent),
+                        label: "Coupons",
+                        tooltip: ""),
+                    NavigationDestination(
+                        icon: Icon(Icons.qr_code),
+                        label: "Scanner",
+                        tooltip: ""),
+                    NavigationDestination(
+                        icon: Icon(Icons.map), label: "Map", tooltip: ""),
+                    NavigationDestination(
+                        icon: Icon(Icons.settings),
+                        label: "Settings",
+                        tooltip: ""),
+                  ],
+                ),
+                body: SafeArea(
+                  child: _content!,
+                ),
+              );
+      },
+    );
   }
 }

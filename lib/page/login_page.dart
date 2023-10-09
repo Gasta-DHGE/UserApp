@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gasta_core/gasta_core.dart';
 import 'package:gasta_core/gasta_core.dart' as core;
+import 'package:gasta_user_app/controller/signup_page_controller.dart';
 import 'package:gasta_user_app/dependency_provider.dart';
 import 'package:gasta_user_app/page/pages.dart';
 import 'package:gasta_user_app/services/i_authentication_service.dart';
@@ -73,7 +74,7 @@ class _LoginPage extends State<LoginPage> {
                                           widget.controller.username = value,
                                       decoration: Styles.inputDecoration(
                                           context: context,
-                                          hintText: "Username"),
+                                          labelText: "Username"),
                                     ),
                                   ),
                                 ),
@@ -89,7 +90,7 @@ class _LoginPage extends State<LoginPage> {
                                       obscureText: true,
                                       decoration: Styles.inputDecoration(
                                           context: context,
-                                          hintText: "Password"),
+                                          labelText: "Password"),
                                     ),
                                   ),
                                 ),
@@ -105,9 +106,11 @@ class _LoginPage extends State<LoginPage> {
                                             context,
                                             MaterialPageRoute(
                                               builder: (context) => SignupPage(
-                                                controller: DependencyProvider
-                                                    .instance
-                                                    .signupPageController,
+                                                controller: SignupPageController(
+                                                    authenticationService:
+                                                        DependencyProvider
+                                                            .instance
+                                                            .authenticationService),
                                               ),
                                             ),
                                           );

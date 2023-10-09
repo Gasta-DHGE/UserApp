@@ -1,42 +1,84 @@
 import 'package:firebase_auth/firebase_auth.dart' as google;
 import 'package:flutter/material.dart';
 
+import '../models/models.dart';
 import 'services.dart';
 
-class AuthenticationService implements IAuthenticationService {
+class AuthenticationService
+    with ChangeNotifier
+    implements IAuthenticationService {
   final google.FirebaseAuth _firebaseAuth = google.FirebaseAuth.instance;
+  late IUserService _userService;
+  User? _user;
+  bool _isLoggedIn = false;
 
   @override
-  google.User? user;
+  User? get user => _user;
 
-  AuthenticationService() {
+  @override
+  set user(User? value) {
+    _user = value;
+    notifyListeners();
+  }
+
+  @override
+  bool get isLoggedIn => _isLoggedIn;
+
+  @override
+  set isLoggedIn(bool value) {
+    _isLoggedIn = value;
+    notifyListeners();
+  }
+
+  AuthenticationService({required IUserService userService}) {
+    _userService = userService;
     _firebaseAuth.authStateChanges().listen(
-      (user) {
+      (user) async {
         if (user == null) {
           this.user = null;
-          isLoggedIn.value = false;
+          isLoggedIn = false;
         } else {
-          this.user = user;
-          isLoggedIn.value = true;
+          try {
+            this.user = User(
+              firebaseUser: user,
+              gastaUser: await _userService.getUserByIdAsync(user.uid),
+            );
+          } catch (e) {
+            this.user = User(firebaseUser: user);
+          }
+
+          isLoggedIn = true;
         }
       },
     );
   }
 
   @override
-  ValueNotifier<bool> isLoggedIn = ValueNotifier<bool>(false);
+  Future<SignupResult> signupAsync(String email, String password) async {
+    try {
+      await _firebaseAuth.createUserWithEmailAndPassword(
+          email: email, password: password);
+      return SignupResult.success;
+    } on google.FirebaseAuthException catch (e) {
+      if (e.code == "network-request-failed") {
+        return SignupResult.noConnection;
+      }
+      if (e.code == "email-already-in-use") {
+        return SignupResult.alreadyInUse;
+      }
+      return SignupResult.invalid;
+    } catch (e) {
+      return SignupResult.unknown;
+    }
+  }
 
   @override
   Future<AuthenticationResult> loginAsync(String email, String password) async {
     try {
-      user = (await _firebaseAuth.signInWithEmailAndPassword(
-              email: email, password: password))
-          .user;
-      isLoggedIn.value = true;
+      await _firebaseAuth.signInWithEmailAndPassword(
+          email: email, password: password);
       return AuthenticationResult.success;
     } on google.FirebaseAuthException catch (e) {
-      isLoggedIn.value = false;
-
       if (e.code == "network-request-failed") {
         return AuthenticationResult.noConnection;
       }
@@ -50,16 +92,5 @@ class AuthenticationService implements IAuthenticationService {
   @override
   Future<void> logoutAsync() async {
     await _firebaseAuth.signOut();
-    isLoggedIn.value = false;
-  }
-
-  @override
-  Future<void> signupAsync(String email, String password) async {
-    try {
-      await _firebaseAuth.createUserWithEmailAndPassword(
-          email: email, password: password);
-    } catch (e) {
-      var test = "";
-    }
   }
 }

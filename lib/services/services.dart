@@ -7,3 +7,5 @@ export 'survey_service.dart';
 export 'test_authentication_service.dart';
 export 'test_survey_service.dart';
 export 'authentication_service.dart';
+export 'i_user_service.dart';
+export 'user_service.dart';
