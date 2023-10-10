@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gasta_user_app/services/i_authentication_service.dart';
 
 import '../models/models.dart';
+import 'result.dart';
 
 class TestAuthenticationService
     with ChangeNotifier
@@ -10,10 +11,10 @@ class TestAuthenticationService
   bool isLoggedIn = false;
 
   @override
-  Future<AuthenticationResult> loginAsync(String email, String password) async {
+  Future<Result> loginAsync(String email, String password) async {
     await Future.delayed(const Duration(seconds: 2));
     isLoggedIn = true;
-    return AuthenticationResult.success;
+    return Result.success;
   }
 
   @override
@@ -23,7 +24,7 @@ class TestAuthenticationService
   }
 
   @override
-  Future<SignupResult> signupAsync(String email, String password) {
+  Future<Result> signupAsync(String email, String password) {
     // TODO: implement signupAsync
     throw UnimplementedError();
   }

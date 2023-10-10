@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 
 import '../services/i_authentication_service.dart';
+import '../services/result.dart';
 
 class LoginPageController {
   IAuthenticationService authenticationService;
   String username = '';
   String password = '';
 
-  AuthenticationResult lastAuthenticationResult = AuthenticationResult.success;
+  Result lastAuthenticationResult = Result.success;
   String get errorString {
     switch (lastAuthenticationResult) {
-      case AuthenticationResult.success:
+      case Result.success:
         return '';
-      case AuthenticationResult.invalid:
+      case Result.invalid:
         return 'Invalid Username or Password';
-      case AuthenticationResult.noConnection:
+      case Result.noConnection:
         return 'No Connection, please check your connection or try again later';
       default:
         return 'Please try again';

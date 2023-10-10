@@ -7,6 +7,7 @@ import 'package:gasta_user_app/page/pages.dart';
 import 'package:gasta_user_app/services/i_authentication_service.dart';
 
 import '../controller/login_page_controller.dart';
+import '../services/result.dart';
 
 // ignore: must_be_immutable
 class LoginPage extends StatefulWidget {
@@ -46,7 +47,7 @@ class _LoginPage extends State<LoginPage> {
                                 Visibility(
                                   visible: widget.controller
                                           .lastAuthenticationResult !=
-                                      AuthenticationResult.success,
+                                      Result.success,
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: SizedBox(
