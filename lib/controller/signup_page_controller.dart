@@ -4,9 +4,30 @@ import '../services/services.dart';
 
 class SignupPageController with ChangeNotifier {
   IAuthenticationService authenticationService;
+  bool _isLoading = false;
   String _username = '';
   String _password = '';
   String _repeatedPassword = '';
+
+  Result lastSignupResult = Result.success;
+  String get errorString {
+    switch (lastSignupResult) {
+      case Result.success:
+        return '';
+      case Result.invalid:
+        return 'Invalid Username or Password';
+      case Result.noConnection:
+        return 'No Connection, please check your connection or try again later';
+      default:
+        return 'Please try again';
+    }
+  }
+
+  bool get isLoading => _isLoading;
+  set isLoading(bool value) {
+    _isLoading = value;
+    notifyListeners();
+  }
 
   String get username => _username;
   set username(String value) {

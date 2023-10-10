@@ -94,6 +94,8 @@ class _CouponPage extends State<CouponPage> {
                               ),
                               onDismissed: (direction) async {
                                 widget.controller.saveService.removeSurvey(
+                                    widget.controller.authenticationService
+                                        .user!.firebaseUser.uid,
                                     widget.controller.savedSurveys.value[index]
                                         .survey.id);
                                 widget.controller.savedSurveys.value

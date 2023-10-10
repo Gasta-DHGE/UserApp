@@ -4,7 +4,6 @@ import 'package:gasta_core/gasta_core.dart' as core;
 import 'package:gasta_user_app/controller/signup_page_controller.dart';
 import 'package:gasta_user_app/dependency_provider.dart';
 import 'package:gasta_user_app/page/pages.dart';
-import 'package:gasta_user_app/services/i_authentication_service.dart';
 
 import '../controller/login_page_controller.dart';
 import '../services/result.dart';

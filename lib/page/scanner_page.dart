@@ -154,6 +154,8 @@ class _ScannerPage extends State<ScannerPage> {
             widget.controller.surveyAnswer =
                 MappingService.map<SurveyAnswer, core.SurveyAnswerModel>(value);
             DependencyProvider.instance.saveService.saveSurveyAsync(
+                DependencyProvider
+                    .instance.authenticationService.user!.firebaseUser.uid,
                 SurveyData(survey: widget.controller.survey!, answer: value));
             Navigator.pop(context);
             widget.controller.surveyLoaded = false;

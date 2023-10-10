@@ -15,7 +15,9 @@ class DependencyProvider {
 
     _appPageController =
         AppPageController(authenticationService: _authenticationService);
-    _couponPageController = CouponPageController(saveService: _saveService);
+    _couponPageController = CouponPageController(
+        authenticationService: _authenticationService,
+        saveService: _saveService);
     _loginPageController =
         LoginPageController(authenticationService: _authenticationService);
     _mapPageController = MapPageController();
