@@ -6,3 +6,6 @@ export 'survey_data.dart';
 export 'reward.dart';
 export 'gasta_user.dart';
 export 'address.dart';
+export 'opening_time.dart';
+export 'company_info.dart';
+export 'coupon.dart';

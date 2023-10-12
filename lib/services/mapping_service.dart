@@ -99,6 +99,44 @@ class MappingService {
           _gastaUserToUserEntity(source as GastaUser)) as TO;
     }
 
+    if ((FROM == core.OpeningTimeEntity || FROM == core.OpeningTimeModel) &&
+        TO == OpeningTime) {
+      return _openingTimeEntityToOpeningTime(source as core.OpeningTimeEntity)
+          as TO;
+    }
+    if (FROM == OpeningTime && TO == core.OpeningTimeEntity) {
+      return _openingTimeToOpeningTimeEntity(source as OpeningTime) as TO;
+    }
+    if (FROM == OpeningTime && TO == core.OpeningTimeModel) {
+      return core.OpeningTimeModel.fromEntity(
+          _openingTimeToOpeningTimeEntity(source as OpeningTime)) as TO;
+    }
+
+    if ((FROM == core.CompanyInfoEntity || FROM == core.CompanyInfoModel) &&
+        TO == CompanyInfo) {
+      return _companyInfoEntityToCompanyInfo(source as core.CompanyInfoEntity)
+          as TO;
+    }
+    if (FROM == CompanyInfo && TO == core.CompanyInfoEntity) {
+      return _companyInfoToCompanyInfoEntity(source as CompanyInfo) as TO;
+    }
+    if (FROM == CompanyInfo && TO == core.CompanyInfoModel) {
+      return core.CompanyInfoModel.fromEntity(
+          _companyInfoToCompanyInfoEntity(source as CompanyInfo)) as TO;
+    }
+
+    if ((FROM == core.CouponEntity || FROM == core.CouponModel) &&
+        TO == Coupon) {
+      return _couponEntityToCoupon(source as core.CouponEntity) as TO;
+    }
+    if (FROM == Coupon && TO == core.CouponEntity) {
+      return _couponToCouponEntity(source as Coupon) as TO;
+    }
+    if (FROM == Coupon && TO == core.CouponModel) {
+      return core.CouponModel.fromEntity(
+          _couponToCouponEntity(source as Coupon)) as TO;
+    }
+
     throw Exception("No mapping defined.");
   }
 
@@ -322,6 +360,83 @@ class MappingService {
       gender: source.gender,
       diet: source.diet,
       address: MappingService.map<Address, core.AddressEntity>(source.address),
+    );
+  }
+
+  static OpeningTime _openingTimeEntityToOpeningTime(
+      core.OpeningTimeEntity source) {
+    return OpeningTime(
+      isOpen: source.isOpen,
+      from: source.from,
+      to: source.to,
+    );
+  }
+
+  static core.OpeningTimeEntity _openingTimeToOpeningTimeEntity(
+      OpeningTime source) {
+    return core.OpeningTimeEntity(
+      isOpen: source.isOpen,
+      from: source.from,
+      to: source.to,
+    );
+  }
+
+  static CompanyInfo _companyInfoEntityToCompanyInfo(
+      core.CompanyInfoEntity source) {
+    Map<DayOfWeek, OpeningTime> openingDays = <DayOfWeek, OpeningTime>{};
+    for (var day = 0; day < DayOfWeek.values.length; day++) {
+      openingDays[DayOfWeek.values[day]] =
+          MappingService.map<core.OpeningTimeEntity, OpeningTime>(
+              source.openingDays[core.DayOfWeek.values[day]]!);
+    }
+
+    return CompanyInfo(
+      name: source.name,
+      address: MappingService.map<core.AddressEntity, Address>(source.address),
+      openingDays: openingDays,
+      companyId: source.companyId,
+    );
+  }
+
+  static core.CompanyInfoEntity _companyInfoToCompanyInfoEntity(
+      CompanyInfo source) {
+    Map<core.DayOfWeek, core.OpeningTimeEntity> openingDays =
+        <core.DayOfWeek, core.OpeningTimeEntity>{};
+    for (var day = 0; day < core.DayOfWeek.values.length; day++) {
+      openingDays[core.DayOfWeek.values[day]] =
+          MappingService.map<OpeningTime, core.OpeningTimeEntity>(
+              source.openingDays[DayOfWeek.values[day]]!);
+    }
+
+    return core.CompanyInfoEntity(
+      name: source.name,
+      address: MappingService.map<Address, core.AddressEntity>(source.address),
+      openingDays: openingDays,
+      companyId: source.companyId,
+    );
+  }
+
+  static Coupon _couponEntityToCoupon(core.CouponEntity source) {
+    return Coupon(
+      id: source.id,
+      surveyId: source.surveyId,
+      expiringDate:
+          core.Util.getDateTimeBySecondsTimeStamp(source.expiringDate),
+      reward: MappingService.map<core.RewardEntity, Reward>(source.reward),
+      companyInfo: MappingService.map<core.CompanyInfoEntity, CompanyInfo>(
+          source.companyInfo),
+    );
+  }
+
+  static core.CouponEntity _couponToCouponEntity(Coupon source) {
+    return core.CouponEntity(
+      id: source.id,
+      surveyId: source.surveyId,
+      expiringDate:
+          core.Util.getSecondsTimeStampByDateTime(source.expiringDate),
+      reward: MappingService.map<Reward, core.RewardEntity>(source.reward),
+      companyInfo: MappingService.map<CompanyInfo, core.CompanyInfoEntity>(
+          source.companyInfo),
     );
   }
 }

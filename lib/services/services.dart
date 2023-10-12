@@ -10,3 +10,5 @@ export 'authentication_service.dart';
 export 'i_user_service.dart';
 export 'user_service.dart';
 export 'result.dart';
+export 'i_coupon_service.dart';
+export 'coupon_service.dart';

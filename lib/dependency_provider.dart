@@ -11,6 +11,7 @@ class DependencyProvider {
     _surveyService = SurveyService();
     _saveService = SaveService();
     _userService = UserService();
+    _couponService = CouponService();
     _authenticationService = AuthenticationService(userService: _userService);
 
     _appPageController =
@@ -52,6 +53,9 @@ class DependencyProvider {
 
   late IUserService _userService;
   IUserService get userService => _userService;
+
+  late ICouponService _couponService;
+  ICouponService get couponService => _couponService;
 
   late ISurveyService _surveyService;
   ISurveyService get surveyService => _surveyService;
