@@ -7,12 +7,6 @@ import '../models/models.dart';
 
 class TestSurveyService extends ISurveyService {
   @override
-  Future<bool> sendSurveyAsync(core.SurveyAnswerModel answer) async {
-    await Future.delayed(const Duration(seconds: 2));
-    return true;
-  }
-
-  @override
   Future<Survey?> getSurveyByIdAsync(String userId, String surveyId) async {
     await Future.delayed(const Duration(seconds: 1));
 
@@ -33,26 +27,26 @@ class TestSurveyService extends ISurveyService {
       rewardExpirationDate: DateTime.now(),
       rewardVariant: SurveyRewardVariantType.first,
       questions: [
-        Question(
+        TextQuestion(
             id: "Tnz3Gwoeb3R99rjCxzxi",
             isOptional: false,
             title: 'What could we do better?',
             description: 'test description',
-            content: List.empty(growable: true),
+            content: '',
             type: core.QuestionType.text),
-        Question(
+        SingleSelectQuestion(
             id: "Tnz3Gwoeb3R99ejCxzxi",
             isOptional: false,
             title: 'What could we do better?',
             description: 'test description',
-            content: options,
+            options: options,
             type: core.QuestionType.select),
-        Question(
+        MultiSelectQuestion(
             id: "Tnz3Gwoeb3Rs9rjCxzxi",
             isOptional: true,
             title: 'What could we do better?',
             description: 'test description',
-            content: options,
+            options: options,
             type: core.QuestionType.multiSelect),
       ],
       questionsAreInFixedOrder: true,
@@ -69,6 +63,12 @@ class TestSurveyService extends ISurveyService {
   @override
   Future createSurveyAsync(String userId, Survey survey) {
     // TODO: implement createSurveyAsync
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> sendSurveyAsync(String userId, SurveyAnswer answer) {
+    // TODO: implement sendSurveyAsync
     throw UnimplementedError();
   }
 }

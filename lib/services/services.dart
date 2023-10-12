@@ -12,3 +12,4 @@ export 'user_service.dart';
 export 'result.dart';
 export 'i_coupon_service.dart';
 export 'coupon_service.dart';
+export 'test_coupon_service.dart';

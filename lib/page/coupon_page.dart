@@ -32,31 +32,37 @@ class _CouponPage extends State<CouponPage> {
             "My Coupons",
             style: Styles.bigHeadlineTextStyle(context),
           ),
-          ValueListenableBuilder(
-            valueListenable: widget.controller.savedSurveys,
-            builder: (BuildContext context, value, Widget? child) {
+          ListenableBuilder(
+            listenable: widget.controller,
+            builder: (BuildContext context, Widget? child) {
               return Visibility(
                 visible: !showSavedServices ||
-                    widget.controller.savedSurveys.value.isEmpty,
+                    widget.controller.savedSurveys.isEmpty,
                 child: Expanded(
                   child: GestureDetector(
-                    onTap: () => widget.controller.loadSavedServicesAsync(),
+                    onTap: () {
+                      widget.controller.loadSavedServicesAsync();
+                      widget.controller.loadCouponsAsync();
+                    },
                     child: Center(
-                      child: Text(
-                        "No Coupons :(",
-                        style: Styles.headlineTextStyle(context),
-                      ),
+                      child: widget.controller.coupons.isEmpty
+                          ? Text(
+                              "No Coupons :(",
+                              style: Styles.headlineTextStyle(context),
+                            )
+                          : Text(
+                              "${widget.controller.coupons.length} Coupons available"),
                     ),
                   ),
                 ),
               );
             },
           ),
-          ValueListenableBuilder(
-            valueListenable: widget.controller.savedSurveys,
-            builder: (BuildContext context, value, Widget? child) {
+          ListenableBuilder(
+            listenable: widget.controller,
+            builder: (BuildContext context, Widget? child) {
               return Visibility(
-                visible: widget.controller.savedSurveys.value.isNotEmpty,
+                visible: widget.controller.savedSurveys.isNotEmpty,
                 child: SingleChildScrollView(
                   child: ExpansionPanelList(
                     elevation: 0,
@@ -74,7 +80,7 @@ class _CouponPage extends State<CouponPage> {
                           return Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                                "Saved Surveys (${widget.controller.savedSurveys.value.length})",
+                                "Saved Surveys (${widget.controller.savedSurveys.length})",
                                 style: TextStyle(
                                     color: Theme.of(context)
                                         .colorScheme
@@ -83,8 +89,7 @@ class _CouponPage extends State<CouponPage> {
                         },
                         body: ListView.builder(
                           shrinkWrap: true,
-                          itemCount:
-                              widget.controller.savedSurveys.value.length,
+                          itemCount: widget.controller.savedSurveys.length,
                           itemBuilder: (context, index) {
                             return Dismissible(
                               key: Key(const Uuid().v1()),
@@ -95,18 +100,17 @@ class _CouponPage extends State<CouponPage> {
                                 widget.controller.saveService.removeSurvey(
                                     widget.controller.authenticationService
                                         .firebaseUser.uid,
-                                    widget.controller.savedSurveys.value[index]
-                                        .survey.id);
-                                widget.controller.savedSurveys.value
-                                    .removeWhere((element) =>
+                                    widget.controller.savedSurveys[index].survey
+                                        .id);
+                                widget.controller.savedSurveys.removeWhere(
+                                    (element) =>
                                         element.survey.id ==
-                                        widget.controller.savedSurveys
-                                            .value[index].survey.id);
+                                        widget.controller.savedSurveys[index]
+                                            .survey.id);
                                 setState(() {});
                               },
                               child: SavedSurveyTile(
-                                survey:
-                                    widget.controller.savedSurveys.value[index],
+                                survey: widget.controller.savedSurveys[index],
                               ),
                             );
                           },

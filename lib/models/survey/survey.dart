@@ -1,6 +1,6 @@
 import 'package:gasta_core/gasta_core.dart';
 
-import 'models.dart';
+import '../models.dart';
 
 class Survey {
   String id;
@@ -39,7 +39,17 @@ class Survey {
   Map<String, dynamic> toJson() {
     List<Map<String, dynamic>> questionMaps = [];
     for (var question in questions) {
-      questionMaps.add(question.toJson());
+      switch (question.runtimeType) {
+        case TextQuestion:
+          questionMaps.add((question as TextQuestion).toJson());
+          break;
+        case SingleSelectQuestion:
+          questionMaps.add((question as SingleSelectQuestion).toJson());
+          break;
+        case MultiSelectQuestion:
+          questionMaps.add((question as MultiSelectQuestion).toJson());
+          break;
+      }
     }
 
     List<Map<String, dynamic>> rewardMaps = [];
@@ -71,7 +81,17 @@ class Survey {
     List<Question> questions = [];
     var questionMaps = json['questions'];
     for (var map in questionMaps) {
-      questions.add(Question.fromJson(map));
+      switch (map['type']) {
+        case 'text':
+          questions.add(TextQuestion.fromJson(map));
+          break;
+        case 'select':
+          questions.add(TextQuestion.fromJson(map));
+          break;
+        case 'multiSelect':
+          questions.add(TextQuestion.fromJson(map));
+          break;
+      }
     }
 
     List<Reward> rewards = [];

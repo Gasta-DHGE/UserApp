@@ -87,7 +87,8 @@ class _ScannerPage extends State<ScannerPage> {
                             onPressed: () {
                               setState(
                                 () {
-                                  _onDataReceivedAsync('WLckqm0wxVQHC88wTzl4');
+                                  _onDataReceivedAsync('nH8Ln0jj5EPYkMtOLNve');
+                                  //_onDataReceivedAsync('RXw9aVqxBvrbIqh4rDXa');
                                 },
                               );
                             },
@@ -159,8 +160,11 @@ class _ScannerPage extends State<ScannerPage> {
             Navigator.pop(context);
             widget.controller.surveyLoaded = false;
           },
-          onSendPressed: (value) {
-            widget.controller.surveyAnswer =
+          onSendPressed: (value) async {
+            await widget.controller.surveyService.sendSurveyAsync(
+                widget.controller.authenticationService.firebaseUser.uid,
+                value);
+            /* widget.controller.surveyAnswer =
                 MappingService.map<SurveyAnswer, core.SurveyAnswerModel>(value);
             Navigator.pop(context);
             Navigator.push(
@@ -169,7 +173,7 @@ class _ScannerPage extends State<ScannerPage> {
                 builder: (context) =>
                     DebugPage(data: widget.controller.surveyAnswer),
               ),
-            );
+            );*/
             widget.controller.surveyLoaded = false;
           },
           onValueChanged: (value) {

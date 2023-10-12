@@ -1,5 +1,5 @@
-import 'package:gasta_user_app/models/survey.dart';
-import 'package:gasta_user_app/models/survey_answer.dart';
+import 'package:gasta_user_app/models/survey/survey.dart';
+import 'package:gasta_user_app/models/survey/survey_answer.dart';
 
 class SurveyData {
   Survey survey;

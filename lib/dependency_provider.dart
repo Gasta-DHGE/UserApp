@@ -11,13 +11,14 @@ class DependencyProvider {
     _surveyService = SurveyService();
     _saveService = SaveService();
     _userService = UserService();
-    _couponService = CouponService();
+    _couponService = TestCouponService();
     _authenticationService = AuthenticationService(userService: _userService);
 
     _appPageController =
         AppPageController(authenticationService: _authenticationService);
     _couponPageController = CouponPageController(
         authenticationService: _authenticationService,
+        couponService: _couponService,
         saveService: _saveService);
     _loginPageController =
         LoginPageController(authenticationService: _authenticationService);

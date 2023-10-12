@@ -6,28 +6,30 @@ import '../models/models.dart';
 
 class SurveyService implements ISurveyService {
   late http.Client client;
-  late core.SurveyRemoteDataSourceImpl source;
+  late core.SurveyRemoteDataSourceImpl surveySource;
+  late core.SurveyDataRemoteDataSourceImpl dataSource;
 
   SurveyService() {
     client = http.Client();
-    source = core.SurveyRemoteDataSourceImpl(client: client);
+    surveySource = core.SurveyRemoteDataSourceImpl(client: client);
+    dataSource = core.SurveyDataRemoteDataSourceImpl(client: client);
   }
 
   @override
   Future<Survey?> getSurveyByIdAsync(String userId, String surveyId) async {
-    var model = await source.getSurveyById(userId, surveyId);
+    var model = await surveySource.getSurveyById(userId, surveyId);
     return MappingService.map<core.SurveyModel, Survey>(model);
   }
 
   @override
   Future createSurveyAsync(String userId, Survey survey) async {
-    await source.createSurvey(
+    await surveySource.createSurvey(
         userId, MappingService.map<Survey, core.SurveyModel>(survey));
   }
 
   @override
-  Future<bool> sendSurveyAsync(core.SurveyAnswerModel answer) {
-    // TODO: implement sendSurveyAsync
-    throw UnimplementedError();
+  Future<void> sendSurveyAsync(String userId, SurveyAnswer answer) async {
+    await dataSource.createSurveyData(userId,
+        MappingService.map<SurveyAnswer, core.SurveyAnswerEntity>(answer));
   }
 }

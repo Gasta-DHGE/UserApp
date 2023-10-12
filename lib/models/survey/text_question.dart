@@ -1,19 +1,15 @@
 import 'package:gasta_core/gasta_core.dart';
+import 'package:gasta_user_app/models/survey/question.dart';
 
-class Question {
-  String id;
-  bool isOptional;
-  QuestionType type;
-  String title;
-  String description;
-  List<dynamic> content;
+class TextQuestion extends Question {
+  String content;
 
-  Question({
-    required this.id,
-    required this.isOptional,
-    required this.type,
-    required this.title,
-    required this.description,
+  TextQuestion({
+    required super.id,
+    required super.isOptional,
+    required super.type,
+    required super.title,
+    required super.description,
     required this.content,
   });
 
@@ -29,7 +25,7 @@ class Question {
   }
 
   static fromJson(Map<String, dynamic> json) {
-    return Question(
+    return TextQuestion(
       id: json['id'],
       isOptional: json['isOptional'],
       type: QuestionType.values

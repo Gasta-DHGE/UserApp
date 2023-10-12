@@ -1,4 +1,4 @@
-import 'package:gasta_user_app/models/survey_data.dart';
+import 'package:gasta_user_app/models/survey/survey_data.dart';
 
 abstract class ISaveService {
   Future saveSurveyAsync(String userId, SurveyData survey);

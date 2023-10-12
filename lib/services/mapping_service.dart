@@ -212,23 +212,167 @@ class MappingService {
   }
 
   static Question _questionEntityToQuestion(core.QuestionEntity source) {
-    return Question(
-        id: source.id,
-        isOptional: source.isOptional,
-        type: source.type,
-        title: source.title,
-        description: source.description,
-        content: source.content);
+    switch (source.type) {
+      case core.QuestionType.text:
+        return TextQuestion(
+            id: source.id,
+            isOptional: source.isOptional,
+            type: source.type,
+            title: source.title,
+            description: source.description,
+            content: source.content.toString());
+      case core.QuestionType.select:
+        return TextQuestion(
+            id: source.id,
+            isOptional: source.isOptional,
+            type: source.type,
+            title: source.title,
+            description: source.description,
+            content: source.content.toString());
+      case core.QuestionType.multiSelect:
+        return TextQuestion(
+            id: source.id,
+            isOptional: source.isOptional,
+            type: source.type,
+            title: source.title,
+            description: source.description,
+            content: source.content.toString());
+      case core.QuestionType.numberRating:
+        return NumberRatingQuestion(
+          id: source.id,
+          isOptional: source.isOptional,
+          type: source.type,
+          title: source.title,
+          description: source.description,
+          minRating: (source.content.first as Map)['minRating'],
+          maxRating: (source.content.first as Map)['maxRating'],
+        );
+      case core.QuestionType.ratingTable:
+        return RatingTableQuestion(
+          id: source.id,
+          isOptional: source.isOptional,
+          type: source.type,
+          title: source.title,
+          description: source.description,
+          ratingHeaders: (source.content.first as Map)['ratingHeader'],
+          ratingQuestions: (source.content.first as Map)['ratingQuestions'],
+        );
+      case core.QuestionType.date:
+        return DateQuestion(
+          id: source.id,
+          isOptional: source.isOptional,
+          type: source.type,
+          title: source.title,
+          description: source.description,
+        );
+      case core.QuestionType.time:
+        return TimeQuestion(
+          id: source.id,
+          isOptional: source.isOptional,
+          type: source.type,
+          title: source.title,
+          description: source.description,
+        );
+      case core.QuestionType.dateAndTime:
+        return DateAndTimeQuestion(
+          id: source.id,
+          isOptional: source.isOptional,
+          type: source.type,
+          title: source.title,
+          description: source.description,
+        );
+      default:
+        throw Exception("Type not mapable");
+    }
   }
 
   static core.QuestionEntity _questionToQuestionEntity(Question source) {
-    return core.QuestionEntity(
-        id: source.id,
-        isOptional: source.isOptional,
-        type: source.type,
-        title: source.title,
-        description: source.description,
-        content: source.content);
+    switch (source.runtimeType) {
+      case TextQuestion:
+        return core.QuestionEntity(
+          id: source.id,
+          isOptional: source.isOptional,
+          type: source.type,
+          title: source.title,
+          description: source.description,
+          content: [(source as TextQuestion).content],
+        );
+      case SingleSelectQuestion:
+        return core.QuestionEntity(
+          id: source.id,
+          isOptional: source.isOptional,
+          type: source.type,
+          title: source.title,
+          description: source.description,
+          content: (source as SingleSelectQuestion).options,
+        );
+      case MultiSelectQuestion:
+        return core.QuestionEntity(
+          id: source.id,
+          isOptional: source.isOptional,
+          type: source.type,
+          title: source.title,
+          description: source.description,
+          content: (source as MultiSelectQuestion).options,
+        );
+      case NumberRatingQuestion:
+        return core.QuestionEntity(
+          id: source.id,
+          isOptional: source.isOptional,
+          type: source.type,
+          title: source.title,
+          description: source.description,
+          content: [
+            {
+              'minRating': (source as NumberRatingQuestion).minRating,
+              'maxRating': source.maxRating,
+            }
+          ],
+        );
+      case RatingTableQuestionAnswer:
+        return core.QuestionEntity(
+          id: source.id,
+          isOptional: source.isOptional,
+          type: source.type,
+          title: source.title,
+          description: source.description,
+          content: [
+            {
+              'ratingHeader': (source as RatingTableQuestion).ratingHeaders,
+              'ratingQuestions': source.ratingQuestions,
+            }
+          ],
+        );
+      case DateQuestionAnswer:
+        return core.QuestionEntity(
+          id: source.id,
+          isOptional: source.isOptional,
+          type: source.type,
+          title: source.title,
+          description: source.description,
+          content: const [],
+        );
+      case TimeQuestionAnswer:
+        return core.QuestionEntity(
+          id: source.id,
+          isOptional: source.isOptional,
+          type: source.type,
+          title: source.title,
+          description: source.description,
+          content: const [],
+        );
+      case DateAndTimeQuestionAnswer:
+        return core.QuestionEntity(
+          id: source.id,
+          isOptional: source.isOptional,
+          type: source.type,
+          title: source.title,
+          description: source.description,
+          content: const [],
+        );
+      default:
+        throw Exception("Type not mapable");
+    }
   }
 
   static SurveyAnswer _surveyAnswerEntityToSurveyAnswer(
@@ -259,20 +403,144 @@ class MappingService {
 
   static QuestionAnswer _questionAnswerEntityToQuestionAnswer(
       core.QuestionAnswerEntity source) {
-    return QuestionAnswer(
-      id: source.id,
-      type: source.type,
-      content: source.content,
-    );
+    switch (source.type) {
+      case core.QuestionType.text:
+        return TextQuestionAnswer(
+          id: source.id,
+          type: source.type,
+          answer: source.content.toString(),
+        );
+      case core.QuestionType.select:
+        return SingleSelectQuestionAnswer(
+          id: source.id,
+          type: source.type,
+          selectedAnswerString: source.content.toString(),
+        );
+      case core.QuestionType.multiSelect:
+        return MultiSelectQuestionAnswer(
+          id: source.id,
+          type: source.type,
+          selectedAnswerStrings:
+              source.content.map((e) => e as String).toList(),
+        );
+      case core.QuestionType.numberRating:
+        return NumberRatingQuestionAnswer(
+          id: source.id,
+          type: source.type,
+          ratedNumber: source.content as int,
+        );
+      case core.QuestionType.ratingTable:
+        return RatingTableQuestionAnswer(
+          id: source.id,
+          type: source.type,
+          ratingAnswers: source.content
+              .map((e) => RatingAnswer.fromJson(e))
+              .toList() as List<RatingAnswer>,
+        );
+      case core.QuestionType.date:
+        return DateQuestionAnswer(
+          id: source.id,
+          type: source.type,
+          date: core.Util.getDateTimeBySecondsTimeStamp(source.content as int),
+        );
+      case core.QuestionType.time:
+        return TimeQuestionAnswer(
+          id: source.id,
+          type: source.type,
+          hour: (source.content as Map)['hour'],
+          minute: (source.content as Map)['minute'],
+          timeSpent: (source.content as Map)['timeSpent'],
+        );
+      case core.QuestionType.dateAndTime:
+        return DateAndTimeQuestionAnswer(
+          id: source.id,
+          type: source.type,
+          date: core.Util.getDateTimeBySecondsTimeStamp(source.content as int),
+          hour: (source.content as Map)['hour'],
+          minute: (source.content as Map)['minute'],
+          timeSpent: (source.content as Map)['timeSpent'],
+        );
+      default:
+        throw Exception("Type not mapable");
+    }
   }
 
   static core.QuestionAnswerEntity _questionAnswerToQuestionAnswerEntity(
       QuestionAnswer source) {
-    return core.QuestionAnswerEntity(
-      id: source.id,
-      type: source.type,
-      content: source.content,
-    );
+    switch (source.runtimeType) {
+      case TextQuestionAnswer:
+        return core.QuestionAnswerEntity(
+          id: source.id,
+          type: source.type,
+          content: [(source as TextQuestionAnswer).answer],
+        );
+      case SingleSelectQuestionAnswer:
+        return core.QuestionAnswerEntity(
+          id: source.id,
+          type: source.type,
+          content: [
+            (source as SingleSelectQuestionAnswer).selectedAnswerString
+          ],
+        );
+      case MultiSelectQuestionAnswer:
+        return core.QuestionAnswerEntity(
+          id: source.id,
+          type: source.type,
+          content: (source as MultiSelectQuestionAnswer).selectedAnswerStrings,
+        );
+      case NumberRatingQuestionAnswer:
+        return core.QuestionAnswerEntity(
+          id: source.id,
+          type: source.type,
+          content: [(source as NumberRatingQuestionAnswer).ratedNumber],
+        );
+      case RatingTableQuestionAnswer:
+        return core.QuestionAnswerEntity(
+          id: source.id,
+          type: source.type,
+          content: (source as RatingTableQuestionAnswer)
+              .ratingAnswers
+              .map((e) => e.toJson())
+              .toList(),
+        );
+      case DateQuestionAnswer:
+        return core.QuestionAnswerEntity(
+          id: source.id,
+          type: source.type,
+          content: [
+            core.Util.getSecondsTimeStampByDateTime(
+                (source as DateQuestionAnswer).date)
+          ],
+        );
+      case TimeQuestionAnswer:
+        return core.QuestionAnswerEntity(
+          id: source.id,
+          type: source.type,
+          content: [
+            <String, int>{
+              'hour': (source as TimeQuestionAnswer).hour,
+              'minute': source.minute,
+              'timeSpent': source.timeSpent
+            }
+          ],
+        );
+      case DateAndTimeQuestionAnswer:
+        return core.QuestionAnswerEntity(
+          id: source.id,
+          type: source.type,
+          content: [
+            <String, int>{
+              'dateTimestamp': core.Util.getSecondsTimeStampByDateTime(
+                  (source as DateAndTimeQuestionAnswer).date),
+              'hour': source.hour,
+              'minute': source.minute,
+              'timeSpent': source.timeSpent
+            }
+          ],
+        );
+      default:
+        throw Exception("Type not mapable");
+    }
   }
 
   static Reward _rewardEntityToReward(core.RewardEntity source) {

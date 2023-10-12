@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:gasta_user_app/models/survey_data.dart';
+import 'package:gasta_user_app/models/survey/survey_data.dart';
 import 'package:gasta_user_app/services/i_save_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
