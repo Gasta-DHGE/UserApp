@@ -29,7 +29,7 @@ class _CouponPage extends State<CouponPage> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            "Coupons",
+            "My Coupons",
             style: Styles.bigHeadlineTextStyle(context),
           ),
           ValueListenableBuilder(

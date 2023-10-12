@@ -10,6 +10,13 @@ class CreateUserDataPageController with ChangeNotifier {
   CreateUserDataPageController(
       {required this.authenticationService, required this.userService});
 
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
+  set isLoading(bool value) {
+    _isLoading = value;
+    notifyListeners();
+  }
+
   String _firstName = '';
   String _lastName = '';
   DateTime birthDate = DateTime.now();

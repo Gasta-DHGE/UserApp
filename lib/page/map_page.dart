@@ -16,11 +16,19 @@ class _MapPage extends State<MapPage> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            "Map",
+            "Partner Map",
             style: Styles.bigHeadlineTextStyle(context),
           ),
+          Expanded(
+              child: Center(
+            child: Text(
+              "Feature coming soon",
+              style: Styles.headlineTextStyle(context),
+            ),
+          ))
         ],
       ),
     );

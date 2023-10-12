@@ -40,7 +40,7 @@ class _ScannerPage extends State<ScannerPage> {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Text(
-            "Scanner",
+            "Scan QR-Code",
             style: core.Styles.bigHeadlineTextStyle(context),
           ),
         ),

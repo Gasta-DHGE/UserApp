@@ -27,7 +27,7 @@ class _SettingsPage extends State<SettingsPage> {
           ]),
           Expanded(
             child: Container(
-              alignment: Alignment.center,
+              alignment: Alignment.bottomRight,
               child: widget.controller.isLoading.value
                   ? const CircularProgressIndicator()
                   : DefaultButton(
