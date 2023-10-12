@@ -5,10 +5,9 @@ import 'package:gasta_user_app/page/pages.dart';
 
 import '../controller/controller.dart';
 
-// ignore: must_be_immutable
 class ShellPage extends StatefulWidget {
-  ShellPageController controller;
-  ShellPage({super.key, required this.controller});
+  final ShellPageController controller;
+  const ShellPage({super.key, required this.controller});
 
   @override
   State<StatefulWidget> createState() => _ShellPage();
@@ -42,14 +41,8 @@ class _ShellPage extends State<ShellPage> {
     return ListenableBuilder(
       listenable: widget.controller.authenticationService,
       builder: (BuildContext context, Widget? child) {
-        return widget.controller.authenticationService.user!.gastaUser == null
-            ? CreateUserDataPage(
-                controller: CreateUserDataPageController(
-                    authenticationService:
-                        DependencyProvider.instance.authenticationService,
-                    userService: DependencyProvider.instance.userService),
-              )
-            : Scaffold(
+        return widget.controller.authenticationService.hasGastaUserData
+            ? Scaffold(
                 bottomNavigationBar: NavigationBar(
                   selectedIndex: _currentpage,
                   onDestinationSelected: (value) =>
@@ -74,6 +67,12 @@ class _ShellPage extends State<ShellPage> {
                 body: SafeArea(
                   child: _content!,
                 ),
+              )
+            : CreateUserDataPage(
+                controller: CreateUserDataPageController(
+                    authenticationService:
+                        DependencyProvider.instance.authenticationService,
+                    userService: DependencyProvider.instance.userService),
               );
       },
     );

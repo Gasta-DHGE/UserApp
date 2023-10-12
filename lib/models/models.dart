@@ -6,4 +6,3 @@ export 'survey_data.dart';
 export 'reward.dart';
 export 'gasta_user.dart';
 export 'address.dart';
-export 'user.dart';

@@ -4,10 +4,9 @@ import 'package:gasta_user_app/controller/controller.dart';
 import 'package:gasta_user_app/widgets/saved_survey_tile.dart';
 import 'package:uuid/uuid.dart';
 
-// ignore: must_be_immutable
 class CouponPage extends StatefulWidget {
-  CouponPageController controller;
-  CouponPage({super.key, required this.controller});
+  final CouponPageController controller;
+  const CouponPage({super.key, required this.controller});
 
   @override
   State<StatefulWidget> createState() => _CouponPage();
@@ -95,7 +94,7 @@ class _CouponPage extends State<CouponPage> {
                               onDismissed: (direction) async {
                                 widget.controller.saveService.removeSurvey(
                                     widget.controller.authenticationService
-                                        .user!.firebaseUser.uid,
+                                        .firebaseUser.uid,
                                     widget.controller.savedSurveys.value[index]
                                         .survey.id);
                                 widget.controller.savedSurveys.value

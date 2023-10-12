@@ -13,26 +13,20 @@ class UserService implements IUserService {
   }
 
   @override
-  Future<void> createUser(User user) async {
-    if (user.gastaUser == null) return;
-    await source.createUserData(user.firebaseUser.uid,
-        MappingService.map<GastaUser, core.UserEntity>(user.gastaUser!));
+  Future<void> createUser(String userId, GastaUser userData) async {
+    await source.createUserData(
+        userId, MappingService.map<GastaUser, core.UserEntity>(userData));
   }
 
   @override
-  Future<void> updateUser(User user) async {
-    if (user.gastaUser == null) return;
-    await source.updateUser(user.firebaseUser.uid,
-        MappingService.map<GastaUser, core.UserEntity>(user.gastaUser!));
+  Future<void> updateUser(String userId, GastaUser userData) async {
+    await source.updateUser(
+        userId, MappingService.map<GastaUser, core.UserEntity>(userData));
   }
 
   @override
-  Future<GastaUser?> getUserByIdAsync(String id) async {
-    try {
-      return MappingService.map<core.UserModel, GastaUser>(
-          await source.getUserById(id));
-    } catch (e) {
-      return null;
-    }
+  Future<GastaUser> getUserByIdAsync(String userId) async {
+    return MappingService.map<core.UserModel, GastaUser>(
+        await source.getUserById(userId));
   }
 }

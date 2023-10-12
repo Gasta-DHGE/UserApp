@@ -24,7 +24,7 @@ class ScannerPageController {
   Future<bool> onDataReceivedAsync(String data) async {
     try {
       survey = await surveyService.getSurveyByIdAsync(
-          authenticationService.user!.firebaseUser.uid, data);
+          authenticationService.firebaseUser.uid, data);
     } catch (e) {
       survey = null;
     }

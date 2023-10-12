@@ -32,8 +32,8 @@ class SavedSurveyTile extends StatelessWidget {
                 onSavePressed: (value) async {
                   survey.answer = value;
                   DependencyProvider.instance.saveService.saveSurveyAsync(
-                      DependencyProvider.instance.authenticationService.user!
-                          .firebaseUser.uid,
+                      DependencyProvider
+                          .instance.authenticationService.firebaseUser.uid,
                       SurveyData(survey: survey.survey, answer: value));
                   Navigator.pop(context);
                 },

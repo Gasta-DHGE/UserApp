@@ -16,8 +16,8 @@ class CouponPageController {
   var savedSurveys = ValueNotifier<List<SurveyData>>([]);
 
   Future loadSavedServicesAsync() async {
-    if (authenticationService.user == null) return;
+    if (!authenticationService.isLoggedIn) return;
     savedSurveys.value = await saveService
-        .loadSurveysAsync(authenticationService.user!.firebaseUser.uid);
+        .loadSurveysAsync(authenticationService.firebaseUser.uid);
   }
 }

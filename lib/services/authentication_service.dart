@@ -1,33 +1,52 @@
-import 'package:firebase_auth/firebase_auth.dart' as google;
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:gasta_user_app/models/models.dart';
 
-import '../models/models.dart';
 import 'services.dart';
 
 class AuthenticationService
     with ChangeNotifier
     implements IAuthenticationService {
-  final google.FirebaseAuth _firebaseAuth = google.FirebaseAuth.instance;
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   late IUserService _userService;
-  User? _user;
-  bool _isLoggedIn = false;
+  User? _firebaseUser;
+  GastaUser? _gastaUser;
 
   @override
-  User? get user => _user;
+  User get firebaseUser => _firebaseUser!;
+  @override
+  GastaUser get gastaUser => _gastaUser!;
 
   @override
-  set user(User? value) {
-    _user = value;
+  set firebaseUser(User? value) {
+    _firebaseUser = value;
     notifyListeners();
   }
 
   @override
-  bool get isLoggedIn => _isLoggedIn;
+  set gastaUser(GastaUser? value) {
+    _gastaUser = value;
+    notifyListeners();
+  }
 
   @override
-  set isLoggedIn(bool value) {
-    _isLoggedIn = value;
-    notifyListeners();
+  bool get isLoggedIn {
+    try {
+      firebaseUser;
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  @override
+  bool get hasGastaUserData {
+    try {
+      gastaUser;
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
   AuthenticationService({required IUserService userService}) {
@@ -35,19 +54,15 @@ class AuthenticationService
     _firebaseAuth.authStateChanges().listen(
       (user) async {
         if (user == null) {
-          this.user = null;
-          isLoggedIn = false;
+          firebaseUser = null;
+          gastaUser = null;
         } else {
+          firebaseUser = user;
           try {
-            this.user = User(
-              firebaseUser: user,
-              gastaUser: await _userService.getUserByIdAsync(user.uid),
-            );
+            gastaUser = await _userService.getUserByIdAsync(user.uid);
           } catch (e) {
-            this.user = User(firebaseUser: user);
+            gastaUser = null;
           }
-
-          isLoggedIn = true;
         }
       },
     );
@@ -59,7 +74,7 @@ class AuthenticationService
       await _firebaseAuth.createUserWithEmailAndPassword(
           email: email, password: password);
       return Result.success;
-    } on google.FirebaseAuthException catch (e) {
+    } on FirebaseAuthException catch (e) {
       if (e.code == "network-request-failed") {
         return Result.noConnection;
       }
@@ -78,7 +93,7 @@ class AuthenticationService
       await _firebaseAuth.signInWithEmailAndPassword(
           email: email, password: password);
       return Result.success;
-    } on google.FirebaseAuthException catch (e) {
+    } on FirebaseAuthException catch (e) {
       if (e.code == "network-request-failed") {
         return Result.noConnection;
       }

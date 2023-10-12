@@ -8,10 +8,9 @@ import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 import '../models/models.dart';
 
-// ignore: must_be_immutable
 class ScannerPage extends StatefulWidget {
-  ScannerPageController controller;
-  ScannerPage({super.key, required this.controller});
+  final ScannerPageController controller;
+  const ScannerPage({super.key, required this.controller});
 
   @override
   State<StatefulWidget> createState() => _ScannerPage();
@@ -155,7 +154,7 @@ class _ScannerPage extends State<ScannerPage> {
                 MappingService.map<SurveyAnswer, core.SurveyAnswerModel>(value);
             DependencyProvider.instance.saveService.saveSurveyAsync(
                 DependencyProvider
-                    .instance.authenticationService.user!.firebaseUser.uid,
+                    .instance.authenticationService.firebaseUser.uid,
                 SurveyData(survey: widget.controller.survey!, answer: value));
             Navigator.pop(context);
             widget.controller.surveyLoaded = false;

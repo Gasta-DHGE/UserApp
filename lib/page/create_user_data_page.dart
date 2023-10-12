@@ -1,15 +1,12 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gasta_core/gasta_core.dart' as core;
-import 'package:gasta_user_app/services/authentication_service.dart';
 
 import '../controller/controller.dart';
 
-// ignore: must_be_immutable
 class CreateUserDataPage extends StatefulWidget {
-  CreateUserDataPageController controller;
-  CreateUserDataPage({super.key, required this.controller});
+  final CreateUserDataPageController controller;
+  const CreateUserDataPage({super.key, required this.controller});
 
   @override
   State<StatefulWidget> createState() => _CreateUserDataPage();

@@ -68,29 +68,29 @@ class CreateUserDataPageController with ChangeNotifier {
 
   Future<void> createUserDataAsync() async {
     await userService.createUser(
-      User(
-        firebaseUser: authenticationService.user!.firebaseUser,
-        gastaUser: GastaUser(
-          firstName: firstName,
-          lastName: lastName,
-          birthDate: birthDate,
-          gender: gender,
-          diet: diet,
-          address: Address(
-            city: city,
-            street: street,
-            streetNumber: streetnumber,
-            additionalInformation: additionalInformation,
-            postcode: postcode,
-            posLatitude: 1,
-            posLongitude: 1,
-          ),
+      authenticationService.firebaseUser.uid,
+      GastaUser(
+        firstName: firstName,
+        lastName: lastName,
+        birthDate: birthDate,
+        gender: gender,
+        diet: diet,
+        address: Address(
+          city: city,
+          street: street,
+          streetNumber: streetnumber,
+          additionalInformation: additionalInformation,
+          postcode: postcode,
+          posLatitude: 1,
+          posLongitude: 1,
         ),
       ),
     );
-    authenticationService.user = User(
-        firebaseUser: authenticationService.user!.firebaseUser,
-        gastaUser: await userService
-            .getUserByIdAsync(authenticationService.user!.firebaseUser.uid));
+    try {
+      authenticationService.gastaUser = await userService
+          .getUserByIdAsync(authenticationService.firebaseUser.uid);
+    } catch (e) {
+      await authenticationService.logoutAsync();
+    }
   }
 }

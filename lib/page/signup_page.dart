@@ -5,10 +5,9 @@ import 'package:gasta_user_app/services/services.dart';
 
 import '../controller/controller.dart';
 
-// ignore: must_be_immutable
 class SignupPage extends StatefulWidget {
-  SignupPageController controller;
-  SignupPage({super.key, required this.controller});
+  final SignupPageController controller;
+  const SignupPage({super.key, required this.controller});
 
   @override
   State<StatefulWidget> createState() => _SignupPage();
@@ -97,8 +96,10 @@ class _SignupPage extends State<SignupPage> {
                 ),
                 Visibility(
                   visible: widget.controller.isLoading,
-                  child: const Center(
-                    child: CircularProgressIndicator(),
+                  child: const Expanded(
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
                   ),
                 ),
                 Visibility(

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gasta_user_app/services/i_authentication_service.dart';
 
@@ -30,5 +31,12 @@ class TestAuthenticationService
   }
 
   @override
-  User? user;
+  late User firebaseUser;
+
+  @override
+  late GastaUser gastaUser;
+
+  @override
+  // TODO: implement hasGastaUserData
+  bool get hasGastaUserData => throw UnimplementedError();
 }
