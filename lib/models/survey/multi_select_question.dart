@@ -17,7 +17,7 @@ class MultiSelectQuestion extends Question {
     return {
       'id': id,
       'isOptional': isOptional,
-      'type': type.toString(),
+      'type': type.name,
       'title': title,
       'description': description,
       'options': options,
@@ -29,11 +29,12 @@ class MultiSelectQuestion extends Question {
       id: json['id'],
       isOptional: json['isOptional'],
       type: QuestionType.values
-          .where((element) => element.toString() == json['type'])
+          .where((element) => element.name == json['type'])
           .first,
       title: json['title'],
       description: json['description'],
-      options: json['options'],
+      options:
+          (json['options'] as List<dynamic>).map((e) => e.toString()).toList(),
     );
   }
 }

@@ -11,7 +11,7 @@ class DependencyProvider {
     _surveyService = SurveyService();
     _saveService = SaveService();
     _userService = UserService();
-    _couponService = TestCouponService();
+    _couponService = CouponService();
     _authenticationService = AuthenticationService(userService: _userService);
 
     _appPageController =

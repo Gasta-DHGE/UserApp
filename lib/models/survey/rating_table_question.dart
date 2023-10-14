@@ -18,7 +18,7 @@ class RatingTableQuestion extends Question {
     return {
       'id': id,
       'isOptional': isOptional,
-      'type': type.toString(),
+      'type': type.name,
       'title': title,
       'description': description,
       'ratingHeaders': ratingHeaders,
@@ -28,14 +28,19 @@ class RatingTableQuestion extends Question {
 
   static fromJson(Map<String, dynamic> json) {
     return RatingTableQuestion(
-        id: json['id'],
-        isOptional: json['isOptional'],
-        type: QuestionType.values
-            .where((element) => element.toString() == json['type'])
-            .first,
-        title: json['title'],
-        description: json['description'],
-        ratingHeaders: json['ratingHeaders'],
-        ratingQuestions: json['ratingQuestions']);
+      id: json['id'],
+      isOptional: json['isOptional'],
+      type: QuestionType.values
+          .where((element) => element.name == json['type'])
+          .first,
+      title: json['title'],
+      description: json['description'],
+      ratingHeaders: (json['ratingHeaders'] as List<dynamic>)
+          .map((e) => e.toString())
+          .toList(),
+      ratingQuestions: (json['ratingQuestions'] as List<dynamic>)
+          .map((e) => e.toString())
+          .toList(),
+    );
   }
 }

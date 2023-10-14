@@ -13,7 +13,7 @@ class DateAndTimeQuestion extends Question {
     return {
       'id': id,
       'isOptional': isOptional,
-      'type': type.toString(),
+      'type': type.name,
       'title': title,
       'description': description,
     };
@@ -24,7 +24,7 @@ class DateAndTimeQuestion extends Question {
       id: json['id'],
       isOptional: json['isOptional'],
       type: QuestionType.values
-          .where((element) => element.toString() == json['type'])
+          .where((element) => element.name == json['type'])
           .first,
       title: json['title'],
       description: json['description'],

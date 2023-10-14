@@ -51,7 +51,7 @@ class _CouponPage extends State<CouponPage> {
                               style: Styles.headlineTextStyle(context),
                             )
                           : Text(
-                              "${widget.controller.coupons.length} Coupons available"),
+                              "${widget.controller.coupons.length} Coupon(s) available"),
                     ),
                   ),
                 ),

@@ -11,7 +11,7 @@ class TextQuestionAnswer extends QuestionAnswer {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'type': type.toString(),
+      'type': type.name,
       'answer': answer,
     };
   }
@@ -20,7 +20,7 @@ class TextQuestionAnswer extends QuestionAnswer {
     return TextQuestionAnswer(
       id: json['id'],
       type: QuestionType.values
-          .where((element) => element.toString() == json['type'])
+          .where((element) => element.name == json['type'])
           .first,
       answer: json['answer'],
     );

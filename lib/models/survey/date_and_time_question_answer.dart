@@ -1,27 +1,25 @@
+import 'package:flutter/material.dart';
 import 'package:gasta_core/gasta_core.dart';
 import 'package:gasta_user_app/models/models.dart';
 
 class DateAndTimeQuestionAnswer extends QuestionAnswer {
   DateTime date;
-  int hour;
-  int minute;
+  TimeOfDay time;
   int timeSpent;
 
   DateAndTimeQuestionAnswer(
       {required super.id,
       required super.type,
       required this.date,
-      required this.hour,
-      required this.minute,
+      required this.time,
       required this.timeSpent});
 
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'type': type.toString(),
+      'type': type.name,
       'date': Util.getSecondsTimeStampByDateTime(date),
-      'hour': hour,
-      'minute': minute,
+      'time': time,
       'timeSpent': timeSpent,
     };
   }
@@ -30,11 +28,10 @@ class DateAndTimeQuestionAnswer extends QuestionAnswer {
     return DateAndTimeQuestionAnswer(
       id: json['id'],
       type: QuestionType.values
-          .where((element) => element.toString() == json['type'])
+          .where((element) => element.name == json['type'])
           .first,
       date: Util.getDateTimeBySecondsTimeStamp(json['date']),
-      hour: json['hour'],
-      minute: json['minute'],
+      time: json['time'],
       timeSpent: json['timeSpent'],
     );
   }

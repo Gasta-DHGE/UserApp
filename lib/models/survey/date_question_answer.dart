@@ -10,7 +10,7 @@ class DateQuestionAnswer extends QuestionAnswer {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'type': type.toString(),
+      'type': type.name,
       'date': Util.getSecondsTimeStampByDateTime(date),
     };
   }
@@ -19,7 +19,7 @@ class DateQuestionAnswer extends QuestionAnswer {
     return DateQuestionAnswer(
         id: json['id'],
         type: QuestionType.values
-            .where((element) => element.toString() == json['type'])
+            .where((element) => element.name == json['type'])
             .first,
         date: Util.getDateTimeBySecondsTimeStamp(json['date']));
   }

@@ -13,7 +13,7 @@ class MultiSelectQuestionAnswer extends QuestionAnswer {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'type': type.toString(),
+      'type': type.name,
       'selectedAnswerStrings': selectedAnswerStrings,
     };
   }
@@ -22,9 +22,11 @@ class MultiSelectQuestionAnswer extends QuestionAnswer {
     return MultiSelectQuestionAnswer(
       id: json['id'],
       type: QuestionType.values
-          .where((element) => element.toString() == json['type'])
+          .where((element) => element.name == json['type'])
           .first,
-      selectedAnswerStrings: json['selectedAnswerStrings'],
+      selectedAnswerStrings: (json['selectedAnswerStrings'] as List<dynamic>)
+          .map((e) => e.toString())
+          .toList(),
     );
   }
 }

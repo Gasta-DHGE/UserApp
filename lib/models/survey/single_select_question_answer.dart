@@ -13,7 +13,7 @@ class SingleSelectQuestionAnswer extends QuestionAnswer {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'type': type.toString(),
+      'type': type.name,
       'selectedAnswerString': selectedAnswerString,
     };
   }
@@ -22,7 +22,7 @@ class SingleSelectQuestionAnswer extends QuestionAnswer {
     return SingleSelectQuestionAnswer(
       id: json['id'],
       type: QuestionType.values
-          .where((element) => element.toString() == json['type'])
+          .where((element) => element.name == json['type'])
           .first,
       selectedAnswerString: json['selectedAnswerString'],
     );

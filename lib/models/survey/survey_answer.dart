@@ -5,12 +5,14 @@ import '../models.dart';
 class SurveyAnswer {
   final String id;
   final int version;
+  final int rewardChoiceIndex;
   final List<QuestionAnswer> answers;
 
   SurveyAnswer({
     required this.id,
-    required this.answers,
     required this.version,
+    required this.rewardChoiceIndex,
+    required this.answers,
   });
 
   Map<String, dynamic> toJson() {
@@ -32,6 +34,7 @@ class SurveyAnswer {
     return {
       'id': id,
       'version': version,
+      'rewardChoiceIndex': rewardChoiceIndex,
       'answers': answerMaps,
     };
   }
@@ -56,6 +59,7 @@ class SurveyAnswer {
     return SurveyAnswer(
       id: json['id'],
       version: json['version'],
+      rewardChoiceIndex: json['rewardChoiceIndex'],
       answers: answers,
     );
   }

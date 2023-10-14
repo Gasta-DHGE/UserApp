@@ -10,7 +10,7 @@ class RatingTableQuestionAnswer extends QuestionAnswer {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'type': type.toString(),
+      'type': type.name,
       'ratingAnswers': ratingAnswers.map((e) => e.toJson()).toList(),
     };
   }
@@ -24,7 +24,7 @@ class RatingTableQuestionAnswer extends QuestionAnswer {
     return RatingTableQuestionAnswer(
       id: json['id'],
       type: QuestionType.values
-          .where((element) => element.toString() == json['type'])
+          .where((element) => element.name == json['type'])
           .first,
       ratingAnswers: answers,
     );

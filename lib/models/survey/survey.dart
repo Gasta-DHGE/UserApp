@@ -49,6 +49,21 @@ class Survey {
         case MultiSelectQuestion:
           questionMaps.add((question as MultiSelectQuestion).toJson());
           break;
+        case NumberRatingQuestion:
+          questionMaps.add((question as NumberRatingQuestion).toJson());
+          break;
+        case RatingTableQuestion:
+          questionMaps.add((question as RatingTableQuestion).toJson());
+          break;
+        case DateQuestion:
+          questionMaps.add((question as DateQuestion).toJson());
+          break;
+        case TimeQuestion:
+          questionMaps.add((question as TimeQuestion).toJson());
+          break;
+        case DateAndTimeQuestion:
+          questionMaps.add((question as DateAndTimeQuestion).toJson());
+          break;
       }
     }
 
@@ -81,15 +96,31 @@ class Survey {
     List<Question> questions = [];
     var questionMaps = json['questions'];
     for (var map in questionMaps) {
-      switch (map['type']) {
-        case 'text':
+      switch (QuestionType.values
+          .firstWhere((element) => element.name == map['type'])) {
+        case QuestionType.text:
           questions.add(TextQuestion.fromJson(map));
           break;
-        case 'select':
-          questions.add(TextQuestion.fromJson(map));
+        case QuestionType.select:
+          questions.add(SingleSelectQuestion.fromJson(map));
           break;
-        case 'multiSelect':
-          questions.add(TextQuestion.fromJson(map));
+        case QuestionType.multiSelect:
+          questions.add(MultiSelectQuestion.fromJson(map));
+          break;
+        case QuestionType.numberRating:
+          questions.add(NumberRatingQuestion.fromJson(map));
+          break;
+        case QuestionType.ratingTable:
+          questions.add(RatingTableQuestion.fromJson(map));
+          break;
+        case QuestionType.date:
+          questions.add(DateQuestion.fromJson(map));
+          break;
+        case QuestionType.time:
+          questions.add(TimeQuestion.fromJson(map));
+          break;
+        case QuestionType.dateAndTime:
+          questions.add(DateAndTimeQuestion.fromJson(map));
           break;
       }
     }

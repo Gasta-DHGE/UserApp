@@ -32,7 +32,6 @@ class TestSurveyService extends ISurveyService {
             isOptional: false,
             title: 'What could we do better?',
             description: 'test description',
-            content: '',
             type: core.QuestionType.text),
         SingleSelectQuestion(
             id: "Tnz3Gwoeb3R99ejCxzxi",

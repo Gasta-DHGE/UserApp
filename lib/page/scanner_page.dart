@@ -22,18 +22,6 @@ class _ScannerPage extends State<ScannerPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.controller.survey != null) {
-      for (int i = 0; i < widget.controller.survey!.questions.length; i++) {
-        widget.controller.surveyAnswer.answers.add(
-          core.QuestionAnswerEntity(
-            id: "",
-            type: widget.controller.survey!.questions[i].type,
-            content: List.empty(growable: true),
-          ),
-        );
-      }
-    }
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -161,19 +149,16 @@ class _ScannerPage extends State<ScannerPage> {
             widget.controller.surveyLoaded = false;
           },
           onSendPressed: (value) async {
-            await widget.controller.surveyService.sendSurveyAsync(
-                widget.controller.authenticationService.firebaseUser.uid,
-                value);
-            /* widget.controller.surveyAnswer =
-                MappingService.map<SurveyAnswer, core.SurveyAnswerModel>(value);
-            Navigator.pop(context);
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) =>
-                    DebugPage(data: widget.controller.surveyAnswer),
-              ),
-            );*/
+            try {
+              await widget.controller.surveyService.sendSurveyAsync(
+                  widget.controller.authenticationService.firebaseUser.uid,
+                  value);
+              // ignore: use_build_context_synchronously
+              Navigator.pop(context);
+            } catch (e) {
+              var test = '';
+            }
+
             widget.controller.surveyLoaded = false;
           },
           onValueChanged: (value) {

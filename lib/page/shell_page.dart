@@ -36,6 +36,11 @@ class _ShellPage extends State<ShellPage> {
         _content = SettingsPage(
             controller: DependencyProvider.instance.settingsPageController);
         break;
+      case 4:
+        _content = DebugPage(
+          data: null,
+        );
+        break;
     }
 
     return ListenableBuilder(
@@ -62,6 +67,8 @@ class _ShellPage extends State<ShellPage> {
                         icon: Icon(Icons.settings),
                         label: "Settings",
                         tooltip: ""),
+                    NavigationDestination(
+                        icon: Icon(Icons.error), label: "Testing", tooltip: ""),
                   ],
                 ),
                 body: SafeArea(

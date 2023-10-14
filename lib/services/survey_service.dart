@@ -16,9 +16,9 @@ class SurveyService implements ISurveyService {
   }
 
   @override
-  Future<Survey?> getSurveyByIdAsync(String userId, String surveyId) async {
-    var model = await surveySource.getSurveyById(userId, surveyId);
-    return MappingService.map<core.SurveyModel, Survey>(model);
+  Future<Survey> getSurveyByIdAsync(String userId, String surveyId) async {
+    return MappingService.map<core.SurveyModel, Survey>(
+        await surveySource.getSurveyById(userId, surveyId));
   }
 
   @override

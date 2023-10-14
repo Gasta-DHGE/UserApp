@@ -137,6 +137,21 @@ class MappingService {
           _couponToCouponEntity(source as Coupon)) as TO;
     }
 
+    if ((FROM == core.RatingTableAnswerEntity ||
+            FROM == core.RatingTableAnswerModel) &&
+        TO == RatingAnswer) {
+      return _ratingTableAnswerEntityToRatingAnswer(
+          source as core.RatingTableAnswerEntity) as TO;
+    }
+    if (FROM == RatingAnswer && TO == core.RatingTableAnswerEntity) {
+      return _ratingAnswerToRatingTableAnswerEntity(source as RatingAnswer)
+          as TO;
+    }
+    if (FROM == RatingAnswer && TO == core.RatingTableAnswerModel) {
+      return core.RatingTableAnswerModel.fromEntity(
+          _ratingAnswerToRatingTableAnswerEntity(source as RatingAnswer)) as TO;
+    }
+
     throw Exception("No mapping defined.");
   }
 
@@ -150,7 +165,7 @@ class MappingService {
 
   //mappings
   static Survey _surveyEntityToSurvey(core.SurveyEntity source) {
-    var result = Survey(
+    return Survey(
       id: source.id,
       userId: source.userId,
       companyId: source.companyId,
@@ -161,24 +176,16 @@ class MappingService {
       endDate: source.endDate,
       createdDate: source.createdDate,
       lastModifiedDate: source.lastModifiedDate,
-      rewards: [],
+      rewards: source.rewards
+          .map((e) => MappingService.map<core.RewardEntity, Reward>(e))
+          .toList(),
       rewardExpirationDate: source.rewardExpirationDate,
       rewardVariant: source.rewardVariant,
-      questions: [],
+      questions: source.questions
+          .map((e) => MappingService.map<core.QuestionEntity, Question>(e))
+          .toList(),
       questionsAreInFixedOrder: source.questionsAreInFixedOrder,
     );
-
-    for (var question in source.questions) {
-      result.questions.add(
-          map<core.QuestionEntity, Question>(question as core.QuestionEntity));
-    }
-
-    for (var reward in source.rewards) {
-      result.rewards
-          .add(map<core.RewardEntity, Reward>(reward as core.RewardEntity));
-    }
-
-    return result;
   }
 
   static core.SurveyEntity _surveyToSurveyEntity(Survey source) {
@@ -212,52 +219,55 @@ class MappingService {
   }
 
   static Question _questionEntityToQuestion(core.QuestionEntity source) {
-    switch (source.type) {
-      case core.QuestionType.text:
+    switch (source.runtimeType) {
+      case core.TextQuestionEntity:
         return TextQuestion(
-            id: source.id,
-            isOptional: source.isOptional,
-            type: source.type,
-            title: source.title,
-            description: source.description,
-            content: source.content.toString());
-      case core.QuestionType.select:
-        return TextQuestion(
-            id: source.id,
-            isOptional: source.isOptional,
-            type: source.type,
-            title: source.title,
-            description: source.description,
-            content: source.content.toString());
-      case core.QuestionType.multiSelect:
-        return TextQuestion(
-            id: source.id,
-            isOptional: source.isOptional,
-            type: source.type,
-            title: source.title,
-            description: source.description,
-            content: source.content.toString());
-      case core.QuestionType.numberRating:
+          id: source.id,
+          isOptional: source.isOptional,
+          type: source.type,
+          title: source.title,
+          description: source.description,
+        );
+      case core.SingleSelectQuestionEntity:
+        return SingleSelectQuestion(
+          id: source.id,
+          isOptional: source.isOptional,
+          type: source.type,
+          title: source.title,
+          description: source.description,
+          options: (source as core.SingleSelectQuestionEntity).options,
+        );
+      case core.MultiSelectQuestionEntity:
+        return MultiSelectQuestion(
+          id: source.id,
+          isOptional: source.isOptional,
+          type: source.type,
+          title: source.title,
+          description: source.description,
+          options: (source as core.MultiSelectQuestionEntity).options,
+        );
+      case core.NumberRatingQuestionEntity:
         return NumberRatingQuestion(
           id: source.id,
           isOptional: source.isOptional,
           type: source.type,
           title: source.title,
           description: source.description,
-          minRating: (source.content.first as Map)['minRating'],
-          maxRating: (source.content.first as Map)['maxRating'],
+          minRating: (source as core.NumberRatingQuestionEntity).minRating,
+          maxRating: source.maxRating,
         );
-      case core.QuestionType.ratingTable:
+      case core.RatingTableQuestionEntity:
         return RatingTableQuestion(
           id: source.id,
           isOptional: source.isOptional,
           type: source.type,
           title: source.title,
           description: source.description,
-          ratingHeaders: (source.content.first as Map)['ratingHeader'],
-          ratingQuestions: (source.content.first as Map)['ratingQuestions'],
+          ratingHeaders:
+              (source as core.RatingTableQuestionEntity).ratingHeaders,
+          ratingQuestions: source.ratingQuestions,
         );
-      case core.QuestionType.date:
+      case core.DateQuestionEntity:
         return DateQuestion(
           id: source.id,
           isOptional: source.isOptional,
@@ -265,7 +275,7 @@ class MappingService {
           title: source.title,
           description: source.description,
         );
-      case core.QuestionType.time:
+      case core.TimeQuestionEntity:
         return TimeQuestion(
           id: source.id,
           isOptional: source.isOptional,
@@ -273,7 +283,7 @@ class MappingService {
           title: source.title,
           description: source.description,
         );
-      case core.QuestionType.dateAndTime:
+      case core.DateAndTimeQuestionEntity:
         return DateAndTimeQuestion(
           id: source.id,
           isOptional: source.isOptional,
@@ -289,86 +299,74 @@ class MappingService {
   static core.QuestionEntity _questionToQuestionEntity(Question source) {
     switch (source.runtimeType) {
       case TextQuestion:
-        return core.QuestionEntity(
+        return core.TextQuestionEntity(
           id: source.id,
           isOptional: source.isOptional,
           type: source.type,
           title: source.title,
           description: source.description,
-          content: [(source as TextQuestion).content],
         );
       case SingleSelectQuestion:
-        return core.QuestionEntity(
+        return core.SingleSelectQuestionEntity(
           id: source.id,
           isOptional: source.isOptional,
           type: source.type,
           title: source.title,
           description: source.description,
-          content: (source as SingleSelectQuestion).options,
+          options: (source as SingleSelectQuestion).options,
         );
       case MultiSelectQuestion:
-        return core.QuestionEntity(
+        return core.MultiSelectQuestionEntity(
           id: source.id,
           isOptional: source.isOptional,
           type: source.type,
           title: source.title,
           description: source.description,
-          content: (source as MultiSelectQuestion).options,
+          options: (source as MultiSelectQuestion).options,
         );
       case NumberRatingQuestion:
-        return core.QuestionEntity(
+        return core.NumberRatingQuestionEntity(
           id: source.id,
           isOptional: source.isOptional,
           type: source.type,
           title: source.title,
           description: source.description,
-          content: [
-            {
-              'minRating': (source as NumberRatingQuestion).minRating,
-              'maxRating': source.maxRating,
-            }
-          ],
+          minRating: (source as NumberRatingQuestion).minRating,
+          maxRating: source.maxRating,
         );
-      case RatingTableQuestionAnswer:
-        return core.QuestionEntity(
+      case RatingTableQuestion:
+        return core.RatingTableQuestionEntity(
           id: source.id,
           isOptional: source.isOptional,
           type: source.type,
           title: source.title,
           description: source.description,
-          content: [
-            {
-              'ratingHeader': (source as RatingTableQuestion).ratingHeaders,
-              'ratingQuestions': source.ratingQuestions,
-            }
-          ],
+          ratingHeaders: (source as RatingTableQuestion).ratingHeaders,
+          ratingQuestions: source.ratingQuestions,
         );
-      case DateQuestionAnswer:
-        return core.QuestionEntity(
+      case DateQuestion:
+        return core.DateQuestionEntity(
           id: source.id,
           isOptional: source.isOptional,
           type: source.type,
           title: source.title,
           description: source.description,
-          content: const [],
         );
-      case TimeQuestionAnswer:
-        return core.QuestionEntity(
+      case TimeQuestion:
+        return core.TimeQuestionEntity(
           id: source.id,
           isOptional: source.isOptional,
           type: source.type,
           title: source.title,
           description: source.description,
-          content: const [],
         );
-      case DateAndTimeQuestionAnswer:
-        return core.QuestionEntity(
+      case DateAndTimeQuestion:
+        return core.DateAndTimeQuestionEntity(
           id: source.id,
           isOptional: source.isOptional,
           type: source.type,
           title: source.title,
           description: source.description,
-          content: const [],
         );
       default:
         throw Exception("Type not mapable");
@@ -377,8 +375,12 @@ class MappingService {
 
   static SurveyAnswer _surveyAnswerEntityToSurveyAnswer(
       core.SurveyAnswerEntity source) {
-    var result =
-        SurveyAnswer(id: source.id, version: source.version, answers: []);
+    var result = SurveyAnswer(
+      id: source.id,
+      version: source.version,
+      rewardChoiceIndex: source.rewardChoiceIndex,
+      answers: List.empty(growable: true),
+    );
 
     for (var answer in source.answers) {
       result.answers
@@ -391,7 +393,11 @@ class MappingService {
   static core.SurveyAnswerEntity _surveyAnswerToSurveyAnswerEntity(
       SurveyAnswer source) {
     var result = core.SurveyAnswerEntity(
-        id: source.id, version: source.version, answers: []);
+      id: source.id,
+      version: source.version,
+      rewardChoiceIndex: source.rewardChoiceIndex,
+      answers: List.empty(growable: true),
+    );
 
     for (var answer in source.answers) {
       result.answers
@@ -403,62 +409,66 @@ class MappingService {
 
   static QuestionAnswer _questionAnswerEntityToQuestionAnswer(
       core.QuestionAnswerEntity source) {
-    switch (source.type) {
-      case core.QuestionType.text:
+    switch (source.runtimeType) {
+      case core.TextQuestionAnswerEntity:
         return TextQuestionAnswer(
           id: source.id,
           type: source.type,
-          answer: source.content.toString(),
+          answer: (source as core.TextQuestionAnswerEntity).answer,
         );
-      case core.QuestionType.select:
+      case core.SingleSelectQuestionAnswerEntity:
         return SingleSelectQuestionAnswer(
           id: source.id,
           type: source.type,
-          selectedAnswerString: source.content.toString(),
+          selectedAnswerString:
+              (source as core.SingleSelectQuestionAnswerEntity)
+                  .selectedAnswerString,
         );
-      case core.QuestionType.multiSelect:
+      case core.MultiSelectQuestionAnswerEntity:
         return MultiSelectQuestionAnswer(
           id: source.id,
           type: source.type,
           selectedAnswerStrings:
-              source.content.map((e) => e as String).toList(),
+              (source as core.MultiSelectQuestionAnswerEntity)
+                  .selectedAnswerStrings,
         );
-      case core.QuestionType.numberRating:
+      case core.NumberRatingQuestionAnswerEntity:
         return NumberRatingQuestionAnswer(
           id: source.id,
           type: source.type,
-          ratedNumber: source.content as int,
+          ratedNumber:
+              (source as core.NumberRatingQuestionAnswerEntity).ratedNumber,
         );
-      case core.QuestionType.ratingTable:
+      case core.RatingTableQuestionAnswerEntity:
         return RatingTableQuestionAnswer(
           id: source.id,
           type: source.type,
-          ratingAnswers: source.content
-              .map((e) => RatingAnswer.fromJson(e))
-              .toList() as List<RatingAnswer>,
+          ratingAnswers: (source as core.RatingTableQuestionAnswerEntity)
+              .ratingAnswers
+              .map((e) => MappingService.map<core.RatingTableAnswerEntity,
+                  RatingAnswer>(e))
+              .toList(),
         );
-      case core.QuestionType.date:
+      case core.DateQuestionAnswerEntity:
         return DateQuestionAnswer(
           id: source.id,
           type: source.type,
-          date: core.Util.getDateTimeBySecondsTimeStamp(source.content as int),
+          date: (source as core.DateQuestionAnswerEntity).date,
         );
-      case core.QuestionType.time:
+      case core.TimeQuestionAnswerEntity:
         return TimeQuestionAnswer(
           id: source.id,
           type: source.type,
-          hour: (source.content as Map)['hour'],
-          minute: (source.content as Map)['minute'],
-          timeSpent: (source.content as Map)['timeSpent'],
+          time: (source as core.TimeQuestionAnswerEntity).time,
+          timeSpent: source.timeSpent,
         );
-      case core.QuestionType.dateAndTime:
+      case core.DateAndTimeQuestionAnswerEntity:
         return DateAndTimeQuestionAnswer(
           id: source.id,
           type: source.type,
-          date: core.Util.getDateTimeBySecondsTimeStamp(source.content as int),
-          hour: (source.content as Map)['hour'],
-          minute: (source.content as Map)['minute'],
-          timeSpent: (source.content as Map)['timeSpent'],
+          date: (source as core.DateAndTimeQuestionAnswerEntity).date,
+          time: source.time,
+          timeSpent: source.timeSpent,
         );
       default:
         throw Exception("Type not mapable");
@@ -469,74 +479,61 @@ class MappingService {
       QuestionAnswer source) {
     switch (source.runtimeType) {
       case TextQuestionAnswer:
-        return core.QuestionAnswerEntity(
+        return core.TextQuestionAnswerEntity(
           id: source.id,
           type: source.type,
-          content: [(source as TextQuestionAnswer).answer],
+          answer: (source as TextQuestionAnswer).answer,
         );
       case SingleSelectQuestionAnswer:
-        return core.QuestionAnswerEntity(
+        return core.SingleSelectQuestionAnswerEntity(
           id: source.id,
           type: source.type,
-          content: [
-            (source as SingleSelectQuestionAnswer).selectedAnswerString
-          ],
+          selectedAnswerString:
+              (source as SingleSelectQuestionAnswer).selectedAnswerString,
         );
       case MultiSelectQuestionAnswer:
-        return core.QuestionAnswerEntity(
+        return core.MultiSelectQuestionAnswerEntity(
           id: source.id,
           type: source.type,
-          content: (source as MultiSelectQuestionAnswer).selectedAnswerStrings,
+          selectedAnswerStrings:
+              (source as MultiSelectQuestionAnswer).selectedAnswerStrings,
         );
       case NumberRatingQuestionAnswer:
-        return core.QuestionAnswerEntity(
+        return core.NumberRatingQuestionAnswerEntity(
           id: source.id,
           type: source.type,
-          content: [(source as NumberRatingQuestionAnswer).ratedNumber],
+          ratedNumber: (source as NumberRatingQuestionAnswer).ratedNumber,
         );
       case RatingTableQuestionAnswer:
-        return core.QuestionAnswerEntity(
+        return core.RatingTableQuestionAnswerEntity(
           id: source.id,
           type: source.type,
-          content: (source as RatingTableQuestionAnswer)
+          ratingAnswers: (source as RatingTableQuestionAnswer)
               .ratingAnswers
-              .map((e) => e.toJson())
+              .map((e) => MappingService.map<RatingAnswer,
+                  core.RatingTableAnswerEntity>(e))
               .toList(),
         );
       case DateQuestionAnswer:
-        return core.QuestionAnswerEntity(
+        return core.DateQuestionAnswerEntity(
           id: source.id,
           type: source.type,
-          content: [
-            core.Util.getSecondsTimeStampByDateTime(
-                (source as DateQuestionAnswer).date)
-          ],
+          date: (source as DateQuestionAnswer).date,
         );
       case TimeQuestionAnswer:
-        return core.QuestionAnswerEntity(
+        return core.TimeQuestionAnswerEntity(
           id: source.id,
           type: source.type,
-          content: [
-            <String, int>{
-              'hour': (source as TimeQuestionAnswer).hour,
-              'minute': source.minute,
-              'timeSpent': source.timeSpent
-            }
-          ],
+          time: (source as TimeQuestionAnswer).time,
+          timeSpent: source.timeSpent,
         );
       case DateAndTimeQuestionAnswer:
-        return core.QuestionAnswerEntity(
+        return core.DateAndTimeQuestionAnswerEntity(
           id: source.id,
           type: source.type,
-          content: [
-            <String, int>{
-              'dateTimestamp': core.Util.getSecondsTimeStampByDateTime(
-                  (source as DateAndTimeQuestionAnswer).date),
-              'hour': source.hour,
-              'minute': source.minute,
-              'timeSpent': source.timeSpent
-            }
-          ],
+          date: (source as DateAndTimeQuestionAnswer).date,
+          time: source.time,
+          timeSpent: source.timeSpent,
         );
       default:
         throw Exception("Type not mapable");
@@ -705,6 +702,22 @@ class MappingService {
       reward: MappingService.map<Reward, core.RewardEntity>(source.reward),
       companyInfo: MappingService.map<CompanyInfo, core.CompanyInfoEntity>(
           source.companyInfo),
+    );
+  }
+
+  static RatingAnswer _ratingTableAnswerEntityToRatingAnswer(
+      core.RatingTableAnswerEntity source) {
+    return RatingAnswer(
+      ratingQuestion: source.ratingQuestion,
+      rating: source.rating,
+    );
+  }
+
+  static core.RatingTableAnswerEntity _ratingAnswerToRatingTableAnswerEntity(
+      RatingAnswer source) {
+    return core.RatingTableAnswerEntity(
+      ratingQuestion: source.ratingQuestion,
+      rating: source.rating,
     );
   }
 }

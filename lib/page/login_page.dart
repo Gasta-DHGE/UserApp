@@ -72,9 +72,8 @@ class _LoginPage extends State<LoginPage> {
                                           text: widget.controller.username),
                                       onChanged: (value) =>
                                           widget.controller.username = value,
-                                      decoration: Styles.inputDecoration(
-                                          context: context,
-                                          labelText: "Username"),
+                                      decoration: const InputDecoration(
+                                          labelText: 'Username'),
                                     ),
                                   ),
                                 ),
@@ -88,9 +87,8 @@ class _LoginPage extends State<LoginPage> {
                                       onChanged: (value) =>
                                           widget.controller.password = value,
                                       obscureText: true,
-                                      decoration: Styles.inputDecoration(
-                                          context: context,
-                                          labelText: "Password"),
+                                      decoration: const InputDecoration(
+                                          labelText: 'Password'),
                                     ),
                                   ),
                                 ),

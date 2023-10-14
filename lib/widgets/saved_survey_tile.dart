@@ -18,6 +18,7 @@ class SavedSurveyTile extends StatelessWidget {
     return ListTile(
       contentPadding: EdgeInsets.zero,
       title: FloatingActionButton.extended(
+        elevation: 0,
         heroTag: const Uuid().v1(),
         label: Text(survey.survey.name),
         backgroundColor: Theme.of(context).colorScheme.surface,
