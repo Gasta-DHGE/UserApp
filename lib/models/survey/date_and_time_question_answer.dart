@@ -19,7 +19,9 @@ class DateAndTimeQuestionAnswer extends QuestionAnswer {
       'id': id,
       'type': type.name,
       'date': Util.getSecondsTimeStampByDateTime(date),
-      'time': time,
+      'time': Util.getSecondsTimeStampByDateTime(
+        DateTime(0, 0, 0, time.hour, time.minute),
+      ),
       'timeSpent': timeSpent,
     };
   }
@@ -31,7 +33,11 @@ class DateAndTimeQuestionAnswer extends QuestionAnswer {
           .where((element) => element.name == json['type'])
           .first,
       date: Util.getDateTimeBySecondsTimeStamp(json['date']),
-      time: json['time'],
+      time: TimeOfDay.fromDateTime(
+        Util.getDateTimeBySecondsTimeStamp(
+          json['time'],
+        ),
+      ),
       timeSpent: json['timeSpent'],
     );
   }

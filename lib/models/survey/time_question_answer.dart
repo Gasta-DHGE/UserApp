@@ -15,8 +15,10 @@ class TimeQuestionAnswer extends QuestionAnswer {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'type': type.toString(),
-      'time': time,
+      'type': type.name,
+      'time': Util.getSecondsTimeStampByDateTime(
+        DateTime(0, 0, 0, time.hour, time.minute),
+      ),
       'timeSpent': timeSpent,
     };
   }
@@ -25,9 +27,13 @@ class TimeQuestionAnswer extends QuestionAnswer {
     return TimeQuestionAnswer(
       id: json['id'],
       type: QuestionType.values
-          .where((element) => element.toString() == json['type'])
+          .where((element) => element.name == json['type'])
           .first,
-      time: json['time'],
+      time: TimeOfDay.fromDateTime(
+        Util.getDateTimeBySecondsTimeStamp(
+          json['time'],
+        ),
+      ),
       timeSpent: json['timeSpent'],
     );
   }

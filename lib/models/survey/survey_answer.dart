@@ -28,6 +28,21 @@ class SurveyAnswer {
         case MultiSelectQuestionAnswer:
           answerMaps.add((answer as MultiSelectQuestionAnswer).toJson());
           break;
+        case NumberRatingQuestionAnswer:
+          answerMaps.add((answer as NumberRatingQuestionAnswer).toJson());
+          break;
+        case RatingTableQuestionAnswer:
+          answerMaps.add((answer as RatingTableQuestionAnswer).toJson());
+          break;
+        case DateQuestionAnswer:
+          answerMaps.add((answer as DateQuestionAnswer).toJson());
+          break;
+        case TimeQuestionAnswer:
+          answerMaps.add((answer as TimeQuestionAnswer).toJson());
+          break;
+        case DateAndTimeQuestionAnswer:
+          answerMaps.add((answer as DateAndTimeQuestionAnswer).toJson());
+          break;
       }
     }
 
@@ -43,7 +58,8 @@ class SurveyAnswer {
     List<QuestionAnswer> answers = [];
     var answerMaps = json['answers'];
     for (var map in answerMaps) {
-      switch (map['type']) {
+      switch (QuestionType.values
+          .firstWhere((element) => element.name == map['type'])) {
         case QuestionType.text:
           answers.add(TextQuestionAnswer.fromJson(map));
           break;
@@ -52,6 +68,21 @@ class SurveyAnswer {
           break;
         case QuestionType.multiSelect:
           answers.add(MultiSelectQuestionAnswer.fromJson(map));
+          break;
+        case QuestionType.numberRating:
+          answers.add(NumberRatingQuestionAnswer.fromJson(map));
+          break;
+        case QuestionType.ratingTable:
+          answers.add(RatingTableQuestionAnswer.fromJson(map));
+          break;
+        case QuestionType.date:
+          answers.add(DateQuestionAnswer.fromJson(map));
+          break;
+        case QuestionType.time:
+          answers.add(TimeQuestionAnswer.fromJson(map));
+          break;
+        case QuestionType.dateAndTime:
+          answers.add(DateAndTimeQuestionAnswer.fromJson(map));
           break;
       }
     }
