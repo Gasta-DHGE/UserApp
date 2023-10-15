@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:gasta_core/gasta_core.dart';
+import 'package:gasta_core/gasta_core.dart' as core;
 import 'package:gasta_user_app/controller/controller.dart';
-import 'package:gasta_user_app/widgets/saved_survey_tile.dart';
 import 'package:uuid/uuid.dart';
+
+import '../widgets/widgets.dart';
 
 class CouponPage extends StatefulWidget {
   final CouponPageController controller;
@@ -50,8 +52,60 @@ class _CouponPage extends State<CouponPage> {
                               "No Coupons :(",
                               style: Styles.headlineTextStyle(context),
                             )
-                          : Text(
-                              "${widget.controller.coupons.length} Coupon(s) available"),
+                          : RefreshIndicator(
+                              color: Theme.of(context).colorScheme.primary,
+                              onRefresh: () {
+                                widget.controller.loadCouponsAsync();
+                                widget.controller.loadSavedServicesAsync();
+                                return Future(() => null);
+                              },
+                              child: ListView.separated(
+                                itemCount: widget.controller.coupons.length,
+                                itemBuilder:
+                                    (BuildContext context, int index) =>
+                                        core.OutlinedButton(
+                                  onPressed: () => showDialog(
+                                    context: context,
+                                    builder: (context) => Coupon(
+                                      coupon: widget.controller.coupons[index],
+                                    ),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      vertical: 8.0,
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        Icon(
+                                          widget.controller.coupons[index]
+                                                      .reward.type ==
+                                                  SurveyRewardType.itemDiscount
+                                              ? Icons.percent
+                                              : Icons
+                                                  .shopping_cart_checkout_outlined,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primary,
+                                        ),
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 8.0),
+                                          child: Text(
+                                            widget.controller.coupons[index]
+                                                .reward.name,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                separatorBuilder:
+                                    (BuildContext context, int index) =>
+                                        const Padding(
+                                  padding: EdgeInsets.all(4.0),
+                                ),
+                              ),
+                            ),
                     ),
                   ),
                 ),
