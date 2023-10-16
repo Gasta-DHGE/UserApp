@@ -68,7 +68,7 @@ class _ScannerPage extends State<ScannerPage> {
                             ),
                           ),
                         ),
-                        Align(
+                        /*Align(
                           alignment: Alignment.bottomRight,
                           child: ElevatedButton(
                             child: const Text("Simulate QR scanned"),
@@ -82,7 +82,7 @@ class _ScannerPage extends State<ScannerPage> {
                               );
                             },
                           ),
-                        ),
+                        ),*/
                       ],
                     ),
             );
@@ -157,7 +157,13 @@ class _ScannerPage extends State<ScannerPage> {
               // ignore: use_build_context_synchronously
               Navigator.pop(context);
             } catch (e) {
-              var test = '';
+              // ignore: use_build_context_synchronously
+              showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                  content: Text(e.toString()),
+                ),
+              );
             }
 
             widget.controller.surveyLoaded = false;
