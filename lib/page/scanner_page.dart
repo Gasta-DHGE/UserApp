@@ -68,7 +68,7 @@ class _ScannerPage extends State<ScannerPage> {
                             ),
                           ),
                         ),
-                        /*Align(
+                        Align(
                           alignment: Alignment.bottomRight,
                           child: ElevatedButton(
                             child: const Text("Simulate QR scanned"),
@@ -82,7 +82,7 @@ class _ScannerPage extends State<ScannerPage> {
                               );
                             },
                           ),
-                        ),*/
+                        ),
                       ],
                     ),
             );

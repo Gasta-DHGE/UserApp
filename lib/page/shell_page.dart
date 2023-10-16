@@ -67,8 +67,8 @@ class _ShellPage extends State<ShellPage> {
                         icon: Icon(Icons.settings),
                         label: "Settings",
                         tooltip: ""),
-                    /*NavigationDestination(
-                        icon: Icon(Icons.error), label: "Testing", tooltip: ""),*/
+                    NavigationDestination(
+                        icon: Icon(Icons.error), label: "Testing", tooltip: ""),
                   ],
                 ),
                 body: SafeArea(
