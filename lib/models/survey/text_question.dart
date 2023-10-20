@@ -1,15 +1,31 @@
 import 'package:gasta_core/gasta_core.dart';
 import 'package:gasta_user_app/models/survey/question.dart';
 
-// ignore: must_be_immutable
 class TextQuestion extends Question {
-  TextQuestion({
+  const TextQuestion({
     required super.id,
     required super.isOptional,
     required super.type,
     required super.title,
     required super.description,
   });
+
+  @override
+  TextQuestion copyWith({
+    String? id,
+    bool? isOptional,
+    QuestionType? type,
+    String? title,
+    String? description,
+  }) {
+    return TextQuestion(
+      id: id ?? this.id,
+      isOptional: isOptional ?? this.isOptional,
+      type: type ?? this.type,
+      title: title ?? this.title,
+      description: description ?? this.description,
+    );
+  }
 
   Map<String, dynamic> toJson() {
     return {

@@ -3,22 +3,39 @@ import 'package:gasta_core/gasta_core.dart';
 
 import 'models.dart';
 
-// ignore: must_be_immutable
 class GastaUser extends Equatable {
-  String firstName;
-  String lastName;
-  DateTime birthDate;
-  Gender gender;
-  Diet diet;
-  Address address;
+  final String firstName;
+  final String lastName;
+  final DateTime birthDate;
+  final Gender gender;
+  final Diet diet;
+  final Address address;
 
-  GastaUser(
+  const GastaUser(
       {required this.firstName,
       required this.lastName,
       required this.birthDate,
       required this.gender,
       required this.diet,
       required this.address});
+
+  GastaUser copyWith({
+    String? firstName,
+    String? lastName,
+    DateTime? birthDate,
+    Gender? gender,
+    Diet? diet,
+    Address? address,
+  }) {
+    return GastaUser(
+      firstName: firstName ?? this.firstName,
+      lastName: lastName ?? this.lastName,
+      birthDate: birthDate ?? this.birthDate,
+      gender: gender ?? this.gender,
+      diet: diet ?? this.diet,
+      address: address ?? this.address,
+    );
+  }
 
   static GastaUser fromJson(Map<String, dynamic> json) {
     return GastaUser(

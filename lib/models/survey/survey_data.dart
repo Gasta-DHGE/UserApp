@@ -2,12 +2,21 @@ import 'package:equatable/equatable.dart';
 import 'package:gasta_user_app/models/survey/survey.dart';
 import 'package:gasta_user_app/models/survey/survey_answer.dart';
 
-// ignore: must_be_immutable
 class SurveyData extends Equatable {
-  Survey survey;
-  SurveyAnswer answer;
+  final Survey survey;
+  final SurveyAnswer answer;
 
-  SurveyData({required this.survey, required this.answer});
+  const SurveyData({required this.survey, required this.answer});
+
+  SurveyData copyWith({
+    Survey? survey,
+    SurveyAnswer? answer,
+  }) {
+    return SurveyData(
+      survey: survey ?? this.survey,
+      answer: answer ?? this.answer,
+    );
+  }
 
   static SurveyData fromJson(Map<String, dynamic> json) {
     return SurveyData(

@@ -2,16 +2,30 @@ import 'package:flutter/material.dart';
 import 'package:gasta_core/gasta_core.dart';
 import 'package:gasta_user_app/models/models.dart';
 
-// ignore: must_be_immutable
 class TimeQuestionAnswer extends QuestionAnswer {
-  TimeOfDay time;
-  int timeSpent;
+  final TimeOfDay time;
+  final int timeSpent;
 
-  TimeQuestionAnswer(
+  const TimeQuestionAnswer(
       {required super.id,
       required super.type,
       required this.time,
       required this.timeSpent});
+
+  @override
+  TimeQuestionAnswer copyWith({
+    String? id,
+    QuestionType? type,
+    TimeOfDay? time,
+    int? timeSpent,
+  }) {
+    return TimeQuestionAnswer(
+      id: id ?? this.id,
+      type: type ?? this.type,
+      time: time ?? this.time,
+      timeSpent: timeSpent ?? this.timeSpent,
+    );
+  }
 
   Map<String, dynamic> toJson() {
     return {

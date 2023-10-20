@@ -1,12 +1,24 @@
 import 'package:gasta_core/gasta_core.dart';
 import 'package:gasta_user_app/models/models.dart';
 
-// ignore: must_be_immutable
 class NumberRatingQuestionAnswer extends QuestionAnswer {
-  int ratedNumber;
+  final int ratedNumber;
 
-  NumberRatingQuestionAnswer(
+  const NumberRatingQuestionAnswer(
       {required super.id, required super.type, required this.ratedNumber});
+
+  @override
+  NumberRatingQuestionAnswer copyWith({
+    String? id,
+    QuestionType? type,
+    int? ratedNumber,
+  }) {
+    return NumberRatingQuestionAnswer(
+      id: id ?? this.id,
+      type: type ?? this.type,
+      ratedNumber: ratedNumber ?? this.ratedNumber,
+    );
+  }
 
   Map<String, dynamic> toJson() {
     return {

@@ -3,20 +3,35 @@ import 'package:gasta_core/gasta_core.dart';
 
 import 'models.dart';
 
-// ignore: must_be_immutable
 class Coupon extends Equatable {
-  String id;
-  String surveyId;
-  DateTime expiringDate;
-  Reward reward;
-  CompanyInfo companyInfo;
+  final String id;
+  final String surveyId;
+  final DateTime expiringDate;
+  final Reward reward;
+  final CompanyInfo companyInfo;
 
-  Coupon(
+  const Coupon(
       {required this.id,
       required this.surveyId,
       required this.expiringDate,
       required this.reward,
       required this.companyInfo});
+
+  Coupon copyWith({
+    String? id,
+    String? surveyId,
+    DateTime? expiringDate,
+    Reward? reward,
+    CompanyInfo? companyInfo,
+  }) {
+    return Coupon(
+      id: id ?? this.id,
+      surveyId: surveyId ?? this.surveyId,
+      expiringDate: expiringDate ?? this.expiringDate,
+      reward: reward ?? this.reward,
+      companyInfo: companyInfo ?? this.companyInfo,
+    );
+  }
 
   Map<String, dynamic> toJson() {
     return {

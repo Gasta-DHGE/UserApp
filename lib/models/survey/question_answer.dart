@@ -1,10 +1,14 @@
 import 'package:equatable/equatable.dart';
 import 'package:gasta_core/gasta_core.dart';
 
-// ignore: must_be_immutable
 abstract class QuestionAnswer extends Equatable {
-  String id;
-  QuestionType type;
+  final String id;
+  final QuestionType type;
 
-  QuestionAnswer({required this.id, required this.type});
+  const QuestionAnswer({required this.id, required this.type});
+
+  QuestionAnswer copyWith({
+    String? id,
+    QuestionType? type,
+  });
 }

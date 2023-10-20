@@ -1,12 +1,24 @@
 import 'package:gasta_core/gasta_core.dart';
 import 'package:gasta_user_app/models/models.dart';
 
-// ignore: must_be_immutable
 class DateQuestionAnswer extends QuestionAnswer {
-  DateTime date;
+  final DateTime date;
 
-  DateQuestionAnswer(
+  const DateQuestionAnswer(
       {required super.id, required super.type, required this.date});
+
+  @override
+  DateQuestionAnswer copyWith({
+    String? id,
+    QuestionType? type,
+    DateTime? date,
+  }) {
+    return DateQuestionAnswer(
+      id: id ?? this.id,
+      type: type ?? this.type,
+      date: date ?? this.date,
+    );
+  }
 
   Map<String, dynamic> toJson() {
     return {

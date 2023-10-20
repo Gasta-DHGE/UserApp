@@ -16,6 +16,20 @@ class SurveyAnswer extends Equatable {
     required this.answers,
   });
 
+  SurveyAnswer copyWith({
+    String? id,
+    int? version,
+    int? rewardChoiceIndex,
+    List<QuestionAnswer>? answers,
+  }) {
+    return SurveyAnswer(
+      id: id ?? this.id,
+      version: version ?? this.version,
+      rewardChoiceIndex: rewardChoiceIndex ?? this.rewardChoiceIndex,
+      answers: answers ?? this.answers,
+    );
+  }
+
   Map<String, dynamic> toJson() {
     List<Map<String, dynamic>> answerMaps = [];
     for (var answer in answers) {

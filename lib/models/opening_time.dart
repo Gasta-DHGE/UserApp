@@ -1,17 +1,28 @@
 import 'package:equatable/equatable.dart';
 import 'package:gasta_core/gasta_core.dart';
 
-// ignore: must_be_immutable
 class OpeningTime extends Equatable {
-  bool isOpen;
-  DateTime from;
-  DateTime to;
+  final bool isOpen;
+  final DateTime from;
+  final DateTime to;
 
-  OpeningTime({
+  const OpeningTime({
     required this.isOpen,
     required this.from,
     required this.to,
   });
+
+  OpeningTime copyWith({
+    bool? isOpen,
+    DateTime? from,
+    DateTime? to,
+  }) {
+    return OpeningTime(
+      isOpen: isOpen ?? this.isOpen,
+      from: from ?? this.from,
+      to: to ?? this.to,
+    );
+  }
 
   Map<String, dynamic> toJson() {
     return {

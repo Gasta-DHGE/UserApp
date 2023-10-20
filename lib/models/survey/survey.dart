@@ -5,23 +5,23 @@ import '../models.dart';
 
 // ignore: must_be_immutable
 class Survey extends Equatable {
-  String id;
-  String userId;
-  String companyId;
-  int version;
-  String name;
-  String description;
-  DateTime startDate;
-  DateTime endDate;
-  DateTime createdDate;
-  DateTime lastModifiedDate;
-  List<Reward> rewards;
-  DateTime rewardExpirationDate;
-  SurveyRewardVariantType rewardVariant;
-  List<Question> questions;
-  bool questionsAreInFixedOrder;
+  final String id;
+  final String userId;
+  final String companyId;
+  final int version;
+  final String name;
+  final String description;
+  final DateTime startDate;
+  final DateTime endDate;
+  final DateTime createdDate;
+  final DateTime lastModifiedDate;
+  final List<Reward> rewards;
+  final DateTime rewardExpirationDate;
+  final SurveyRewardVariantType rewardVariant;
+  final List<Question> questions;
+  final bool questionsAreInFixedOrder;
 
-  Survey(
+  const Survey(
       {required this.id,
       required this.userId,
       required this.companyId,
@@ -37,6 +37,43 @@ class Survey extends Equatable {
       required this.rewardVariant,
       required this.questions,
       required this.questionsAreInFixedOrder});
+
+  Survey copyWith({
+    String? id,
+    String? userId,
+    String? companyId,
+    int? version,
+    String? name,
+    String? description,
+    DateTime? startDate,
+    DateTime? endDate,
+    DateTime? createdDate,
+    DateTime? lastModifiedDate,
+    List<Reward>? rewards,
+    DateTime? rewardExpirationDate,
+    SurveyRewardVariantType? rewardVariant,
+    List<Question>? questions,
+    bool? questionsAreInFixedOrder,
+  }) {
+    return Survey(
+      id: id ?? this.id,
+      userId: userId ?? this.userId,
+      companyId: companyId ?? this.companyId,
+      version: version ?? this.version,
+      name: name ?? this.name,
+      description: description ?? this.description,
+      startDate: startDate ?? this.startDate,
+      endDate: endDate ?? this.endDate,
+      createdDate: createdDate ?? this.createdDate,
+      lastModifiedDate: lastModifiedDate ?? this.lastModifiedDate,
+      rewards: rewards ?? this.rewards,
+      rewardExpirationDate: rewardExpirationDate ?? this.rewardExpirationDate,
+      rewardVariant: rewardVariant ?? this.rewardVariant,
+      questions: questions ?? this.questions,
+      questionsAreInFixedOrder:
+          questionsAreInFixedOrder ?? this.questionsAreInFixedOrder,
+    );
+  }
 
   Map<String, dynamic> toJson() {
     List<Map<String, dynamic>> questionMaps = [];

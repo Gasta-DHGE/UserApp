@@ -2,14 +2,27 @@ import 'package:gasta_core/gasta_core.dart';
 
 import '../models.dart';
 
-// ignore: must_be_immutable
 class MultiSelectQuestionAnswer extends QuestionAnswer {
-  List<String> selectedAnswerStrings = [];
+  final List<String> selectedAnswerStrings;
 
-  MultiSelectQuestionAnswer(
+  const MultiSelectQuestionAnswer(
       {required super.id,
       required super.type,
       required this.selectedAnswerStrings});
+
+  @override
+  MultiSelectQuestionAnswer copyWith({
+    String? id,
+    QuestionType? type,
+    List<String>? selectedAnswerStrings,
+  }) {
+    return MultiSelectQuestionAnswer(
+      id: id ?? this.id,
+      type: type ?? this.type,
+      selectedAnswerStrings:
+          selectedAnswerStrings ?? this.selectedAnswerStrings,
+    );
+  }
 
   Map<String, dynamic> toJson() {
     return {

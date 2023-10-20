@@ -2,18 +2,31 @@ import 'package:equatable/equatable.dart';
 
 import 'models.dart';
 
-// ignore: must_be_immutable
 class CompanyInfo extends Equatable {
-  String name;
-  Address address;
-  Map<DayOfWeek, OpeningTime> openingDays;
-  String companyId;
+  final String name;
+  final Address address;
+  final Map<DayOfWeek, OpeningTime> openingDays;
+  final String companyId;
 
-  CompanyInfo(
+  const CompanyInfo(
       {required this.name,
       required this.address,
       required this.openingDays,
       required this.companyId});
+
+  CompanyInfo copyWith({
+    String? name,
+    Address? address,
+    Map<DayOfWeek, OpeningTime>? openingDays,
+    String? companyId,
+  }) {
+    return CompanyInfo(
+      name: name ?? this.name,
+      address: address ?? this.address,
+      openingDays: openingDays ?? this.openingDays,
+      companyId: companyId ?? this.companyId,
+    );
+  }
 
   Map<String, dynamic> toJson() {
     return {

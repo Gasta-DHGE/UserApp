@@ -2,12 +2,24 @@ import 'package:equatable/equatable.dart';
 import 'package:gasta_core/gasta_core.dart';
 import 'package:gasta_user_app/models/models.dart';
 
-// ignore: must_be_immutable
 class RatingTableQuestionAnswer extends QuestionAnswer {
-  List<RatingAnswer> ratingAnswers;
+  final List<RatingAnswer> ratingAnswers;
 
-  RatingTableQuestionAnswer(
+  const RatingTableQuestionAnswer(
       {required super.id, required super.type, required this.ratingAnswers});
+
+  @override
+  RatingTableQuestionAnswer copyWith({
+    String? id,
+    QuestionType? type,
+    List<RatingAnswer>? ratingAnswers,
+  }) {
+    return RatingTableQuestionAnswer(
+      id: id ?? this.id,
+      type: type ?? this.type,
+      ratingAnswers: ratingAnswers ?? this.ratingAnswers,
+    );
+  }
 
   Map<String, dynamic> toJson() {
     return {

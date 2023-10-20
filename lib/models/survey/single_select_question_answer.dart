@@ -2,14 +2,26 @@ import 'package:gasta_core/gasta_core.dart';
 
 import '../models.dart';
 
-// ignore: must_be_immutable
 class SingleSelectQuestionAnswer extends QuestionAnswer {
-  String selectedAnswerString = '';
+  final String selectedAnswerString;
 
-  SingleSelectQuestionAnswer(
+  const SingleSelectQuestionAnswer(
       {required super.id,
       required super.type,
       required this.selectedAnswerString});
+
+  @override
+  SingleSelectQuestionAnswer copyWith({
+    String? id,
+    QuestionType? type,
+    String? selectedAnswerString,
+  }) {
+    return SingleSelectQuestionAnswer(
+      id: id ?? this.id,
+      type: type ?? this.type,
+      selectedAnswerString: selectedAnswerString ?? this.selectedAnswerString,
+    );
+  }
 
   Map<String, dynamic> toJson() {
     return {

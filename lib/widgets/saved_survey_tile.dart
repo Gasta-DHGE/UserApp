@@ -8,7 +8,6 @@ import '../controller/controller.dart';
 import '../dependency_provider.dart';
 import '../page/pages.dart';
 
-// ignore: must_be_immutable
 class SavedSurveyTile extends StatelessWidget {
   SurveyData survey;
   SavedSurveyTile({super.key, required this.survey});

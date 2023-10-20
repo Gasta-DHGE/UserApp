@@ -19,6 +19,27 @@ class Address extends Equatable {
     required this.posLatitude,
   });
 
+  Address copyWith({
+    String? city,
+    String? street,
+    int? streetNumber,
+    String? additionalInformation,
+    String? postcode,
+    double? posLongitude,
+    double? posLatitude,
+  }) {
+    return Address(
+      city: city ?? this.city,
+      street: street ?? this.street,
+      streetNumber: streetNumber ?? this.streetNumber,
+      additionalInformation:
+          additionalInformation ?? this.additionalInformation,
+      postcode: postcode ?? this.postcode,
+      posLongitude: posLongitude ?? this.posLongitude,
+      posLatitude: posLatitude ?? this.posLatitude,
+    );
+  }
+
   static Address fromJson(Map<String, dynamic> json) {
     return Address(
       city: json['city'],

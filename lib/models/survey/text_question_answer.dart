@@ -2,12 +2,24 @@ import 'package:gasta_core/gasta_core.dart';
 
 import '../models.dart';
 
-// ignore: must_be_immutable
 class TextQuestionAnswer extends QuestionAnswer {
-  String answer = '';
+  final String answer;
 
-  TextQuestionAnswer(
+  const TextQuestionAnswer(
       {required super.id, required super.type, required this.answer});
+
+  @override
+  TextQuestionAnswer copyWith({
+    String? id,
+    QuestionType? type,
+    String? answer,
+  }) {
+    return TextQuestionAnswer(
+      id: id ?? this.id,
+      type: type ?? this.type,
+      answer: answer ?? this.answer,
+    );
+  }
 
   Map<String, dynamic> toJson() {
     return {
