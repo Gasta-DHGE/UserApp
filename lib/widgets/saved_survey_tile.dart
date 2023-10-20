@@ -8,6 +8,7 @@ import '../controller/controller.dart';
 import '../dependency_provider.dart';
 import '../page/pages.dart';
 
+// ignore: must_be_immutable
 class SavedSurveyTile extends StatelessWidget {
   SurveyData survey;
   SavedSurveyTile({super.key, required this.survey});
@@ -30,7 +31,7 @@ class SavedSurveyTile extends StatelessWidget {
                 survey: survey.survey,
                 answer: survey.answer,
                 onSavePressed: (value) async {
-                  survey.answer = value;
+                  survey = survey.copyWith(answer: value);
                   DependencyProvider.instance.saveService.saveSurveyAsync(
                       DependencyProvider
                           .instance.authenticationService.firebaseUser.uid,
@@ -38,7 +39,7 @@ class SavedSurveyTile extends StatelessWidget {
                   Navigator.pop(context);
                 },
                 onSendPressed: (value) {
-                  survey.answer = value;
+                  survey = survey.copyWith(answer: value);
                   Navigator.pop(context);
                   Navigator.push(
                     context,
@@ -51,7 +52,7 @@ class SavedSurveyTile extends StatelessWidget {
                   );
                 },
                 onValueChanged: (value) {
-                  survey.answer = value;
+                  survey = survey.copyWith(answer: value);
                 },
               ),
             ),

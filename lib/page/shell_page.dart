@@ -21,8 +21,7 @@ class _ShellPage extends State<ShellPage> {
   Widget build(BuildContext context) {
     switch (_currentpage) {
       case 0:
-        _content = CouponPage(
-            controller: DependencyProvider.instance.couponPageController);
+        _content = CouponPage();
         break;
       case 1:
         _content = ScannerPage(

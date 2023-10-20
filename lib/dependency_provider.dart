@@ -16,10 +16,6 @@ class DependencyProvider {
 
     _appPageController =
         AppPageController(authenticationService: _authenticationService);
-    _couponPageController = CouponPageController(
-        authenticationService: _authenticationService,
-        couponService: _couponService,
-        saveService: _saveService);
     _loginPageController =
         LoginPageController(authenticationService: _authenticationService);
     _mapPageController = MapPageController();
@@ -66,9 +62,6 @@ class DependencyProvider {
 
   late AppPageController _appPageController;
   AppPageController get appPageController => _appPageController;
-
-  late CouponPageController _couponPageController;
-  CouponPageController get couponPageController => _couponPageController;
 
   late LoginPageController _loginPageController;
   LoginPageController get loginPageController => _loginPageController;
