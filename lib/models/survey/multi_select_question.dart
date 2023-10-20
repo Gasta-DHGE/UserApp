@@ -1,6 +1,7 @@
 import 'package:gasta_core/gasta_core.dart';
 import 'package:gasta_user_app/models/survey/question.dart';
 
+// ignore: must_be_immutable
 class MultiSelectQuestion extends Question {
   List<String> options;
 
@@ -37,4 +38,14 @@ class MultiSelectQuestion extends Question {
           (json['options'] as List<dynamic>).map((e) => e.toString()).toList(),
     );
   }
+
+  @override
+  List<Object?> get props => [
+        id,
+        isOptional,
+        type,
+        title,
+        description,
+        options,
+      ];
 }

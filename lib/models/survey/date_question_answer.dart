@@ -1,6 +1,7 @@
 import 'package:gasta_core/gasta_core.dart';
 import 'package:gasta_user_app/models/models.dart';
 
+// ignore: must_be_immutable
 class DateQuestionAnswer extends QuestionAnswer {
   DateTime date;
 
@@ -23,4 +24,11 @@ class DateQuestionAnswer extends QuestionAnswer {
             .first,
         date: Util.getDateTimeBySecondsTimeStamp(json['date']));
   }
+
+  @override
+  List<Object?> get props => [
+        id,
+        type,
+        date,
+      ];
 }

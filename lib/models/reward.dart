@@ -1,6 +1,8 @@
+import 'package:equatable/equatable.dart';
 import 'package:gasta_core/gasta_core.dart';
 
-abstract class Reward {
+// ignore: must_be_immutable
+abstract class Reward extends Equatable {
   String name;
   String description;
   SurveyRewardType type;
@@ -14,6 +16,7 @@ abstract class Reward {
   Map<String, dynamic> toJson();
 }
 
+// ignore: must_be_immutable
 class ItemDiscountReward extends Reward {
   String discountItem;
   double discount;
@@ -48,8 +51,18 @@ class ItemDiscountReward extends Reward {
       discount: json['discount'],
     );
   }
+
+  @override
+  List<Object?> get props => [
+        name,
+        description,
+        type,
+        discountItem,
+        discount,
+      ];
 }
 
+// ignore: must_be_immutable
 class FreeItemReward extends Reward {
   String item;
 
@@ -80,4 +93,12 @@ class FreeItemReward extends Reward {
       item: json['item'],
     );
   }
+
+  @override
+  List<Object?> get props => [
+        name,
+        description,
+        type,
+        item,
+      ];
 }

@@ -1,14 +1,15 @@
+import 'package:equatable/equatable.dart';
 import 'package:gasta_core/gasta_core.dart';
 
 import '../models.dart';
 
-class SurveyAnswer {
+class SurveyAnswer extends Equatable {
   final String id;
   final int version;
   final int rewardChoiceIndex;
   final List<QuestionAnswer> answers;
 
-  SurveyAnswer({
+  const SurveyAnswer({
     required this.id,
     required this.version,
     required this.rewardChoiceIndex,
@@ -94,4 +95,12 @@ class SurveyAnswer {
       answers: answers,
     );
   }
+
+  @override
+  List<Object?> get props => [
+        id,
+        version,
+        rewardChoiceIndex,
+        answers,
+      ];
 }

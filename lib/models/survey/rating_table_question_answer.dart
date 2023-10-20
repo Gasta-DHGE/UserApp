@@ -1,6 +1,8 @@
+import 'package:equatable/equatable.dart';
 import 'package:gasta_core/gasta_core.dart';
 import 'package:gasta_user_app/models/models.dart';
 
+// ignore: must_be_immutable
 class RatingTableQuestionAnswer extends QuestionAnswer {
   List<RatingAnswer> ratingAnswers;
 
@@ -29,9 +31,17 @@ class RatingTableQuestionAnswer extends QuestionAnswer {
       ratingAnswers: answers,
     );
   }
+
+  @override
+  List<Object?> get props => [
+        id,
+        type,
+        ratingAnswers,
+      ];
 }
 
-class RatingAnswer {
+// ignore: must_be_immutable
+class RatingAnswer extends Equatable {
   String ratingQuestion;
   String rating;
 
@@ -48,4 +58,10 @@ class RatingAnswer {
     return RatingAnswer(
         ratingQuestion: json['ratingQuestion'], rating: json['rating']);
   }
+
+  @override
+  List<Object?> get props => [
+        ratingQuestion,
+        rating,
+      ];
 }

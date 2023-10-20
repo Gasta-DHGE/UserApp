@@ -1,6 +1,7 @@
 import 'package:gasta_core/gasta_core.dart';
 import 'package:gasta_user_app/models/survey/question.dart';
 
+// ignore: must_be_immutable
 class TextQuestion extends Question {
   TextQuestion({
     required super.id,
@@ -31,4 +32,13 @@ class TextQuestion extends Question {
       description: json['description'],
     );
   }
+
+  @override
+  List<Object?> get props => [
+        id,
+        isOptional,
+        type,
+        title,
+        description,
+      ];
 }

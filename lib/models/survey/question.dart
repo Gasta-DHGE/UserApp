@@ -1,6 +1,8 @@
+import 'package:equatable/equatable.dart';
 import 'package:gasta_core/gasta_core.dart';
 
-abstract class Question {
+// ignore: must_be_immutable
+abstract class Question extends Equatable {
   String id;
   bool isOptional;
   QuestionType type;

@@ -2,6 +2,7 @@ import 'package:gasta_core/gasta_core.dart';
 
 import '../models.dart';
 
+// ignore: must_be_immutable
 class MultiSelectQuestionAnswer extends QuestionAnswer {
   List<String> selectedAnswerStrings = [];
 
@@ -29,4 +30,11 @@ class MultiSelectQuestionAnswer extends QuestionAnswer {
           .toList(),
     );
   }
+
+  @override
+  List<Object?> get props => [
+        id,
+        type,
+        selectedAnswerStrings,
+      ];
 }

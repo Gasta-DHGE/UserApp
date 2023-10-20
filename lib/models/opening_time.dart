@@ -1,6 +1,8 @@
+import 'package:equatable/equatable.dart';
 import 'package:gasta_core/gasta_core.dart';
 
-class OpeningTime {
+// ignore: must_be_immutable
+class OpeningTime extends Equatable {
   bool isOpen;
   DateTime from;
   DateTime to;
@@ -30,4 +32,11 @@ class OpeningTime {
       ),
     );
   }
+
+  @override
+  List<Object?> get props => [
+        isOpen,
+        from,
+        to,
+      ];
 }

@@ -1,6 +1,7 @@
 import 'package:gasta_core/gasta_core.dart';
 import 'package:gasta_user_app/models/models.dart';
 
+// ignore: must_be_immutable
 class NumberRatingQuestionAnswer extends QuestionAnswer {
   int ratedNumber;
 
@@ -24,4 +25,11 @@ class NumberRatingQuestionAnswer extends QuestionAnswer {
       ratedNumber: json['ratedNumber'],
     );
   }
+
+  @override
+  List<Object?> get props => [
+        id,
+        type,
+        ratedNumber,
+      ];
 }

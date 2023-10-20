@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gasta_core/gasta_core.dart';
 import 'package:gasta_user_app/models/models.dart';
 
+// ignore: must_be_immutable
 class DateAndTimeQuestionAnswer extends QuestionAnswer {
   DateTime date;
   TimeOfDay time;
@@ -41,4 +42,13 @@ class DateAndTimeQuestionAnswer extends QuestionAnswer {
       timeSpent: json['timeSpent'],
     );
   }
+
+  @override
+  List<Object?> get props => [
+        id,
+        type,
+        date,
+        time,
+        timeSpent,
+      ];
 }

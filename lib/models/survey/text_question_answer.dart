@@ -2,6 +2,7 @@ import 'package:gasta_core/gasta_core.dart';
 
 import '../models.dart';
 
+// ignore: must_be_immutable
 class TextQuestionAnswer extends QuestionAnswer {
   String answer = '';
 
@@ -25,4 +26,11 @@ class TextQuestionAnswer extends QuestionAnswer {
       answer: json['answer'],
     );
   }
+
+  @override
+  List<Object?> get props => [
+        id,
+        type,
+        answer,
+      ];
 }

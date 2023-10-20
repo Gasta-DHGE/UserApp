@@ -1,8 +1,10 @@
+import 'package:equatable/equatable.dart';
 import 'package:gasta_core/gasta_core.dart';
 
 import '../models.dart';
 
-class Survey {
+// ignore: must_be_immutable
+class Survey extends Equatable {
   String id;
   String userId;
   String companyId;
@@ -162,6 +164,7 @@ class Survey {
         json['rewardExpirationDate'] as int,
       ),
       rewardVariant: SurveyRewardVariantType.values.contains(
+              // ignore: iterable_contains_unrelated_type
               (element) => element.toString() == json['rewardVariant'])
           ? SurveyRewardVariantType.values
               .where((element) => element.toString() == json['rewardVariant'])
@@ -171,4 +174,23 @@ class Survey {
       questionsAreInFixedOrder: json['questionAreInFixedOrder'],
     );
   }
+
+  @override
+  List<Object?> get props => [
+        id,
+        userId,
+        companyId,
+        version,
+        name,
+        description,
+        startDate,
+        endDate,
+        createdDate,
+        lastModifiedDate,
+        rewards,
+        rewardExpirationDate,
+        rewardVariant,
+        questions,
+        questionsAreInFixedOrder,
+      ];
 }

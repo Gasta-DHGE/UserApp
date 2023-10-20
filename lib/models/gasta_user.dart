@@ -1,8 +1,10 @@
+import 'package:equatable/equatable.dart';
 import 'package:gasta_core/gasta_core.dart';
 
 import 'models.dart';
 
-class GastaUser {
+// ignore: must_be_immutable
+class GastaUser extends Equatable {
   String firstName;
   String lastName;
   DateTime birthDate;
@@ -45,4 +47,14 @@ class GastaUser {
       'address': address.toJson(),
     };
   }
+
+  @override
+  List<Object?> get props => [
+        firstName,
+        lastName,
+        birthDate,
+        gender,
+        diet,
+        address,
+      ];
 }

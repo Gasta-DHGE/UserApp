@@ -1,6 +1,9 @@
+import 'package:equatable/equatable.dart';
+
 import 'models.dart';
 
-class CompanyInfo {
+// ignore: must_be_immutable
+class CompanyInfo extends Equatable {
   String name;
   Address address;
   Map<DayOfWeek, OpeningTime> openingDays;
@@ -29,6 +32,14 @@ class CompanyInfo {
       companyId: json['companyId'],
     );
   }
+
+  @override
+  List<Object?> get props => [
+        name,
+        address,
+        openingDays,
+        companyId,
+      ];
 }
 
 enum DayOfWeek {

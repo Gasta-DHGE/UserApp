@@ -1,8 +1,10 @@
+import 'package:equatable/equatable.dart';
 import 'package:gasta_core/gasta_core.dart';
 
 import 'models.dart';
 
-class Coupon {
+// ignore: must_be_immutable
+class Coupon extends Equatable {
   String id;
   String surveyId;
   DateTime expiringDate;
@@ -51,4 +53,13 @@ class Coupon {
       companyInfo: CompanyInfo.fromJson(json['companyInfo']),
     );
   }
+
+  @override
+  List<Object?> get props => [
+        id,
+        surveyId,
+        expiringDate,
+        reward,
+        companyInfo,
+      ];
 }

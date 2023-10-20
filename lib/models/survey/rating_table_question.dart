@@ -1,6 +1,7 @@
 import 'package:gasta_core/gasta_core.dart';
 import 'package:gasta_user_app/models/models.dart';
 
+// ignore: must_be_immutable
 class RatingTableQuestion extends Question {
   List<String> ratingHeaders;
   List<String> ratingQuestions;
@@ -43,4 +44,15 @@ class RatingTableQuestion extends Question {
           .toList(),
     );
   }
+
+  @override
+  List<Object?> get props => [
+        id,
+        isOptional,
+        type,
+        title,
+        description,
+        ratingHeaders,
+        ratingQuestions,
+      ];
 }

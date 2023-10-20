@@ -1,6 +1,7 @@
 import 'package:gasta_core/gasta_core.dart';
 import 'package:gasta_user_app/models/models.dart';
 
+// ignore: must_be_immutable
 class DateAndTimeQuestion extends Question {
   DateAndTimeQuestion(
       {required super.id,
@@ -30,4 +31,13 @@ class DateAndTimeQuestion extends Question {
       description: json['description'],
     );
   }
+
+  @override
+  List<Object?> get props => [
+        id,
+        isOptional,
+        type,
+        title,
+        description,
+      ];
 }
