@@ -69,39 +69,15 @@ class AuthenticationService
   }
 
   @override
-  Future<Result> signupAsync(String email, String password) async {
-    try {
-      await _firebaseAuth.createUserWithEmailAndPassword(
-          email: email, password: password);
-      return Result.success;
-    } on FirebaseAuthException catch (e) {
-      if (e.code == "network-request-failed") {
-        return Result.noConnection;
-      }
-      if (e.code == "email-already-in-use") {
-        return Result.alreadyInUse;
-      }
-      return Result.invalid;
-    } catch (e) {
-      return Result.unknown;
-    }
+  Future<void> signupAsync(String email, String password) async {
+    await _firebaseAuth.createUserWithEmailAndPassword(
+        email: email, password: password);
   }
 
   @override
-  Future<Result> loginAsync(String email, String password) async {
-    try {
-      await _firebaseAuth.signInWithEmailAndPassword(
-          email: email, password: password);
-      return Result.success;
-    } on FirebaseAuthException catch (e) {
-      if (e.code == "network-request-failed") {
-        return Result.noConnection;
-      }
-
-      return Result.invalid;
-    } catch (e) {
-      return Result.unknown;
-    }
+  Future<void> loginAsync(String email, String password) async {
+    await _firebaseAuth.signInWithEmailAndPassword(
+        email: email, password: password);
   }
 
   @override

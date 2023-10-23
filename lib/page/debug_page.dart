@@ -1,6 +1,7 @@
+// ignore_for_file: unused_local_variable
+
 import 'package:flutter/material.dart';
 import 'package:gasta_core/gasta_core.dart' as core;
-import 'package:gasta_user_app/controller/controller.dart';
 import 'package:gasta_user_app/services/services.dart';
 
 import '../models/models.dart';
@@ -139,7 +140,6 @@ class _DebugPage extends State<DebugPage> {
                 context,
                 MaterialPageRoute(
                   builder: (context) => SurveyPage(
-                    controller: SurveyPageController(),
                     survey: survey,
                     answer: surveyAnswer,
                     onValueChanged: (value) => surveyAnswer = value,

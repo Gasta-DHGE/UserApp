@@ -4,7 +4,6 @@ import 'package:gasta_user_app/models/models.dart';
 import 'package:gasta_user_app/services/mapping_service.dart';
 import 'package:uuid/uuid.dart';
 
-import '../controller/controller.dart';
 import '../dependency_provider.dart';
 import '../page/pages.dart';
 
@@ -27,7 +26,6 @@ class SavedSurveyTile extends StatelessWidget {
             context,
             MaterialPageRoute(
               builder: (context) => SurveyPage(
-                controller: SurveyPageController(),
                 survey: survey.survey,
                 answer: survey.answer,
                 onSavePressed: (value) async {

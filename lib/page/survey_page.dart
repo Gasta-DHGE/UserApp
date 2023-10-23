@@ -2,12 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:gasta_core/gasta_core.dart' as core;
 import 'package:gasta_user_app/services/mapping_service.dart';
 
-import '../controller/controller.dart';
 import '../models/models.dart';
 
 // ignore: must_be_immutable
 class SurveyPage extends StatefulWidget {
-  SurveyPageController controller;
   late Survey _survey;
   SurveyAnswer? _answer;
   ValueChanged<SurveyAnswer>? _onValueChanged;
@@ -15,7 +13,6 @@ class SurveyPage extends StatefulWidget {
   ValueChanged<SurveyAnswer>? _onSavePressed;
   SurveyPage(
       {super.key,
-      required this.controller,
       required Survey survey,
       SurveyAnswer? answer,
       ValueChanged<SurveyAnswer>? onValueChanged,
@@ -44,17 +41,17 @@ class _SurveyPage extends State<SurveyPage> {
                   widget._answer!)
               : null,
           onValueChanged: (value) {
-            widget._onValueChanged!.call(
+            widget._onValueChanged?.call(
                 MappingService.map<core.SurveyAnswerModel, SurveyAnswer>(
                     core.SurveyAnswerModel.fromEntity(value)));
           },
           onSendPressed: (value) {
-            widget._onSendPressed!.call(
+            widget._onSendPressed?.call(
                 MappingService.map<core.SurveyAnswerModel, SurveyAnswer>(
                     core.SurveyAnswerModel.fromEntity(value)));
           },
           onSavePressed: (value) {
-            widget._onSavePressed!.call(
+            widget._onSavePressed?.call(
                 MappingService.map<core.SurveyAnswerModel, SurveyAnswer>(
                     core.SurveyAnswerModel.fromEntity(value)));
           },

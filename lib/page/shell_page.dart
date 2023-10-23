@@ -6,8 +6,7 @@ import 'package:gasta_user_app/page/pages.dart';
 import '../controller/controller.dart';
 
 class ShellPage extends StatefulWidget {
-  final ShellPageController controller;
-  const ShellPage({super.key, required this.controller});
+  const ShellPage({super.key});
 
   @override
   State<StatefulWidget> createState() => _ShellPage();
@@ -21,31 +20,24 @@ class _ShellPage extends State<ShellPage> {
   Widget build(BuildContext context) {
     switch (_currentpage) {
       case 0:
-        _content = CouponPage();
+        _content = const CouponPage();
         break;
       case 1:
-        _content = ScannerPage(
-            controller: DependencyProvider.instance.scannerPageController);
+        _content = const ScannerPage();
         break;
       case 2:
-        _content =
-            MapPage(controller: DependencyProvider.instance.mapPageController);
+        _content = const MapPage();
         break;
       case 3:
-        _content = SettingsPage(
-            controller: DependencyProvider.instance.settingsPageController);
-        break;
-      case 4:
-        _content = DebugPage(
-          data: null,
-        );
+        _content = const SettingsPage();
         break;
     }
 
     return ListenableBuilder(
-      listenable: widget.controller.authenticationService,
+      listenable: DependencyProvider.instance.authenticationService,
       builder: (BuildContext context, Widget? child) {
-        return widget.controller.authenticationService.hasGastaUserData
+        return DependencyProvider
+                .instance.authenticationService.hasGastaUserData
             ? Scaffold(
                 bottomNavigationBar: NavigationBar(
                   selectedIndex: _currentpage,
@@ -66,8 +58,6 @@ class _ShellPage extends State<ShellPage> {
                         icon: Icon(Icons.settings),
                         label: "Settings",
                         tooltip: ""),
-                    /*NavigationDestination(
-                        icon: Icon(Icons.error), label: "Testing", tooltip: ""),*/
                   ],
                 ),
                 body: SafeArea(

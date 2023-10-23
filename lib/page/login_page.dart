@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gasta_core/gasta_core.dart';
 import 'package:gasta_core/gasta_core.dart' as core;
+import 'package:gasta_user_app/bloc/bloc.dart';
 import 'package:gasta_user_app/controller/signup_page_controller.dart';
 import 'package:gasta_user_app/dependency_provider.dart';
 import 'package:gasta_user_app/page/pages.dart';
 
-import '../controller/login_page_controller.dart';
-import '../services/result.dart';
-
-// ignore: must_be_immutable
 class LoginPage extends StatefulWidget {
-  LoginPageController controller;
-  LoginPage({super.key, required this.controller});
+  final TextEditingController usernameController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
+  LoginPage({super.key});
 
   @override
   State<StatefulWidget> createState() => _LoginPage();
@@ -32,27 +32,28 @@ class _LoginPage extends State<LoginPage> {
                 style: Styles.bigHeadlineTextStyle(context),
               ),
               Expanded(
-                child: Container(
-                  alignment: Alignment.center,
-                  child: ValueListenableBuilder(
-                    valueListenable: widget.controller.isLoading,
-                    builder: (BuildContext context, bool value, Widget? child) {
-                      return widget.controller.isLoading.value
-                          ? const CircularProgressIndicator()
-                          : Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Visibility(
-                                  visible: widget.controller
-                                          .lastAuthenticationResult !=
-                                      Result.success,
-                                  child: Padding(
+                child: BlocBuilder<LoginBloc, LoginState>(
+                  builder: (context, state) {
+                    if (state is LoginLoading) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+
+                    if (state is LoginDefault || state is LoginError) {
+                      return Container(
+                        alignment: Alignment.center,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            state is LoginError
+                                ? Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: SizedBox(
                                       width: 300,
                                       child: Text(
-                                        widget.controller.errorString,
+                                        state.errorString,
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
                                           color: Theme.of(context)
@@ -61,73 +62,93 @@ class _LoginPage extends State<LoginPage> {
                                         ),
                                       ),
                                     ),
-                                  ),
+                                  )
+                                : Container(),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: SizedBox(
+                                width: 300,
+                                child: TextField(
+                                  controller: widget.usernameController,
+                                  onChanged: (value) =>
+                                      widget.usernameController.text = value,
+                                  decoration: const InputDecoration(
+                                      labelText: 'Username'),
                                 ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: SizedBox(
+                                width: 300,
+                                child: TextField(
+                                  controller: widget.passwordController,
+                                  onChanged: (value) =>
+                                      widget.passwordController.text = value,
+                                  obscureText: true,
+                                  decoration: const InputDecoration(
+                                      labelText: 'Password'),
+                                ),
+                              ),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
                                 Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: SizedBox(
-                                    width: 300,
-                                    child: TextField(
-                                      controller: TextEditingController(
-                                          text: widget.controller.username),
-                                      onChanged: (value) =>
-                                          widget.controller.username = value,
-                                      decoration: const InputDecoration(
-                                          labelText: 'Username'),
-                                    ),
+                                  padding: const EdgeInsets.only(right: 8.0),
+                                  child: core.OutlinedButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => SignupPage(
+                                            controller: SignupPageController(
+                                                authenticationService:
+                                                    DependencyProvider.instance
+                                                        .authenticationService),
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    child: const Text("Sign Up"),
                                   ),
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: SizedBox(
-                                    width: 300,
-                                    child: TextField(
-                                      controller: TextEditingController(
-                                          text: widget.controller.password),
-                                      onChanged: (value) =>
-                                          widget.controller.password = value,
-                                      obscureText: true,
-                                      decoration: const InputDecoration(
-                                          labelText: 'Password'),
-                                    ),
-                                  ),
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Padding(
-                                      padding:
-                                          const EdgeInsets.only(right: 8.0),
-                                      child: core.OutlinedButton(
-                                        onPressed: () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) => SignupPage(
-                                                controller: SignupPageController(
-                                                    authenticationService:
-                                                        DependencyProvider
-                                                            .instance
-                                                            .authenticationService),
-                                              ),
-                                            ),
-                                          );
-                                        },
-                                        child: const Text("Sign Up"),
-                                      ),
-                                    ),
-                                    DefaultButton(
-                                      onPressed: () {
-                                        widget.controller.loginAsync();
-                                      },
-                                      child: const Text("Login"),
-                                    ),
-                                  ],
+                                DefaultButton(
+                                  onPressed: () {
+                                    context.read<LoginBloc>().add(
+                                          Login(
+                                            username:
+                                                widget.usernameController.text,
+                                            password:
+                                                widget.passwordController.text,
+                                          ),
+                                        );
+                                  },
+                                  child: const Text("Login"),
                                 ),
                               ],
-                            );
-                    },
-                  ),
+                            ),
+                          ],
+                        ),
+                      );
+                    }
+
+                    return Center(
+                      child: Column(
+                        children: [
+                          const Text('Something went wrong'),
+                          core.OutlinedButton(
+                            onPressed: () {
+                              context.read<LoginBloc>().add(
+                                    Logout(),
+                                  );
+                            },
+                            child: const Text('Logout'),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
                 ),
               )
             ],

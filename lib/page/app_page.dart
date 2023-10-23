@@ -1,17 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gasta_user_app/controller/app_page_controller.dart';
-import 'package:gasta_user_app/controller/controller.dart';
 import 'package:gasta_user_app/dependency_provider.dart';
 import 'package:gasta_user_app/page/login_page.dart';
 import 'package:gasta_user_app/page/shell_page.dart';
 
 import '../bloc/bloc.dart';
 
-// ignore: must_be_immutable
 class AppPage extends StatefulWidget {
-  AppPageController controller;
-  AppPage({super.key, required this.controller});
+  const AppPage({super.key});
 
   @override
   State<StatefulWidget> createState() => _AppPage();
@@ -22,6 +18,7 @@ class _AppPage extends State<AppPage> {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider(create: (context) => LoginBloc()),
         BlocProvider(
           create: (context) => CouponsBloc()
             ..add(
@@ -40,18 +37,14 @@ class _AppPage extends State<AppPage> {
               ),
             ),
         ),
+        BlocProvider(create: (context) => ScannerBloc()),
       ],
       child: ListenableBuilder(
-        listenable: widget.controller.authenticationService,
+        listenable: DependencyProvider.instance.authenticationService,
         builder: (context, child) {
-          return widget.controller.authenticationService.isLoggedIn
-              ? ShellPage(
-                  controller: DependencyProvider.instance.shellPageController)
-              : LoginPage(
-                  controller: LoginPageController(
-                      authenticationService:
-                          DependencyProvider.instance.authenticationService),
-                );
+          return DependencyProvider.instance.authenticationService.isLoggedIn
+              ? const ShellPage()
+              : LoginPage();
         },
       ),
     );

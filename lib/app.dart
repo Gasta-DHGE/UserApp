@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gasta_core/gasta_core.dart';
-import 'package:gasta_user_app/dependency_provider.dart';
 import 'package:gasta_user_app/page/pages.dart';
 
 class App extends StatefulWidget {
@@ -17,7 +16,7 @@ class _App extends State<App> {
       themeMode: ThemeMode.system,
       theme: Themes.lightTheme,
       darkTheme: Themes.darkTheme,
-      home: AppPage(controller: DependencyProvider.instance.appPageController),
+      home: const AppPage(),
     );
   }
 }

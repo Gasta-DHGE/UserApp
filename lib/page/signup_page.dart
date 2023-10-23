@@ -117,11 +117,10 @@ class _SignupPage extends State<SignupPage> {
                                 widget.controller.isRepeatedPasswordValid
                             ? () async {
                                 widget.controller.isLoading = true;
-                                widget.controller.lastSignupResult =
-                                    await widget
-                                        .controller.authenticationService
-                                        .signupAsync(widget.controller.username,
-                                            widget.controller.password);
+
+                                await widget.controller.authenticationService
+                                    .signupAsync(widget.controller.username,
+                                        widget.controller.password);
                                 widget.controller.isLoading = false;
                                 if (widget.controller.lastSignupResult ==
                                     Result.success) {

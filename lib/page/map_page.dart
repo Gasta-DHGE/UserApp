@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gasta_core/gasta_core.dart';
-import 'package:gasta_user_app/controller/map_page_controller.dart';
 
 class MapPage extends StatefulWidget {
-  final MapPageController controller;
-  const MapPage({super.key, required this.controller});
+  const MapPage({super.key});
 
   @override
   State<StatefulWidget> createState() => _MapPage();

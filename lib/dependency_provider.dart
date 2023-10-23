@@ -14,20 +14,6 @@ class DependencyProvider {
     _couponService = CouponService();
     _authenticationService = AuthenticationService(userService: _userService);
 
-    _appPageController =
-        AppPageController(authenticationService: _authenticationService);
-    _loginPageController =
-        LoginPageController(authenticationService: _authenticationService);
-    _mapPageController = MapPageController();
-    _scannerPageController = ScannerPageController(
-        authenticationService: _authenticationService,
-        surveyService: _surveyService,
-        saveService: _saveService);
-    _settingsPageController =
-        SettingsPageController(authenticationService: _authenticationService);
-    _shellPageController =
-        ShellPageController(authenticationService: _authenticationService);
-    _surveyPageController = SurveyPageController();
     _createUserDataPageController = CreateUserDataPageController(
         authenticationService: _authenticationService,
         userService: _userService);
@@ -59,27 +45,6 @@ class DependencyProvider {
 
   late ISaveService _saveService;
   ISaveService get saveService => _saveService;
-
-  late AppPageController _appPageController;
-  AppPageController get appPageController => _appPageController;
-
-  late LoginPageController _loginPageController;
-  LoginPageController get loginPageController => _loginPageController;
-
-  late MapPageController _mapPageController;
-  MapPageController get mapPageController => _mapPageController;
-
-  late ScannerPageController _scannerPageController;
-  ScannerPageController get scannerPageController => _scannerPageController;
-
-  late SettingsPageController _settingsPageController;
-  SettingsPageController get settingsPageController => _settingsPageController;
-
-  late ShellPageController _shellPageController;
-  ShellPageController get shellPageController => _shellPageController;
-
-  late SurveyPageController _surveyPageController;
-  SurveyPageController get surveyPageController => _surveyPageController;
 
   late SignupPageController _signupPageController;
   SignupPageController get signupPageController => _signupPageController;

@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gasta_core/gasta_core.dart';
+import 'package:gasta_user_app/bloc/bloc.dart';
 
-import '../controller/settings_page_controller.dart';
-
-// ignore: must_be_immutable
 class SettingsPage extends StatefulWidget {
-  SettingsPageController controller;
-  SettingsPage({super.key, required this.controller});
+  const SettingsPage({super.key});
 
   @override
   State<StatefulWidget> createState() => _SettingsPage();
@@ -28,16 +26,18 @@ class _SettingsPage extends State<SettingsPage> {
           Expanded(
             child: Container(
               alignment: Alignment.bottomRight,
-              child: widget.controller.isLoading.value
-                  ? const CircularProgressIndicator()
-                  : DefaultButton(
-                      onPressed: () {
-                        setState(() {
-                          widget.controller.logoutAsync();
-                        });
-                      },
-                      child: const Text("Logout"),
-                    ),
+              child: BlocBuilder<LoginBloc, LoginState>(
+                builder: (context, state) {
+                  return DefaultButton(
+                    onPressed: () {
+                      context.read<LoginBloc>().add(
+                            Logout(),
+                          );
+                    },
+                    child: const Text("Logout"),
+                  );
+                },
+              ),
             ),
           )
         ],

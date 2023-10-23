@@ -7,7 +7,7 @@ import '../models/models.dart';
 
 class TestSurveyService extends ISurveyService {
   @override
-  Future<Survey?> getSurveyByIdAsync(String userId, String surveyId) async {
+  Future<Survey> getSurveyByIdAsync(String userId, String surveyId) async {
     await Future.delayed(const Duration(seconds: 1));
 
     var options = ["Option 1", "Option 2", "Option 3", "Option 4"];
