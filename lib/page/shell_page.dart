@@ -3,8 +3,6 @@ import 'package:gasta_user_app/dependency_provider.dart';
 import 'package:gasta_user_app/page/create_user_data_page.dart';
 import 'package:gasta_user_app/page/pages.dart';
 
-import '../controller/controller.dart';
-
 class ShellPage extends StatefulWidget {
   const ShellPage({super.key});
 
@@ -64,12 +62,7 @@ class _ShellPage extends State<ShellPage> {
                   child: _content!,
                 ),
               )
-            : CreateUserDataPage(
-                controller: CreateUserDataPageController(
-                    authenticationService:
-                        DependencyProvider.instance.authenticationService,
-                    userService: DependencyProvider.instance.userService),
-              );
+            : const CreateUserDataPage();
       },
     );
   }

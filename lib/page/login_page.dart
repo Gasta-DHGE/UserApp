@@ -3,21 +3,19 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gasta_core/gasta_core.dart';
 import 'package:gasta_core/gasta_core.dart' as core;
 import 'package:gasta_user_app/bloc/bloc.dart';
-import 'package:gasta_user_app/controller/signup_page_controller.dart';
-import 'package:gasta_user_app/dependency_provider.dart';
 import 'package:gasta_user_app/page/pages.dart';
 
 class LoginPage extends StatefulWidget {
-  final TextEditingController usernameController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-
-  LoginPage({super.key});
+  const LoginPage({super.key});
 
   @override
   State<StatefulWidget> createState() => _LoginPage();
 }
 
 class _LoginPage extends State<LoginPage> {
+  final TextEditingController usernameController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,9 +67,7 @@ class _LoginPage extends State<LoginPage> {
                               child: SizedBox(
                                 width: 300,
                                 child: TextField(
-                                  controller: widget.usernameController,
-                                  onChanged: (value) =>
-                                      widget.usernameController.text = value,
+                                  controller: usernameController,
                                   decoration: const InputDecoration(
                                       labelText: 'Username'),
                                 ),
@@ -82,9 +78,7 @@ class _LoginPage extends State<LoginPage> {
                               child: SizedBox(
                                 width: 300,
                                 child: TextField(
-                                  controller: widget.passwordController,
-                                  onChanged: (value) =>
-                                      widget.passwordController.text = value,
+                                  controller: passwordController,
                                   obscureText: true,
                                   decoration: const InputDecoration(
                                       labelText: 'Password'),
@@ -98,14 +92,11 @@ class _LoginPage extends State<LoginPage> {
                                   padding: const EdgeInsets.only(right: 8.0),
                                   child: core.OutlinedButton(
                                     onPressed: () {
-                                      Navigator.push(
-                                        context,
+                                      Navigator.of(context).push(
                                         MaterialPageRoute(
-                                          builder: (context) => SignupPage(
-                                            controller: SignupPageController(
-                                                authenticationService:
-                                                    DependencyProvider.instance
-                                                        .authenticationService),
+                                          builder: (context) => BlocProvider(
+                                            create: (context) => SignUpBloc(),
+                                            child: const SignupPage(),
                                           ),
                                         ),
                                       );
@@ -117,10 +108,8 @@ class _LoginPage extends State<LoginPage> {
                                   onPressed: () {
                                     context.read<LoginBloc>().add(
                                           Login(
-                                            username:
-                                                widget.usernameController.text,
-                                            password:
-                                                widget.passwordController.text,
+                                            username: usernameController.text,
+                                            password: passwordController.text,
                                           ),
                                         );
                                   },

@@ -1,6 +1,5 @@
 // ignore_for_file: unused_import
 
-import 'package:gasta_user_app/controller/controller.dart';
 import 'package:gasta_user_app/services/test_authentication_service.dart';
 import 'package:gasta_user_app/services/test_survey_service.dart';
 
@@ -13,12 +12,6 @@ class DependencyProvider {
     _userService = UserService();
     _couponService = CouponService();
     _authenticationService = AuthenticationService(userService: _userService);
-
-    _createUserDataPageController = CreateUserDataPageController(
-        authenticationService: _authenticationService,
-        userService: _userService);
-    _signupPageController =
-        SignupPageController(authenticationService: _authenticationService);
   }
 
   static DependencyProvider? _instance;
@@ -45,11 +38,4 @@ class DependencyProvider {
 
   late ISaveService _saveService;
   ISaveService get saveService => _saveService;
-
-  late SignupPageController _signupPageController;
-  SignupPageController get signupPageController => _signupPageController;
-
-  late CreateUserDataPageController _createUserDataPageController;
-  CreateUserDataPageController get createUserDataPageController =>
-      _createUserDataPageController;
 }

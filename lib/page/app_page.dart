@@ -19,6 +19,7 @@ class _AppPage extends State<AppPage> {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => LoginBloc()),
+        BlocProvider(create: (context) => CreateUserDataBloc()),
         BlocProvider(
           create: (context) => CouponsBloc()
             ..add(
