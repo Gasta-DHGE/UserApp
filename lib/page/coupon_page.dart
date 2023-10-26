@@ -66,11 +66,12 @@ class _CouponPage extends State<CouponPage> {
                                   onRefresh: () {
                                     context.read<CouponsBloc>().add(
                                           UpdateCoupons(
-                                              userId: DependencyProvider
-                                                  .instance
-                                                  .authenticationService
-                                                  .firebaseUser
-                                                  .uid),
+                                            userId: DependencyProvider
+                                                .instance
+                                                .authenticationService
+                                                .firebaseUser
+                                                .uid,
+                                          ),
                                         );
                                     return Future(() => null);
                                   },
