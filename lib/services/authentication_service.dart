@@ -57,7 +57,7 @@ class AuthenticationService
           firebaseUser = null;
           gastaUser = null;
         } else {
-          firebaseUser = user;
+          _firebaseUser = user;
           try {
             gastaUser = await _userService.getUserByIdAsync(user.uid);
           } catch (e) {

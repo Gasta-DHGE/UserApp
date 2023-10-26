@@ -37,9 +37,7 @@ class ScannerBloc extends Bloc<ScannerEvent, ScannerState> {
     try {
       await DependencyProvider.instance.surveyService
           .sendSurveyAsync(event.userId, event.answer);
-    } catch (e) {
-      var test = '';
-    }
+    } catch (e) {}
 
     emit(ScannerScanning());
   }
