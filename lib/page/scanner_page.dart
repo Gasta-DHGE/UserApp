@@ -90,29 +90,36 @@ class _ScannerPage extends State<ScannerPage> {
             if (state is ScannerScanned) {
               var bloc = context.read<ScannerBloc>();
               SchedulerBinding.instance.addPostFrameCallback((_) {
-                Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => SurveyPage(
-                    survey: state.survey,
-                    onSavePressed: (value) async {
-                      DependencyProvider.instance.saveService.saveSurveyAsync(
-                          DependencyProvider
-                              .instance.authenticationService.firebaseUser.uid,
-                          SurveyData(survey: state.survey, answer: value));
-                      Navigator.pop(context);
-                      bloc.add(RefreshScanner());
-                    },
-                    onSendPressed: (value) {
-                      bloc.add(
-                        SendSurvey(
-                          userId: DependencyProvider
-                              .instance.authenticationService.firebaseUser.uid,
-                          answer: value,
-                        ),
-                      );
-                      Navigator.pop(context);
-                    },
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => WillPopScope(
+                      onWillPop: () async => false,
+                      child: SurveyPage(
+                        survey: state.survey,
+                        onSavePressed: (value) async {
+                          DependencyProvider.instance.saveService
+                              .saveSurveyAsync(
+                                  DependencyProvider.instance
+                                      .authenticationService.firebaseUser.uid,
+                                  SurveyData(
+                                      survey: state.survey, answer: value));
+                          Navigator.pop(context);
+                          bloc.add(RefreshScanner());
+                        },
+                        onSendPressed: (value) {
+                          bloc.add(
+                            SendSurvey(
+                              userId: DependencyProvider.instance
+                                  .authenticationService.firebaseUser.uid,
+                              answer: value,
+                            ),
+                          );
+                          Navigator.pop(context);
+                        },
+                      ),
+                    ),
                   ),
-                ));
+                );
               });
 
               return const Expanded(
