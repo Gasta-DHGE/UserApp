@@ -8,7 +8,8 @@ import '../page/pages.dart';
 // ignore: must_be_immutable
 class SavedSurveyTile extends StatelessWidget {
   SurveyData survey;
-  SavedSurveyTile({super.key, required this.survey});
+  Function? onClosed;
+  SavedSurveyTile({super.key, required this.survey, this.onClosed});
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +34,9 @@ class SavedSurveyTile extends StatelessWidget {
                           .instance.authenticationService.firebaseUser.uid,
                       SurveyData(survey: survey.survey, answer: value));
                   Navigator.pop(context);
+                  if (onClosed != null) {
+                    onClosed!();
+                  }
                 },
                 onSendPressed: (value) async {
                   survey = survey.copyWith(answer: value);
@@ -51,6 +55,10 @@ class SavedSurveyTile extends StatelessWidget {
 
                   // ignore: use_build_context_synchronously
                   Navigator.pop(context);
+
+                  if (onClosed != null) {
+                    onClosed!();
+                  }
                 },
                 onValueChanged: (value) {
                   survey = survey.copyWith(answer: value);

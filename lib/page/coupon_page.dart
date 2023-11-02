@@ -192,6 +192,17 @@ class _CouponPage extends State<CouponPage> {
                                     },
                                     child: SavedSurveyTile(
                                       survey: state.savedSurveys[index],
+                                      onClosed: () {
+                                        context.read<SavedSurveysBloc>().add(
+                                              LoadSavedSurveys(
+                                                userId: DependencyProvider
+                                                    .instance
+                                                    .authenticationService
+                                                    .firebaseUser
+                                                    .uid,
+                                              ),
+                                            );
+                                      },
                                     ),
                                   );
                                 },
