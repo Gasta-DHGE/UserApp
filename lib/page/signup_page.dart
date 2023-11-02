@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gasta_core/gasta_core.dart';
 import 'package:gasta_core/gasta_core.dart' as core;
+import 'package:gasta_user_app/dependency_provider.dart';
 
 import '../bloc/bloc.dart';
 
@@ -34,6 +36,13 @@ class _SignupPage extends State<SignupPage> {
               Expanded(
                 child: BlocBuilder<SignUpBloc, SignUpState>(
                   builder: (context, state) {
+                    if (DependencyProvider
+                        .instance.authenticationService.isLoggedIn) {
+                      SchedulerBinding.instance.addPostFrameCallback((_) {
+                        Navigator.pop(context);
+                      });
+                    }
+
                     if (state is SignUpLoading) {
                       return const Center(
                         child: CircularProgressIndicator(),
