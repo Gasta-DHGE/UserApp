@@ -243,7 +243,7 @@ class _CreateUserDataPage extends State<CreateUserDataPage> {
                                           controller: cityController,
                                           inputFormatters: [
                                             FilteringTextInputFormatter.allow(
-                                              RegExp("[a-zA-Z]"),
+                                              RegExp("[a-zA-Zß]"),
                                             ),
                                           ],
                                           onChanged: (value) {
@@ -311,7 +311,7 @@ class _CreateUserDataPage extends State<CreateUserDataPage> {
                                           controller: streetController,
                                           inputFormatters: [
                                             FilteringTextInputFormatter.allow(
-                                              RegExp("[a-zA-Z]"),
+                                              RegExp("[a-zA-Zß]"),
                                             ),
                                           ],
                                           onChanged: (value) {

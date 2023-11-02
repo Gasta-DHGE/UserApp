@@ -57,9 +57,18 @@ class _CouponPage extends State<CouponPage> {
                       return Expanded(
                         child: Center(
                           child: state.coupons.isEmpty
-                              ? Text(
-                                  "No Coupons :(",
-                                  style: Styles.headlineTextStyle(context),
+                              ? GestureDetector(
+                                  onTap: () => context.read<CouponsBloc>().add(
+                                      LoadCoupons(
+                                          userId: DependencyProvider
+                                              .instance
+                                              .authenticationService
+                                              .firebaseUser
+                                              .uid)),
+                                  child: Text(
+                                    "No Coupons :(",
+                                    style: Styles.headlineTextStyle(context),
+                                  ),
                                 )
                               : RefreshIndicator(
                                   color: Theme.of(context).colorScheme.primary,
