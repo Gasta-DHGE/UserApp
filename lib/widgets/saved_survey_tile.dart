@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gasta_core/gasta_core.dart' as core;
 import 'package:gasta_user_app/models/models.dart';
-import 'package:gasta_user_app/services/mapping_service.dart';
 import 'package:uuid/uuid.dart';
 
 import '../dependency_provider.dart';
@@ -36,18 +34,23 @@ class SavedSurveyTile extends StatelessWidget {
                       SurveyData(survey: survey.survey, answer: value));
                   Navigator.pop(context);
                 },
-                onSendPressed: (value) {
+                onSendPressed: (value) async {
                   survey = survey.copyWith(answer: value);
+                  try {
+                    await DependencyProvider.instance.surveyService
+                        .sendSurveyAsync(
+                            DependencyProvider.instance.authenticationService
+                                .firebaseUser.uid,
+                            survey.answer);
+
+                    DependencyProvider.instance.saveService.removeSurvey(
+                        DependencyProvider
+                            .instance.authenticationService.firebaseUser.uid,
+                        survey.survey.id);
+                  } catch (e) {}
+
+                  // ignore: use_build_context_synchronously
                   Navigator.pop(context);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => DebugPage(
-                        data: MappingService.map<SurveyAnswer,
-                            core.SurveyAnswerModel>(survey.answer),
-                      ),
-                    ),
-                  );
                 },
                 onValueChanged: (value) {
                   survey = survey.copyWith(answer: value);

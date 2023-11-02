@@ -171,7 +171,24 @@ class _CouponPage extends State<CouponPage> {
                                           Theme.of(context).colorScheme.error,
                                     ),
                                     onDismissed: (direction) async {
-                                      setState(() {});
+                                      DependencyProvider.instance.saveService
+                                          .removeSurvey(
+                                              DependencyProvider
+                                                  .instance
+                                                  .authenticationService
+                                                  .firebaseUser
+                                                  .uid,
+                                              state.savedSurveys[index].survey
+                                                  .id);
+                                      context.read<SavedSurveysBloc>().add(
+                                            LoadSavedSurveys(
+                                              userId: DependencyProvider
+                                                  .instance
+                                                  .authenticationService
+                                                  .firebaseUser
+                                                  .uid,
+                                            ),
+                                          );
                                     },
                                     child: SavedSurveyTile(
                                       survey: state.savedSurveys[index],
