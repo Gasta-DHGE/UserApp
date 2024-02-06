@@ -1,8 +1,6 @@
-import 'package:gasta_core/gasta_core.dart' as core;
 import 'package:http/http.dart' as http;
-
-import '../models/models.dart';
-import 'services.dart';
+import 'package:gasta_core/gasta_core.dart' as core;
+import 'package:gasta_user_app/services/interfaces/i_coupon_service.dart';
 
 class CouponService implements ICouponService {
   late http.Client client;
@@ -14,21 +12,13 @@ class CouponService implements ICouponService {
   }
 
   @override
-  Future<Coupon> getCouponByCouponIdAsync(
-      String userId, String couponId) async {
-    return MappingService.map<core.CouponModel, Coupon>(
-        await source.getCouponByCouponId(couponId, userId));
+  Future<List<core.CouponEntity>> getCouponsByUserId(String userId) async {
+    return await source.getCouponsOfUser(userId);
   }
 
   @override
-  Future<List<Coupon>> getCouponByUserIdAsync(String userId) async {
-    var couponModels = await source.getCouponsOfUser(userId);
-
-    List<Coupon> coupons = [];
-    for (var coupon in couponModels) {
-      coupons.add(MappingService.map<core.CouponModel, Coupon>(coupon));
-    }
-
-    return coupons;
+  Future<core.CouponEntity> getCouponByCouponIdAsync(
+      String userId, String couponId) async {
+    return await source.getCouponByCouponId(couponId, userId);
   }
 }

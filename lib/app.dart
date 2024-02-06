@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gasta_core/gasta_core.dart';
-
-import 'page/pages.dart';
+import 'package:gasta_user_app/dependency_provider.dart';
+import 'package:gasta_user_app/pages/debug_page.dart';
+import 'package:gasta_user_app/pages/login_page.dart';
 
 class App extends StatefulWidget {
   const App({super.key});
@@ -17,7 +18,13 @@ class _App extends State<App> {
       themeMode: ThemeMode.system,
       theme: Themes.lightTheme,
       darkTheme: Themes.darkTheme,
-      home: const AppPage(),
+      home: ListenableBuilder(
+        listenable: DependencyProvider.instance.authenticationService,
+        builder: (context, child) =>
+            DependencyProvider.instance.authenticationService.user == null
+                ? LoginPage()
+                : const DebugPage(),
+      ),
     );
   }
 }
