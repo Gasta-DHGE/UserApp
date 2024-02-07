@@ -3,10 +3,14 @@ import 'package:gasta_core/gasta_core.dart';
 import 'package:gasta_core/gasta_core.dart' as core;
 import 'package:gasta_user_app/controller/login_page_controller.dart';
 import 'package:gasta_user_app/dependency_provider.dart';
+import 'package:gasta_user_app/page_manager.dart';
+import 'package:gasta_user_app/pages/signup_page.dart';
 
 // ignore: must_be_immutable
 class LoginPage extends StatefulWidget {
-  LoginPage({super.key});
+  PageManager pageManager;
+
+  LoginPage(this.pageManager, {super.key});
   LoginPageController controller =
       LoginPageController(DependencyProvider.instance.authenticationService);
 
@@ -76,7 +80,10 @@ class _LoginPage extends State<LoginPage> {
                                 Padding(
                                   padding: const EdgeInsets.only(right: 8.0),
                                   child: core.OutlinedButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      widget.pageManager
+                                          .changePage<SignupPage>();
+                                    },
                                     child: const Text("Sign Up"),
                                   ),
                                 ),
